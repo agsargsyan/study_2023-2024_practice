@@ -14,8 +14,8 @@ csl: pandoc/csl/gost-r-7-0-5-2008-numeric.csl
 ## Pdf output format
 toc: true # Table of contents
 toc-depth: 2
-lof: true # List of figures
-lot: true # List of tables
+<!-- lof: true # List of figures
+lot: true # List of tables -->
 fontsize: 12pt
 linestretch: 1.5
 papersize: a4
@@ -96,13 +96,13 @@ RED, с другой стороны, является алгоритмом, ко
 ## Описание
 
 Описание моделируемой сети:
-– сеть состоит из 6 узлов;
-– между всеми узлами установлено дуплексное соединение с различными пропускной способностью и задержкой 10 мс ((рис. @fig:001);
-– узел r1 использует очередь с дисциплиной RED для накопления пакетов, максимальный размер которой составляет 25;
-– TCP-источники на узлах s1 и s2 подключаются к TCP-приёмнику на узле s3;
-– генераторы трафика FTP прикреплены к TCP-агентам
+- сеть состоит из 6 узлов;
+- между всеми узлами установлено дуплексное соединение с различными пропускной способностью и задержкой 10 мс (рис. @fig:001);
+- узел r1 использует очередь с дисциплиной RED для накопления пакетов, максимальный размер которой составляет 25;
+- TCP-источники на узлах s1 и s2 подключаются к TCP-приёмнику на узле s3;
+- генераторы трафика FTP прикреплены к TCP-агентам
 
-![Топология сети](image/placeimg_800_600_tech.jpg){#fig:001 width=70%}
+![Топология сети](image/topology.png){#fig:001 width=70%}
 
 Полная реализация  вычислительной модели сети с алгоритмом управления очередью RED представлена в разделе **Приложение 1**.
 
@@ -131,9 +131,6 @@ RED, с другой стороны, является алгоритмом, ко
 | `/tmp`       | Временные файлы                                                                                                            |
 | `/usr`       | Вторичная иерархия для данных пользователя                                                                                 |
 
-Более подробно об Unix см. в [@gnu-doc:bash;@newham:2005:bash;@zarrelli:2017:bash;@robbins:2013:bash;@tannenbaum:arch-pc:ru;@tannenbaum:modern-os:ru].
-
-
 # Выводы
 
 Здесь кратко описываются итоги проделанной работы.
@@ -151,6 +148,10 @@ RED, с другой стороны, является алгоритмом, ко
 ```
 #создаем симулятор
 set ns [new Simulator]
+
+#Открыть трейс-файл для nam
+set nf [open output/out.nam w]
+$ns namtrace-all $nf
 #вызываем скрипты со всех файлов
 source "node.tcl"
 source "link.tcl"
@@ -167,10 +168,6 @@ $ns run
 #Задаем разные цвета для потоков
 $ns color 1 Blue
 $ns color 0 Red
-
-#Открыть трейс-файл для nam
-set nf [open output/out.nam w]
-$ns namtrace-all $nf
 
 #отображение в nam
 $ns duplex-link-op $node_(s1) $node_(r1) orient right-down
@@ -264,7 +261,7 @@ proc finish {} {
 	}
 	}
 	
-	set f [open temp.queue w]
+	set f [open output/temp.queue w]
 	puts $f "TitleText: RED"
 	puts $f "Device: Postscript"
 
