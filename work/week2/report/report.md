@@ -14,8 +14,7 @@ csl: pandoc/csl/gost-r-7-0-5-2008-numeric.csl
 ## Pdf output format
 toc: true # Table of contents
 toc-depth: 2
-<!-- lof: true # List of figures
-lot: true # List of tables -->
+<!-- lof: true # List of figures lot: true # List of tables -->
 fontsize: 12pt
 linestretch: 1.5
 papersize: a4
@@ -147,13 +146,13 @@ plot "output/WvsT" with lines linestyle 1 lt 1 lw 2 title "WindowVsTimeReno"
 
 Полная реализация  вычислительной модели сети с алгоритмом управления очередью RED представлена в разделе [**Приложение 2**](https://github.com/agsargsyan/study_2022-2023_practice/edit/main/work/week2/report/report.md#%D0%BF%D1%80%D0%B8%D0%BB%D0%BE%D0%B6%D0%B5%D0%BD%D0%B8%D0%B5-2). 
 
-В результате запуска программы получил следующие результаты (рис. @fig:002, @fig:003). Для выводов графиков размера окна TCP и длины очереди и средней длины очереди был использовен аналогичный для первой модели скрипт.
+В результате запуска программы получил следующие результаты (рис. @fig:004, @fig:005). Для выводов графиков размера окна TCP и длины очереди и средней длины очереди был использовен аналогичный для первой модели скрипт.
 
 ![График очередей](image/TCP4.jpg){#fig:004 width=70%}
 
 ![График динамики изменения окна TCP](image/queues4.jpg){#fig:005 width=70%}
 
-# Список литературы{.unnumbered}
+# Список литературы
 
 1. Sally Floyd and Van Jacobson Random Early Detection Gateways for Congestion Avoidance, 1993 год
 2. J. Roberts Modeling random early detection in a differentiated services network, 2002 год
