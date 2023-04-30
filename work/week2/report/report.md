@@ -91,9 +91,9 @@ RED, с другой стороны, является алгоритмом, ко
 
 Таким образом, основным отличием между RED и Droptail является то, что RED позволяет контролировать пропускную способность и более эффективно управлять потоками трафика, тогда как Droptail прост в реализации, но не гарантирует равномерное распределение пропускной способности.
 
-# Реализация
+# Реализация первой модели
 
-## Описание
+## Описание топологии
 
 Описание моделируемой сети:
 - сеть состоит из 6 узлов;
@@ -104,45 +104,64 @@ RED, с другой стороны, является алгоритмом, ко
 
 ![Топология сети](image/topology.png){#fig:001 width=70%}
 
-Полная реализация  вычислительной модели сети с алгоритмом управления очередью RED представлена в разделе **Приложение 1**.
+Полная реализация  вычислительной модели сети с алгоритмом управления очередью RED представлена в разделе [**Приложение 1**](https://github.com/agsargsyan/study_2022-2023_practice/edit/main/work/week2/report/report.md#%D0%BF%D1%80%D0%BE%D0%B3%D1%80%D0%B0%D0%BC%D0%BC%D0%B0-%D0%B4%D0%B5%D0%BC%D0%BE%D0%BD%D1%81%D1%82%D1%80%D0%B0%D1%86%D0%B8%D0%B8-%D0%BF%D0%B5%D1%80%D0%B2%D0%BE%D0%B3%D0%BE-%D0%B0%D0%BB%D0%B3%D0%BE%D1%80%D0%B8%D1%82%D0%BC%D0%B0-red).
 
+## Результаты
 
-# Задание
+После запуска программы сгенерировали скрипт для вывода графиков размера окна TCP и длины очереди и средней длины очереди:
+```
+#!/usr/bin/gnuplot -persist
 
-Здесь приводится описание задания в соответствии с рекомендациями
-методического пособия и выданным вариантом.
+set terminal postscript eps
+set output "images/queues.eps"
+set xlabel "Time (s)"
+set ylabel "Queue Length"
+set title "RED Queue"
+plot "output/temp.q" with lines linestyle 1 lt 1 lw 2 title "Queue length", "output/temp.a" with lines linestyle 2 lt 3 lw 2 title "Average queue length"
 
-# Теоретическое введение
+set terminal postscript eps
+set output "images/TCP.eps"
+set xlabel "Time (s)"
+set ylabel "Window size"
+set title "TCPRenoVsWindow"
+plot "output/WvsT" with lines linestyle 1 lt 1 lw 2 title "WindowVsTimeReno"
+```
+В результате запуска программы получил следующие результаты (рис. @fig:002, @fig:003). Следует учитывать, что для моделирования были использованы значения RED в NS-2 по умолчанию, а также алгоритм алгоритм предотвращения перегрузки TCP Reno.
 
-Здесь описываются теоретические аспекты, связанные с выполнением работы.
+![График очередей](image/TCPReno.jpg){#fig:002 width=70%}
 
-Например, в табл. @tbl:std-dir приведено краткое описание стандартных каталогов Unix.
+![График динамики изменения окна TCP](image/RenoQueue.jpg){#fig:003 width=70%}
 
-: Описание некоторых каталогов файловой системы GNU Linux {#tbl:std-dir}
+# Реализация второй модели
 
-| Имя каталога | Описание каталога                                                                                                          |
-|--------------|----------------------------------------------------------------------------------------------------------------------------|
-| `/`          | Корневая директория, содержащая всю файловую                                                                               |
-| `/bin `      | Основные системные утилиты, необходимые как в однопользовательском режиме, так и при обычной работе всем пользователям     |
-| `/etc`       | Общесистемные конфигурационные файлы и файлы конфигурации установленных программ                                           |
-| `/home`      | Содержит домашние директории пользователей, которые, в свою очередь, содержат персональные настройки и данные пользователя |
-| `/media`     | Точки монтирования для сменных носителей                                                                                   |
-| `/root`      | Домашняя директория пользователя  `root`                                                                                   |
-| `/tmp`       | Временные файлы                                                                                                            |
-| `/usr`       | Вторичная иерархия для данных пользователя                                                                                 |
+## Описание топологии
 
-# Выводы
+- сеть состоит из $N=20$ TCP-источников, N TCP-приёмников, двух маршрутизаторов R1 и R2 между источниками и приёмниками (N — не менее 20);
+- между TCP-источниками и первым маршрутизатором установлены дуплексные соединения с пропускной способностью 100 Мбит/с и задержкой 20 мс очередью типа DropTail;
+- между TCP-приёмниками и вторым маршрутизатором установлены дуплексные соединения с пропускной способностью 100 Мбит/с и задержкой 20 мс очередью типа DropTail
+- между маршрутизаторами установлено симплексное соединение (R1–R2) с пропускной способностью 20 Мбит/с и задержкой 15 мс очередью типа RED,
+размером буфера 300 пакетов; в обратную сторону — симплексное соединение (R2–R1) с пропускной способностью 15 Мбит/с и задержкой 20 мс очередью типа DropTail;
+- данные передаются по протоколу FTP поверх TCPReno;
+- параметры алгоритма RED: $q_{min} = 75, q_{max} = 150, q_w = 0, 002, p_{max} = 0.1$ ;
+- максимальный размер TCP-окна 32; размер передаваемого пакета 500 байт; время моделирования — не менее 20 единиц модельного времени.
 
-Здесь кратко описываются итоги проделанной работы.
+Полная реализация  вычислительной модели сети с алгоритмом управления очередью RED представлена в разделе [**Приложение 2**](https://github.com/agsargsyan/study_2022-2023_practice/edit/main/work/week2/report/report.md#%D0%BF%D1%80%D0%B8%D0%BB%D0%BE%D0%B6%D0%B5%D0%BD%D0%B8%D0%B5-2). 
+
+В результате запуска программы получил следующие результаты (рис. @fig:002, @fig:003). Для выводов графиков размера окна TCP и длины очереди и средней длины очереди был использовен аналогичный для первой модели скрипт.
+
+![График очередей](image/TCP4.jpg){#fig:004 width=70%}
+
+![График динамики изменения окна TCP](image/queues4.jpg){#fig:005 width=70%}
 
 # Список литературы{.unnumbered}
 
 1. Sally Floyd and Van Jacobson Random Early Detection Gateways for Congestion Avoidance, 1993 год
 2. J. Roberts Modeling random early detection in a differentiated services network, 2002 год
+3. Kevin Fall, Kannan VaradhanThe ns Manual, 2011 год
 
 # Приложение 1
 
-## Программа демонстрации алгоритма RED
+## Программа демонстрации первого алгоритма RED
 
 - main.tcl
 ```
@@ -283,5 +302,162 @@ proc finish {} {
 	exec xgraph -bb -tk -x time -y queue output/temp.queue &
 	exec xgraph -bb -tk -x time -t "TCPRenoCWND" output/WvsT &
 	exit 0
+}
+```
+# Приложение 2
+
+## Реализация второго алгоритма RED
+
+- main.tcl
+```
+#Создать новый экземпляр объекта Symulator
+set ns [new Simulator]
+#Открыть трейс файл для nam
+set nf [open output/out.nam w]
+$ns namtrace-all $nf
+set N 20
+source "nodes.tcl"
+source "links.tcl"
+source "queue.tcl"
+source "connections.tcl"
+source "timing.tcl"
+source "nam.tcl"
+source "finish.tcl"                                                                                      
+#Запуск программы
+$ns run
+```
+- nodes.tcl
+```
+set node_(r0) [$ns node]
+set node_(r1) [$ns node]
+
+for {set i 0} {$i < $N} {incr i} {
+	set node_(s$i) [$ns node]
+	set node_(s[expr $N + $i]) [$ns node]
+	}
+```
+- links.tcl
+```
+for {set i 0} {$i < $N} {incr i} {
+	$ns duplex-link $node_(s$i) $node_(r0) 100Mb 20ms DropTail
+	$ns duplex-link $node_(s[expr $N + $i]) $node_(r1) 100Mb 20ms DropTail
+}
+
+$ns simplex-link $node_(r0) $node_(r1) 20Mb 15ms RED
+$ns simplex-link $node_(r1) $node_(r0) 15Mb 20ms DropTail
+```
+- nam.tcl
+```
+$node_(r0) color "red"
+$node_(r1) color "red"
+$node_(r0) label "RED"
+$node_(r1) shape "square"
+$node_(r0) label "square"
+
+$ns simplex-link-op $node_(r0) $node_(r1) orient right
+$ns simplex-link-op $node_(r1) $node_(r0) orient left
+$ns simplex-link-op $node_(r0) $node_(r1) queuePos 0
+$ns simplex-link-op $node_(r1) $node_(r0) queuePos 0
+
+for {set m 0} {$m < $N} {incr m} {
+	$ns duplex-link-op $node_(s$m) $node_(r0) orient right
+	$ns duplex-link-op $node_(s[expr $N + $m]) $node_(r1) orient left 
+}
+for {set i 0} {$i < $N} {incr i} {
+	$node_(s$i) color "blue"
+	$node_(s$i) label "ftp"
+}
+```
+- connections.tcl
+```
+for {set t 0} {$t < $N} {incr t} {
+	$ns color $t green
+	set tcp($t) [$ns create-connection TCP/Reno $node_(s$t) TCPSink $node_(s[expr $N + $t]) $t]
+	$tcp($t) set window_ 32
+	$tcp($t) set maxcwnd_ 32
+	$tcp($t) set packetSize_ 500
+	set ftp($t) [$tcp($t) attach-source FTP]
+}
+
+proc plotWindow {tcpSource file} {
+   global ns
+   set time 0.01
+   set now [$ns now]
+   set cwnd [$tcpSource set cwnd_]
+   puts $file "$now $cwnd"
+   $ns at [expr $now+$time] "plotWindow $tcpSource $file"
+}
+```
+- queue.tcl
+```
+$ns queue-limit $node_(r0) $node_(r1) 300
+$ns queue-limit $node_(r1) $node_(r0) 300
+
+set windowVsTime [open output/WvsT w]
+set qmon [$ns monitor-queue $node_(r0) $node_(r1) [open output/qm.out w]]
+[$ns link $node_(r0) $node_(r1)] queue-sample-timeout
+
+set redq [[$ns link $node_(r0) $node_(r1)] queue]
+$redq set thresh_ 75 #q_min
+$redq set maxthresh_ 150  #q_max
+$redq set q_weight_ 0.002 # q_weight
+$redq set linterm_ 10 # 1/p_max
+$redq set drop-tail_ true
+set tchan_ [open output/all.q w]
+$redq trace curq_
+$redq trace ave_
+$redq attach $tchan_
+```
+- timing.tcl
+```
+for {set r 0} {$r < $N} {incr r} {
+	$ns at 0.0 "$ftp($r) start"
+	$ns at 1.0 "plotWindow $tcp($r) $windowVsTime"
+	$ns at 24.0 "$ftp($r) stop"
+}
+
+$ns at 25.0 "finish"
+```
+- finish.tcl
+```
+#Finish procedure
+proc finish {} {
+   global ns nf
+   $ns flush-trace
+   close $nf
+   global tchan_
+   set awkCode {
+      {
+	 if ($1 == "Q" && NF>2) {
+	    print $2, $3 >> "output/temp.q";
+	    set end $2
+	 }
+	 else if ($1 == "a" && NF>2)
+	 print $2, $3 >> "output/temp.a";
+      }
+   }
+
+   set f [open output/temp.queue w]
+   puts $f "TitleText: RED"
+   puts $f "Device: Postscript"
+
+   if { [info exists tchan_] } {
+      close $tchan_
+   }
+
+   exec rm -f output/temp.q output/temp.a
+   exec touch output/temp.a output/temp.q
+
+   exec awk $awkCode output/all.q
+
+   puts $f \"queue
+   exec cat output/temp.q >@ $f
+   puts $f \n\"ave_queue
+   exec cat output/temp.a >@ $f
+   close $f
+   # вывод в xgraph
+   exec xgraph -bb -tk -x time -t "TCPRenoCWND" output/WvsT &
+   exec xgraph -bb -tk -x time -y queue output/temp.queue &
+   exit 0
 }
 ```
