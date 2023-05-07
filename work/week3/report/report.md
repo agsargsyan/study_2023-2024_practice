@@ -90,11 +90,26 @@ p_{b} = \begin{cases}
 \end{cases}
 $$
 
+![классический RED](image/RED.png){#fig:001 width=70%}
+
 ## Реализация в NS-2
 
+В NS-2 параметры RED Файлы,указываются в каталоге ns-2.35/queue, там представлены также другие реализации очередей (среди них DropTail, BLUE и т.д.).
 
-
-
+Вот пример реализации параметров RED в NS-2:
+```
+# Мониторинг очереди:
+set redq [[$ns link $node_(r0) $node_(r1)] queue]
+$redq set thresh_ 75 #q_min
+$redq set maxthresh_ 150  # q_max
+$redq set q_weight_ 0.002 # q_weight
+$redq set linterm_ 10 # 1/p_max
+$redq set drop-tail_ true # вместо механизма randomdrop используется drop-tail в случае переполнения очереди или когда средний размер очереди больше maxthresh_
+set tchan_ [open output/all.q w]
+$redq trace curq_ # текущий размер очереди
+$redq trace ave_ # средний размер очереди
+$redq attach $tchan_
+```
 
 # GRED
 
@@ -115,6 +130,14 @@ p_{b} =\begin{cases}
 	1, &  \ \hat{q} \geqslant  q_{max} 
 \end{cases}
 $$
+
+![Gentle RED](image/GentleRED.jpg){#fig:002 width=70%}
+
+## Реализация в NS-2
+
+Для реализации модификации в мониторинге очереди нужно прописать следующую строку:
+
+$redq set gentle_ true
 
 # WRED
 
