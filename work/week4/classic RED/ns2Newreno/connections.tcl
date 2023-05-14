@@ -1,10 +1,8 @@
 #Строим соединение
 set tcp1 [$ns create-connection TCP/Newreno $node_(s1) TCPSink $node_(s3) 0]
 $tcp1 set window_ 15
-$tcp1 set maxcwnd_ 32
 set tcp2 [$ns create-connection TCP/Newreno $node_(s2) TCPSink $node_(s3) 1]
 $tcp2 set window_ 15
-$tcp2 set maxcwnd_ 32
 set ftp1 [$tcp1 attach-source FTP]
 set ftp2 [$tcp2 attach-source FTP]
 
