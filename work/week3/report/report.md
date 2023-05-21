@@ -91,6 +91,8 @@ p_{b} = \begin{cases}
 \end{cases}
 $$					
 
+
+
 ![классический RED](image/RED.png){#fig:001 width=70%}
 
 ## Реализация в NS-2
