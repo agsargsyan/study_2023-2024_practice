@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2023.5.31)  7 JUN 2023 18:23
+This is pdfTeX, Version 3.141592653-2.6-1.40.22 (TeX Live 2022/dev/Debian) (preloaded format=pdflatex 2023.5.31)  7 JUN 2023 21:24
 entering extended mode
  \write18 enabled.
  %&-line parsing enabled.
@@ -978,29 +978,24 @@ LaTeX Font Info:    Trying to load font information for U+msb on input line 55.
 File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 ) [1
 
-{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]) (./abstract.tex)
+{/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}])
 
 LaTeX Font Warning: Font shape `T2A/cmr/m/n' in size <32.34409> not available
-(Font)              size <29.86> substituted on input line 56.
+(Font)              size <29.86> substituted on input line 52.
 
 
 LaTeX Font Warning: Font shape `T2A/cmr/bx/n' in size <32.34409> not available
-(Font)              size <29.86> substituted on input line 56.
+(Font)              size <29.86> substituted on input line 52.
 
 
 LaTeX Font Warning: Font shape `T2A/cmr/bx/n' in size <22.46396> not available
-(Font)              size <20.74> substituted on input line 56.
+(Font)              size <20.74> substituted on input line 52.
 
 (./main.toc)
 \tf@toc=\write6
 \openout6 = `main.toc'.
 
-pdfTeX warning (ext4): destination with the same identifier (name{page.1}) has 
-been already used, duplicate ignored
-<to be read again> 
-                   \relax 
-l.58 \newpage
-              [1
+ [2
 
 ] (./intro.tex
 
@@ -1013,9 +1008,9 @@ Overfull \hbox (1.10477pt too wide) in paragraph at lines 19--20
 -ю-щих ме-то-дов ана-ли-за слож-
  []
 
-[2
+[3
 
-]) (./ch01.tex [3]
+]) (./ch01.tex [4]
 {\cyrillictext \CYRG \cyrl \cyra \cyrv \cyra } 1.
 
 LaTeX Font Warning: Font shape `T2A/cmr/m/n' in size <26.96207> not available
@@ -1027,123 +1022,116 @@ LaTeX Font Warning: Font shape `T2A/cmr/bx/n' in size <26.96207> not available
 
 
 LaTeX Font Warning: Font shape `T2A/cmr/m/n' in size <18.72003> not available
-(Font)              size <17.28> substituted on input line 2.
+(Font)              size <17.28> substituted on input line 3.
 
 
 LaTeX Font Warning: Font shape `T2A/cmr/bx/n' in size <18.72003> not available
-(Font)              size <17.28> substituted on input line 2.
+(Font)              size <17.28> substituted on input line 3.
 
-[4
+[5
 
-]) (./ch02.tex [5]
+]) (./ch02.tex [6]
 {\cyrillictext \CYRG \cyrl \cyra \cyrv \cyra } 2.
-[6
+[7
 
 ]
-<image/RED.png, id=133, 989.6975pt x 688.5725pt>
+<image/RED.png, id=141, 989.6975pt x 688.5725pt>
 File: image/RED.png Graphic file (type png)
 <use image/RED.png>
-Package pdftex.def Info: image/RED.png  used on input line 24.
+Package pdftex.def Info: image/RED.png  used on input line 25.
 (pdftex.def)             Requested size: 328.6279pt x 228.63753pt.
 LaTeX Font Info:    Trying to load font information for T2A+cmtt on input line 
-30.
+31.
  (/usr/share/texlive/texmf-dist/tex/latex/cyrillic/t2acmtt.fd
 File: t2acmtt.fd 2001/08/11 v1.0a Computer Modern Cyrillic font definitions
 )
 
 LaTeX Font Warning: Font shape `T2A/cmtt/m/n' in size <13> not available
-(Font)              size <12> substituted on input line 30.
+(Font)              size <12> substituted on input line 31.
 
 
-Overfull \hbox (55.27637pt too wide) in paragraph at lines 34--34
+Overfull \hbox (55.27637pt too wide) in paragraph at lines 35--35
 []\T2A/cmtt/m/n/12 double REDQueue::calculate_p_new(double v_ave, double th_max
 , int gentle, double v_a,[] 
  []
 
 
-Overfull \hbox (141.70526pt too wide) in paragraph at lines 40--40
+Overfull \hbox (141.70526pt too wide) in paragraph at lines 41--41
 []        \T2A/cmtt/m/n/12 } else if (!gentle && v_ave >= th_max) { // Превысил
 и пороговое значение в классическом RED[] 
  []
 
 
-Overfull \hbox (191.0932pt too wide) in paragraph at lines 42--42
+Overfull \hbox (191.0932pt too wide) in paragraph at lines 43--43
 []        \T2A/cmtt/m/n/12 } else { //p в промежутке от 0 до max_p, тогда средн
 ий размер очереди в промежутке th_min до th_max[] 
  []
 
-[7 <./image/RED.png>]
-<image/GentleRED.jpg, id=144, 979.66pt x 688.5725pt>
+[8 <./image/RED.png>]
+<image/GentleRED.jpg, id=153, 979.66pt x 688.5725pt>
 File: image/GentleRED.jpg Graphic file (type jpg)
 <use image/GentleRED.jpg>
-Package pdftex.def Info: image/GentleRED.jpg  used on input line 78.
+Package pdftex.def Info: image/GentleRED.jpg  used on input line 80.
 (pdftex.def)             Requested size: 328.6279pt x 230.98053pt.
- [8 <./image/GentleRED.jpg (PNG copy)>]
-<image/wred.png, id=153, 1085.05376pt x 444.66125pt>
+ [9 <./image/GentleRED.jpg (PNG copy)>]
+<image/wred.png, id=164, 1085.05376pt x 444.66125pt>
 File: image/wred.png Graphic file (type png)
 <use image/wred.png>
-Package pdftex.def Info: image/wred.png  used on input line 91.
+Package pdftex.def Info: image/wred.png  used on input line 93.
 (pdftex.def)             Requested size: 328.6279pt x 134.67497pt.
- [9 <./image/wred.png>]
-<image/NonLinearRED.png, id=166, 989.6975pt x 688.5725pt>
+<image/NonLinearRED.png, id=169, 989.6975pt x 688.5725pt>
 File: image/NonLinearRED.png Graphic file (type png)
 <use image/NonLinearRED.png>
-Package pdftex.def Info: image/NonLinearRED.png  used on input line 118.
+Package pdftex.def Info: image/NonLinearRED.png  used on input line 121.
 (pdftex.def)             Requested size: 328.6279pt x 228.63753pt.
-
-Overfull \hbox (2.30441pt too wide) in paragraph at lines 128--129
+ [10 <./image/wred.png>]
+Overfull \hbox (2.30441pt too wide) in paragraph at lines 131--132
 []\T2A/cmr/m/n/12 В тер-ми-на-ле за-пу-стил ко-ман-ду patch -p1 < NLRED.patch, 
 а за-тем за-пу-стил $\OML/cmm/m/it/12 :=install$\T2A/cmr/m/n/12 . 
  []
 
+[11 <./image/NonLinearRED.png>]
 
-Overfull \hbox (7.24475pt too wide) in paragraph at lines 136--137
-[]\T2A/cmr/m/n/12 Алгоритм ARED функ-ци-о-ни-ру-ет сле-ду-ю-щим об-ра-зом. Для 
-каж-до-го ин-тер-ва-ла interval
- []
-
-[10 <./image/NonLinearRED.png>]
-
-LaTeX Warning: Command \cyra invalid in math mode on input line 182.
+LaTeX Warning: Command \cyra invalid in math mode on input line 186.
 
 
-LaTeX Warning: Command \cyrz invalid in math mode on input line 182.
+LaTeX Warning: Command \cyrz invalid in math mode on input line 186.
 
 
-LaTeX Warning: Command \cyra invalid in math mode on input line 182.
+LaTeX Warning: Command \cyra invalid in math mode on input line 186.
 
 
-LaTeX Warning: Command \cyrt invalid in math mode on input line 182.
+LaTeX Warning: Command \cyrt invalid in math mode on input line 186.
 
 
-LaTeX Warning: Command \cyre invalid in math mode on input line 182.
+LaTeX Warning: Command \cyre invalid in math mode on input line 186.
 
 
-LaTeX Warning: Command \cyrm invalid in math mode on input line 182.
+LaTeX Warning: Command \cyrm invalid in math mode on input line 186.
 
 
-LaTeX Warning: Command \cyrz invalid in math mode on input line 182.
+LaTeX Warning: Command \cyrz invalid in math mode on input line 186.
 
 
-LaTeX Warning: Command \cyra invalid in math mode on input line 182.
+LaTeX Warning: Command \cyra invalid in math mode on input line 186.
 
 
-LaTeX Warning: Command \cyrp invalid in math mode on input line 182.
+LaTeX Warning: Command \cyrp invalid in math mode on input line 186.
 
 
-LaTeX Warning: Command \cyru invalid in math mode on input line 182.
+LaTeX Warning: Command \cyru invalid in math mode on input line 186.
 
 
-LaTeX Warning: Command \cyrs invalid in math mode on input line 182.
+LaTeX Warning: Command \cyrs invalid in math mode on input line 186.
 
 
-LaTeX Warning: Command \cyrt invalid in math mode on input line 182.
+LaTeX Warning: Command \cyrt invalid in math mode on input line 186.
 
 
-LaTeX Warning: Command \cyri invalid in math mode on input line 182.
+LaTeX Warning: Command \cyri invalid in math mode on input line 186.
 
 
-LaTeX Warning: Command \cyrl invalid in math mode on input line 182.
+LaTeX Warning: Command \cyrl invalid in math mode on input line 186.
 
 Missing character: There is no а in font cmr12!
 Missing character: There is no з in font cmr12!
@@ -1159,7 +1147,7 @@ Missing character: There is no с in font cmr12!
 Missing character: There is no т in font cmr12!
 Missing character: There is no и in font cmr12!
 Missing character: There is no л in font cmr12!
-[11]) (./ch03.tex [12]
+[12]) (./ch03.tex [13]
 {\cyrillictext \CYRG \cyrl \cyra \cyrv \cyra } 3.
 Package epstopdf Info: Source file: <image/queues_75-150_classic.eps>
 (epstopdf)                    date: 2023-05-19 17:59:30
@@ -1172,14 +1160,14 @@ to.pdf>
 -eps-converted-to.pdf image/queues_75-150_classic.eps>
 (epstopdf)             \includegraphics on input line 21.
 Package epstopdf Info: Output file is already uptodate.
-<image/queues_75-150_classic-eps-converted-to.pdf, id=193, 361.35pt x 252.945pt
+<image/queues_75-150_classic-eps-converted-to.pdf, id=213, 361.35pt x 252.945pt
 >
 File: image/queues_75-150_classic-eps-converted-to.pdf Graphic file (type pdf)
 <use image/queues_75-150_classic-eps-converted-to.pdf>
 Package pdftex.def Info: image/queues_75-150_classic-eps-converted-to.pdf  used
  on input line 21.
 (pdftex.def)             Requested size: 281.68515pt x 197.18051pt.
-[13
+[14
 
 ]
 Package epstopdf Info: Source file: <image/av_queues_maxthresh.eps>
@@ -1193,7 +1181,7 @@ Package epstopdf Info: Source file: <image/av_queues_maxthresh.eps>
 ps-converted-to.pdf image/av_queues_maxthresh.eps>
 (epstopdf)             \includegraphics on input line 32.
 Package epstopdf Info: Output file is already uptodate.
-<image/av_queues_maxthresh-eps-converted-to.pdf, id=200, 361.35pt x 252.945pt>
+<image/av_queues_maxthresh-eps-converted-to.pdf, id=220, 361.35pt x 252.945pt>
 File: image/av_queues_maxthresh-eps-converted-to.pdf Graphic file (type pdf)
 <use image/av_queues_maxthresh-eps-converted-to.pdf>
 Package pdftex.def Info: image/av_queues_maxthresh-eps-converted-to.pdf  used o
@@ -1210,7 +1198,7 @@ ed-to.pdf>
 tle-eps-converted-to.pdf image/av_queues_classic_gentle.eps>
 (epstopdf)             \includegraphics on input line 43.
 Package epstopdf Info: Output file is already uptodate.
-<image/av_queues_classic_gentle-eps-converted-to.pdf, id=205, 361.35pt x 252.94
+<image/av_queues_classic_gentle-eps-converted-to.pdf, id=225, 361.35pt x 252.94
 5pt>
 File: image/av_queues_classic_gentle-eps-converted-to.pdf Graphic file (type pd
 f)
@@ -1229,7 +1217,7 @@ f>
 converted-to.pdf image/av_queues_3types.eps>
 (epstopdf)             \includegraphics on input line 50.
 Package epstopdf Info: Output file is already uptodate.
-<image/av_queues_3types-eps-converted-to.pdf, id=206, 361.35pt x 252.945pt>
+<image/av_queues_3types-eps-converted-to.pdf, id=226, 361.35pt x 252.945pt>
 File: image/av_queues_3types-eps-converted-to.pdf Graphic file (type pdf)
 <use image/av_queues_3types-eps-converted-to.pdf>
 Package pdftex.def Info: image/av_queues_3types-eps-converted-to.pdf  used on i
@@ -1245,7 +1233,7 @@ Package epstopdf Info: Source file: <image/queues_3types.eps>
 verted-to.pdf image/queues_3types.eps>
 (epstopdf)             \includegraphics on input line 57.
 Package epstopdf Info: Output file is already uptodate.
-<image/queues_3types-eps-converted-to.pdf, id=207, 361.35pt x 252.945pt>
+<image/queues_3types-eps-converted-to.pdf, id=227, 361.35pt x 252.945pt>
 File: image/queues_3types-eps-converted-to.pdf Graphic file (type pdf)
 <use image/queues_3types-eps-converted-to.pdf>
 Package pdftex.def Info: image/queues_3types-eps-converted-to.pdf  used on inpu
@@ -1262,7 +1250,7 @@ erted-to.pdf>
 linear-eps-converted-to.pdf image/av_queues_classic_nonlinear.eps>
 (epstopdf)             \includegraphics on input line 64.
 Package epstopdf Info: Output file is already uptodate.
-<image/av_queues_classic_nonlinear-eps-converted-to.pdf, id=208, 361.35pt x 252
+<image/av_queues_classic_nonlinear-eps-converted-to.pdf, id=228, 361.35pt x 252
 .945pt>
 File: image/av_queues_classic_nonlinear-eps-converted-to.pdf Graphic file (type
  pdf)
@@ -1270,12 +1258,12 @@ File: image/av_queues_classic_nonlinear-eps-converted-to.pdf Graphic file (type
 Package pdftex.def Info: image/av_queues_classic_nonlinear-eps-converted-to.pdf
   used on input line 64.
 (pdftex.def)             Requested size: 281.68515pt x 197.18051pt.
- [14 <./image/queues_75-150_classic-eps-converted-to.pdf> <./image/av_queues_ma
+ [15 <./image/queues_75-150_classic-eps-converted-to.pdf> <./image/av_queues_ma
 xthresh-eps-converted-to.pdf>]
 
-LaTeX Warning: Text page 15 contains only floats.
+LaTeX Warning: Text page 16 contains only floats.
 
-[15 <./image/av_queues_classic_gentle-eps-converted-to.pdf> <./image/av_queues_
+[16 <./image/av_queues_classic_gentle-eps-converted-to.pdf> <./image/av_queues_
 3types-eps-converted-to.pdf> <./image/queues_3types-eps-converted-to.pdf>]
 Package epstopdf Info: Source file: <image/av_queues_tcp.eps>
 (epstopdf)                    date: 2023-05-21 14:44:53
@@ -1287,7 +1275,7 @@ Package epstopdf Info: Source file: <image/av_queues_tcp.eps>
 verted-to.pdf image/av_queues_tcp.eps>
 (epstopdf)             \includegraphics on input line 75.
 Package epstopdf Info: Output file is already uptodate.
-<image/av_queues_tcp-eps-converted-to.pdf, id=245, 361.35pt x 252.945pt>
+<image/av_queues_tcp-eps-converted-to.pdf, id=265, 361.35pt x 252.945pt>
 File: image/av_queues_tcp-eps-converted-to.pdf Graphic file (type pdf)
 <use image/av_queues_tcp-eps-converted-to.pdf>
 Package pdftex.def Info: image/av_queues_tcp-eps-converted-to.pdf  used on inpu
@@ -1304,7 +1292,7 @@ pdf>
 s-converted-to.pdf image/TCP_75-150_classic.eps>
 (epstopdf)             \includegraphics on input line 82.
 Package epstopdf Info: Output file is already uptodate.
-<image/TCP_75-150_classic-eps-converted-to.pdf, id=246, 361.35pt x 252.945pt>
+<image/TCP_75-150_classic-eps-converted-to.pdf, id=266, 361.35pt x 252.945pt>
 File: image/TCP_75-150_classic-eps-converted-to.pdf Graphic file (type pdf)
 <use image/TCP_75-150_classic-eps-converted-to.pdf>
 Package pdftex.def Info: image/TCP_75-150_classic-eps-converted-to.pdf  used on
@@ -1320,15 +1308,15 @@ Package epstopdf Info: Source file: <image/TCP_vegas.eps>
 ed-to.pdf image/TCP_vegas.eps>
 (epstopdf)             \includegraphics on input line 89.
 Package epstopdf Info: Output file is already uptodate.
-<image/TCP_vegas-eps-converted-to.pdf, id=247, 361.35pt x 252.945pt>
+<image/TCP_vegas-eps-converted-to.pdf, id=267, 361.35pt x 252.945pt>
 File: image/TCP_vegas-eps-converted-to.pdf Graphic file (type pdf)
 <use image/TCP_vegas-eps-converted-to.pdf>
 Package pdftex.def Info: image/TCP_vegas-eps-converted-to.pdf  used on input li
 ne 89.
 (pdftex.def)             Requested size: 281.68515pt x 197.18051pt.
 )
-(./conclusion.tex [16 <./image/av_queues_classic_nonlinear-eps-converted-to.pdf
-> <./image/av_queues_tcp-eps-converted-to.pdf>] [17 <./image/TCP_75-150_classic
+(./conclusion.tex [17 <./image/av_queues_classic_nonlinear-eps-converted-to.pdf
+> <./image/av_queues_tcp-eps-converted-to.pdf>] [18 <./image/TCP_75-150_classic
 -eps-converted-to.pdf> <./image/TCP_vegas-eps-converted-to.pdf>]
 Overfull \hbox (6.12532pt too wide) in paragraph at lines 4--5
 \T2A/cmr/m/n/12 За пе-ри-од прак-ти-ки в от-де-ле информационно-технологическог
@@ -1347,9 +1335,9 @@ Overfull \hbox (4.53102pt too wide) in paragraph at lines 12--13
 в ис-сле-до-ва-ний(изучение
  []
 
-) (./main.bbl [18
+) [19
 
-]
+] (./main.bbl
 Underfull \hbox (badness 1210) in paragraph at lines 52--60
 \T2A/cmr/m/n/12 Engineering and Technology Publishing. ^^V 2019. ^^V Т. 40, ќ 4
 . ^^V С. 229^^U235 ^^V
@@ -1361,7 +1349,9 @@ Underfull \hbox (badness 2653) in paragraph at lines 82--89
 ks ed. by
  []
 
-) (./ap01.tex [19
+) (./ap01.tex [20
+
+
 
 ]
 LaTeX Font Info:    Trying to load font information for TS1+cmtt on input line 
@@ -1373,7 +1363,7 @@ File: ts1cmtt.fd 2019/12/16 v2.5j Standard LaTeX font definitions
 LaTeX Font Warning: Font shape `TS1/cmtt/m/n' in size <13> not available
 (Font)              size <12> substituted on input line 7.
 
-[20
+[21
 
 ]
 Overfull \hbox (92.31732pt too wide) in paragraph at lines 70--70
@@ -1381,30 +1371,30 @@ Overfull \hbox (92.31732pt too wide) in paragraph at lines 70--70
 ink $node_(s[expr $N + $t]) $t][] 
  []
 
-[21] [22] [23]
+[22] [23] [24]
 Overfull \hbox (475.07385pt too wide) in paragraph at lines 171--171
 []\T2A/cmtt/m/n/12 plot "output/temp.q" with lines linestyle 1 lt 1 lw 2 title 
 "Queue length", "output/temp.a" with lines linestyle 2 lt 3 lw 2 title "Average
  queue length"[] 
  []
 
-) [24] (./main.aux)
+) [25] (./main.aux)
 
 LaTeX Font Warning: Size substitutions with differences
 (Font)              up to 2.48409pt have occurred.
 
 Package rerunfilecheck Info: File `main.out' has not changed.
-(rerunfilecheck)             Checksum: 58157009AB80F54B84A1074ED61D8427;1592.
+(rerunfilecheck)             Checksum: CB76641FB9FF46E90B4A22029351ADD3;1774.
  )
 (\end occurred inside a group at level 1)
 
 ### simple group (level 1) entered at line 1 ({)
 ### bottom level 
 Here is how much of TeX's memory you used:
- 20184 strings out of 478287
- 336157 string characters out of 5849289
- 707962 words of memory out of 5000000
- 37962 multiletter control sequences out of 15000+600000
+ 20196 strings out of 478287
+ 336242 string characters out of 5849289
+ 710250 words of memory out of 5000000
+ 37967 multiletter control sequences out of 15000+600000
  482969 words of font info for 59 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  108i,10n,106p,2405b,547s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -1423,10 +1413,10 @@ fonts/type1/public/cm-super/sfbx1728.pfb></usr/share/texmf/fonts/type1/public/c
 m-super/sfbx2074.pfb></usr/share/texmf/fonts/type1/public/cm-super/sfbx2488.pfb
 ></usr/share/texmf/fonts/type1/public/cm-super/sfrm1200.pfb></usr/share/texmf/f
 onts/type1/public/cm-super/sftt1200.pfb>
-Output written on main.pdf (25 pages, 1419143 bytes).
+Output written on main.pdf (25 pages, 1420998 bytes).
 PDF statistics:
- 395 PDF objects out of 1000 (max. 8388607)
- 308 compressed objects within 4 object streams
- 72 named destinations out of 1000 (max. 500000)
- 186 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 418 PDF objects out of 1000 (max. 8388607)
+ 331 compressed objects within 4 object streams
+ 81 named destinations out of 1000 (max. 500000)
+ 194 words of extra memory for PDF output out of 10000 (max. 10000000)
 

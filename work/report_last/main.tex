@@ -46,15 +46,10 @@ top=20mm
 
 \begin{document}
 \onehalfspacing
-
 \input{title}
-\newpage
-
-\input{abstract}
-\newpage
-
+%\newpage
+\setcounter{page}{2}
 \tableofcontents
-
 \newpage
 
 %\input{abbrev}
@@ -64,27 +59,28 @@ top=20mm
 \input{intro}
 
 %\newpage
-
 \input{ch01}
 
 %\newpage
-
+%\renewcommand{\chaptername}{RED}
 \input{ch02}
 
 %\clearpage
 %\newpage
-
+%\renewcommand{\chaptername}{Результаты}
  \input{ch03}
 
 %\newpage
 
 \input{conclusion}
- 
-%\newpage
 
-%\input{main.bbl}
+%\newpage
+\renewcommand{\bibname}{Список литературы}
+\cleardoublepage
+\phantomsection
+\addcontentsline{toc}{chapter}{Список литературы}
 \bibliography{bib}
-%\chapter*{Литература}
+
 \bibliographystyle{ugost2008l} 
 % \bibliographystyle{plain} 
 % \bibliographystyle{gost2008l} 
