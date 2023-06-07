@@ -201,7 +201,7 @@
           </group>
           <text macro="type-number" prefix=": "/>
           <!-- Сведения, относящиеся к заглавию -->
-          <text macro="container" prefix=" // "/>
+          <text macro="container" prefix=" – "/>
           <text macro="edition" prefix=". "/>
           <!-- Издание -->
           <!-- предполагается, что редакторы и переводчики относятся к конкретному изданию, поэтому указываются после номера издания -->
