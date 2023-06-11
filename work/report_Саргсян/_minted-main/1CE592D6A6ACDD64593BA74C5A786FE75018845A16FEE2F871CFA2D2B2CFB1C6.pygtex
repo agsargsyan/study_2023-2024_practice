@@ -1,0 +1,25 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k+kn}{from} \PYG{n+nn}{mininet.topo} \PYG{k+kn}{import} \PYG{n}{Topo}
+
+\PYG{k}{class} \PYG{n+nc}{CongestionTopo}\PYG{p}{(}\PYG{n}{Topo}\PYG{p}{):}
+  \PYG{k}{def} \PYG{n+nf+fm}{\PYGZus{}\PYGZus{}init\PYGZus{}\PYGZus{}}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{):}
+    \PYG{n}{Topo}\PYG{o}{.}\PYG{n+nf+fm}{\PYGZus{}\PYGZus{}init\PYGZus{}\PYGZus{}}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{)}
+    \PYG{n}{h1} \PYG{o}{=} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{addHost}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}h1\PYGZsq{}}\PYG{p}{,} \PYG{n}{ip}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}10.0.0.1\PYGZsq{}}\PYG{p}{)}
+    \PYG{n}{h2} \PYG{o}{=} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{addHost}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}h2\PYGZsq{}}\PYG{p}{,} \PYG{n}{ip}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}10.0.0.2\PYGZsq{}}\PYG{p}{)}
+    \PYG{n}{s1} \PYG{o}{=} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{addSwitch}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}s1\PYGZsq{}}\PYG{p}{)}
+    \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{addLink}\PYG{p}{(}\PYG{n}{h1}\PYG{p}{,} \PYG{n}{s1}\PYG{p}{,} \PYG{n}{bw}\PYG{o}{=}\PYG{l+m+mi}{5}\PYG{p}{,} \PYG{n}{delay}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}50ms\PYGZsq{}}\PYG{p}{)}
+    \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{addLink}\PYG{p}{(}\PYG{n}{h2}\PYG{p}{,} \PYG{n}{s1}\PYG{p}{,} \PYG{n}{bw}\PYG{o}{=}\PYG{l+m+mf}{0.054}\PYG{p}{,} \PYG{n}{delay}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}50ms\PYGZsq{}}\PYG{p}{,} \PYG{n}{max\PYGZus{}queue\PYGZus{}size}\PYG{o}{=}\PYG{l+m+mi}{10}\PYG{p}{)}
+
+\PYG{k}{class} \PYG{n+nc}{StandardTopo}\PYG{p}{(}\PYG{n}{Topo}\PYG{p}{):}
+  \PYG{k}{def} \PYG{n+nf+fm}{\PYGZus{}\PYGZus{}init\PYGZus{}\PYGZus{}}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{,} \PYG{n}{link\PYGZus{}delay}\PYG{p}{):}
+    \PYG{n}{Topo}\PYG{o}{.}\PYG{n+nf+fm}{\PYGZus{}\PYGZus{}init\PYGZus{}\PYGZus{}}\PYG{p}{(}\PYG{n+nb+bp}{self}\PYG{p}{)}
+    \PYG{n}{h1} \PYG{o}{=} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{addHost}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}h1\PYGZsq{}}\PYG{p}{,} \PYG{n}{ip}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}10.0.0.1\PYGZsq{}}\PYG{p}{)}
+    \PYG{n}{h2} \PYG{o}{=} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{addHost}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}h2\PYGZsq{}}\PYG{p}{,} \PYG{n}{ip}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}10.0.0.2\PYGZsq{}}\PYG{p}{)}
+    \PYG{n}{s1} \PYG{o}{=} \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{addSwitch}\PYG{p}{(}\PYG{l+s+s1}{\PYGZsq{}s1\PYGZsq{}}\PYG{p}{)}
+    \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{addLink}\PYG{p}{(}\PYG{n}{h1}\PYG{p}{,} \PYG{n}{s1}\PYG{p}{,} \PYG{n}{delay}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+si}{\PYGZpc{}d}\PYG{l+s+s1}{ms\PYGZsq{}} \PYG{o}{\PYGZpc{}} \PYG{n}{link\PYGZus{}delay}\PYG{p}{)}
+    \PYG{n+nb+bp}{self}\PYG{o}{.}\PYG{n}{addLink}\PYG{p}{(}\PYG{n}{h2}\PYG{p}{,} \PYG{n}{s1}\PYG{p}{,} \PYG{n}{delay}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}}\PYG{l+s+si}{\PYGZpc{}d}\PYG{l+s+s1}{ms\PYGZsq{}} \PYG{o}{\PYGZpc{}} \PYG{n}{link\PYGZus{}delay}\PYG{p}{)}
+
+\PYG{n}{topos} \PYG{o}{=} \PYG{p}{\PYGZob{}} \PYG{l+s+s1}{\PYGZsq{}standard\PYGZsq{}} \PYG{p}{:} \PYG{p}{(}\PYG{k}{lambda}\PYG{p}{:} \PYG{n}{StandardTopo}\PYG{p}{(}\PYG{l+m+mi}{250}\PYG{p}{)),}
+          \PYG{l+s+s1}{\PYGZsq{}congestion\PYGZsq{}}\PYG{p}{:} \PYG{p}{(}\PYG{k}{lambda}\PYG{p}{:} \PYG{n}{CongestionTopo}\PYG{p}{())}
+        \PYG{p}{\PYGZcb{}}
+\end{Verbatim}

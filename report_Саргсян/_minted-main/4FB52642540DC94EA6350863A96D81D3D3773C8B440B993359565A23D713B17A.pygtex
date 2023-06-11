@@ -1,0 +1,176 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYGZhy{}\PYG{+w}{ }main.tcl
+\PYG{l+s+sb}{```}
+\PYG{c+c1}{\PYGZsh{}Создать новый экземпляр объекта Symulator}
+\PYG{n+nb}{set}\PYG{+w}{ }ns\PYG{+w}{ }\PYG{o}{[}new\PYG{+w}{ }Simulator\PYG{o}{]}
+\PYG{c+c1}{\PYGZsh{}Открыть трейс файл для nam}
+\PYG{n+nb}{set}\PYG{+w}{ }nf\PYG{+w}{ }\PYG{o}{[}open\PYG{+w}{ }output/out.nam\PYG{+w}{ }w\PYG{o}{]}
+\PYG{n+nv}{\PYGZdl{}ns}\PYG{+w}{ }namtrace\PYGZhy{}all\PYG{+w}{ }\PYG{n+nv}{\PYGZdl{}nf}
+\PYG{n+nb}{set}\PYG{+w}{ }N\PYG{+w}{ }\PYG{l+m}{20}
+\PYG{n+nb}{source}\PYG{+w}{ }\PYG{l+s+s2}{\PYGZdq{}nodes.tcl\PYGZdq{}}
+\PYG{n+nb}{source}\PYG{+w}{ }\PYG{l+s+s2}{\PYGZdq{}links.tcl\PYGZdq{}}
+\PYG{n+nb}{source}\PYG{+w}{ }\PYG{l+s+s2}{\PYGZdq{}queue.tcl\PYGZdq{}}
+\PYG{n+nb}{source}\PYG{+w}{ }\PYG{l+s+s2}{\PYGZdq{}connections.tcl\PYGZdq{}}
+\PYG{n+nb}{source}\PYG{+w}{ }\PYG{l+s+s2}{\PYGZdq{}timing.tcl\PYGZdq{}}
+\PYG{n+nb}{source}\PYG{+w}{ }\PYG{l+s+s2}{\PYGZdq{}nam.tcl\PYGZdq{}}
+\PYG{n+nb}{source}\PYG{+w}{ }\PYG{l+s+s2}{\PYGZdq{}finish.tcl\PYGZdq{}}
+\PYG{c+c1}{\PYGZsh{}Запуск программы}
+\PYG{n+nv}{\PYGZdl{}ns}\PYG{+w}{ }run
+\PYG{l+s+sb}{```}
+\PYGZhy{}\PYG{+w}{ }nodes.tcl
+\PYG{l+s+sb}{```}
+\PYG{n+nb}{set}\PYG{+w}{ }node\PYGZus{}\PYG{o}{(}r0\PYG{o}{)}\PYG{+w}{ }\PYG{o}{[}\PYG{n+nv}{\PYGZdl{}ns}\PYG{+w}{ }node\PYG{o}{]}
+\PYG{n+nb}{set}\PYG{+w}{ }node\PYGZus{}\PYG{o}{(}r1\PYG{o}{)}\PYG{+w}{ }\PYG{o}{[}\PYG{n+nv}{\PYGZdl{}ns}\PYG{+w}{ }node\PYG{o}{]}
+
+\PYG{k}{for}\PYG{+w}{ }\PYG{o}{\PYGZob{}}\PYG{n+nb}{set}\PYG{+w}{ }i\PYG{+w}{ }\PYG{l+m}{0}\PYG{o}{\PYGZcb{}}\PYG{+w}{ }\PYG{o}{\PYGZob{}}\PYG{n+nv}{\PYGZdl{}i}\PYG{+w}{ }\PYGZlt{}\PYG{+w}{ }\PYG{n+nv}{\PYGZdl{}N}\PYG{o}{\PYGZcb{}}\PYG{+w}{ }\PYG{o}{\PYGZob{}}incr\PYG{+w}{ }i\PYG{o}{\PYGZcb{}}\PYG{+w}{ }\PYG{o}{\PYGZob{}}
+\PYG{+w}{        }\PYG{n+nb}{set}\PYG{+w}{ }node\PYGZus{}\PYG{o}{(}s\PYG{n+nv}{\PYGZdl{}i}\PYG{o}{)}\PYG{+w}{ }\PYG{o}{[}\PYG{n+nv}{\PYGZdl{}ns}\PYG{+w}{ }node\PYG{o}{]}
+\PYG{+w}{        }\PYG{n+nb}{set}\PYG{+w}{ }node\PYGZus{}\PYG{o}{(}s\PYG{o}{[}expr\PYG{+w}{ }\PYG{n+nv}{\PYGZdl{}N}\PYG{+w}{ }+\PYG{+w}{ }\PYG{n+nv}{\PYGZdl{}i}\PYG{o}{])}\PYG{+w}{ }\PYG{o}{[}\PYG{n+nv}{\PYGZdl{}ns}\PYG{+w}{ }node\PYG{o}{]}
+\PYG{+w}{        }\PYG{o}{\PYGZcb{}}
+\PYG{l+s+sb}{```}
+\PYGZhy{}\PYG{+w}{ }links.tcl
+\PYG{l+s+sb}{```}
+\PYG{k}{for}\PYG{+w}{ }\PYG{o}{\PYGZob{}}\PYG{n+nb}{set}\PYG{+w}{ }i\PYG{+w}{ }\PYG{l+m}{0}\PYG{o}{\PYGZcb{}}\PYG{+w}{ }\PYG{o}{\PYGZob{}}\PYG{n+nv}{\PYGZdl{}i}\PYG{+w}{ }\PYGZlt{}\PYG{+w}{ }\PYG{n+nv}{\PYGZdl{}N}\PYG{o}{\PYGZcb{}}\PYG{+w}{ }\PYG{o}{\PYGZob{}}incr\PYG{+w}{ }i\PYG{o}{\PYGZcb{}}\PYG{+w}{ }\PYG{o}{\PYGZob{}}
+\PYG{+w}{        }\PYG{n+nv}{\PYGZdl{}ns}\PYG{+w}{ }duplex\PYGZhy{}link\PYG{+w}{ }\PYG{n+nv}{\PYGZdl{}node\PYGZus{}}\PYG{o}{(}s\PYG{n+nv}{\PYGZdl{}i}\PYG{o}{)}\PYG{+w}{ }\PYG{n+nv}{\PYGZdl{}node\PYGZus{}}\PYG{o}{(}r0\PYG{o}{)}\PYG{+w}{ }100Mb\PYG{+w}{ }20ms\PYG{+w}{ }DropTail
+\PYG{+w}{        }\PYG{n+nv}{\PYGZdl{}ns}\PYG{+w}{ }duplex\PYGZhy{}link\PYG{+w}{ }\PYG{n+nv}{\PYGZdl{}node\PYGZus{}}\PYG{o}{(}s\PYG{o}{[}expr\PYG{+w}{ }\PYG{n+nv}{\PYGZdl{}N}\PYG{+w}{ }+\PYG{+w}{ }\PYG{n+nv}{\PYGZdl{}i}\PYG{o}{])}\PYG{+w}{ }\PYG{n+nv}{\PYGZdl{}node\PYGZus{}}\PYG{o}{(}r1\PYG{o}{)}\PYG{+w}{ }100Mb\PYG{+w}{ }20ms\PYG{+w}{ }DropTail
+\PYG{o}{\PYGZcb{}}
+
+\PYG{n+nv}{\PYGZdl{}ns}\PYG{+w}{ }simplex\PYGZhy{}link\PYG{+w}{ }\PYG{n+nv}{\PYGZdl{}node\PYGZus{}}\PYG{o}{(}r0\PYG{o}{)}\PYG{+w}{ }\PYG{n+nv}{\PYGZdl{}node\PYGZus{}}\PYG{o}{(}r1\PYG{o}{)}\PYG{+w}{ }20Mb\PYG{+w}{ }15ms\PYG{+w}{ }RED
+\PYG{n+nv}{\PYGZdl{}ns}\PYG{+w}{ }simplex\PYGZhy{}link\PYG{+w}{ }\PYG{n+nv}{\PYGZdl{}node\PYGZus{}}\PYG{o}{(}r1\PYG{o}{)}\PYG{+w}{ }\PYG{n+nv}{\PYGZdl{}node\PYGZus{}}\PYG{o}{(}r0\PYG{o}{)}\PYG{+w}{ }15Mb\PYG{+w}{ }20ms\PYG{+w}{ }DropTail
+\PYG{l+s+sb}{```}
+\PYGZhy{}\PYG{+w}{ }nam.tcl
+\PYG{l+s+sb}{```}
+\PYG{n+nv}{\PYGZdl{}node\PYGZus{}}\PYG{o}{(}r0\PYG{o}{)}\PYG{+w}{ }color\PYG{+w}{ }\PYG{l+s+s2}{\PYGZdq{}red\PYGZdq{}}
+\PYG{n+nv}{\PYGZdl{}node\PYGZus{}}\PYG{o}{(}r1\PYG{o}{)}\PYG{+w}{ }color\PYG{+w}{ }\PYG{l+s+s2}{\PYGZdq{}red\PYGZdq{}}
+\PYG{n+nv}{\PYGZdl{}node\PYGZus{}}\PYG{o}{(}r0\PYG{o}{)}\PYG{+w}{ }label\PYG{+w}{ }\PYG{l+s+s2}{\PYGZdq{}RED\PYGZdq{}}
+\PYG{n+nv}{\PYGZdl{}node\PYGZus{}}\PYG{o}{(}r1\PYG{o}{)}\PYG{+w}{ }shape\PYG{+w}{ }\PYG{l+s+s2}{\PYGZdq{}square\PYGZdq{}}
+\PYG{n+nv}{\PYGZdl{}node\PYGZus{}}\PYG{o}{(}r0\PYG{o}{)}\PYG{+w}{ }label\PYG{+w}{ }\PYG{l+s+s2}{\PYGZdq{}square\PYGZdq{}}
+
+\PYG{n+nv}{\PYGZdl{}ns}\PYG{+w}{ }simplex\PYGZhy{}link\PYGZhy{}op\PYG{+w}{ }\PYG{n+nv}{\PYGZdl{}node\PYGZus{}}\PYG{o}{(}r0\PYG{o}{)}\PYG{+w}{ }\PYG{n+nv}{\PYGZdl{}node\PYGZus{}}\PYG{o}{(}r1\PYG{o}{)}\PYG{+w}{ }orient\PYG{+w}{ }right
+\PYG{n+nv}{\PYGZdl{}ns}\PYG{+w}{ }simplex\PYGZhy{}link\PYGZhy{}op\PYG{+w}{ }\PYG{n+nv}{\PYGZdl{}node\PYGZus{}}\PYG{o}{(}r1\PYG{o}{)}\PYG{+w}{ }\PYG{n+nv}{\PYGZdl{}node\PYGZus{}}\PYG{o}{(}r0\PYG{o}{)}\PYG{+w}{ }orient\PYG{+w}{ }left
+\PYG{n+nv}{\PYGZdl{}ns}\PYG{+w}{ }simplex\PYGZhy{}link\PYGZhy{}op\PYG{+w}{ }\PYG{n+nv}{\PYGZdl{}node\PYGZus{}}\PYG{o}{(}r0\PYG{o}{)}\PYG{+w}{ }\PYG{n+nv}{\PYGZdl{}node\PYGZus{}}\PYG{o}{(}r1\PYG{o}{)}\PYG{+w}{ }queuePos\PYG{+w}{ }\PYG{l+m}{0}
+\PYG{n+nv}{\PYGZdl{}ns}\PYG{+w}{ }simplex\PYGZhy{}link\PYGZhy{}op\PYG{+w}{ }\PYG{n+nv}{\PYGZdl{}node\PYGZus{}}\PYG{o}{(}r1\PYG{o}{)}\PYG{+w}{ }\PYG{n+nv}{\PYGZdl{}node\PYGZus{}}\PYG{o}{(}r0\PYG{o}{)}\PYG{+w}{ }queuePos\PYG{+w}{ }\PYG{l+m}{0}
+
+\PYG{k}{for}\PYG{+w}{ }\PYG{o}{\PYGZob{}}\PYG{n+nb}{set}\PYG{+w}{ }m\PYG{+w}{ }\PYG{l+m}{0}\PYG{o}{\PYGZcb{}}\PYG{+w}{ }\PYG{o}{\PYGZob{}}\PYG{n+nv}{\PYGZdl{}m}\PYG{+w}{ }\PYGZlt{}\PYG{+w}{ }\PYG{n+nv}{\PYGZdl{}N}\PYG{o}{\PYGZcb{}}\PYG{+w}{ }\PYG{o}{\PYGZob{}}incr\PYG{+w}{ }m\PYG{o}{\PYGZcb{}}\PYG{+w}{ }\PYG{o}{\PYGZob{}}
+\PYG{+w}{        }\PYG{n+nv}{\PYGZdl{}ns}\PYG{+w}{ }duplex\PYGZhy{}link\PYGZhy{}op\PYG{+w}{ }\PYG{n+nv}{\PYGZdl{}node\PYGZus{}}\PYG{o}{(}s\PYG{n+nv}{\PYGZdl{}m}\PYG{o}{)}\PYG{+w}{ }\PYG{n+nv}{\PYGZdl{}node\PYGZus{}}\PYG{o}{(}r0\PYG{o}{)}\PYG{+w}{ }orient\PYG{+w}{ }right
+\PYG{+w}{        }\PYG{n+nv}{\PYGZdl{}ns}\PYG{+w}{ }duplex\PYGZhy{}link\PYGZhy{}op\PYG{+w}{ }\PYG{n+nv}{\PYGZdl{}node\PYGZus{}}\PYG{o}{(}s\PYG{o}{[}expr\PYG{+w}{ }\PYG{n+nv}{\PYGZdl{}N}\PYG{+w}{ }+\PYG{+w}{ }\PYG{n+nv}{\PYGZdl{}m}\PYG{o}{])}\PYG{+w}{ }\PYG{n+nv}{\PYGZdl{}node\PYGZus{}}\PYG{o}{(}r1\PYG{o}{)}\PYG{+w}{ }orient\PYG{+w}{ }left
+\PYG{o}{\PYGZcb{}}
+\PYG{k}{for}\PYG{+w}{ }\PYG{o}{\PYGZob{}}\PYG{n+nb}{set}\PYG{+w}{ }i\PYG{+w}{ }\PYG{l+m}{0}\PYG{o}{\PYGZcb{}}\PYG{+w}{ }\PYG{o}{\PYGZob{}}\PYG{n+nv}{\PYGZdl{}i}\PYG{+w}{ }\PYGZlt{}\PYG{+w}{ }\PYG{n+nv}{\PYGZdl{}N}\PYG{o}{\PYGZcb{}}\PYG{+w}{ }\PYG{o}{\PYGZob{}}incr\PYG{+w}{ }i\PYG{o}{\PYGZcb{}}\PYG{+w}{ }\PYG{o}{\PYGZob{}}
+\PYG{+w}{        }\PYG{n+nv}{\PYGZdl{}node\PYGZus{}}\PYG{o}{(}s\PYG{n+nv}{\PYGZdl{}i}\PYG{o}{)}\PYG{+w}{ }color\PYG{+w}{ }\PYG{l+s+s2}{\PYGZdq{}blue\PYGZdq{}}
+\PYG{+w}{        }\PYG{n+nv}{\PYGZdl{}node\PYGZus{}}\PYG{o}{(}s\PYG{n+nv}{\PYGZdl{}i}\PYG{o}{)}\PYG{+w}{ }label\PYG{+w}{ }\PYG{l+s+s2}{\PYGZdq{}ftp\PYGZdq{}}
+\PYG{o}{\PYGZcb{}}
+\PYG{l+s+sb}{```}
+\PYGZhy{}\PYG{+w}{ }connections.tcl
+\PYG{l+s+sb}{```}
+\PYG{k}{for}\PYG{+w}{ }\PYG{o}{\PYGZob{}}\PYG{n+nb}{set}\PYG{+w}{ }t\PYG{+w}{ }\PYG{l+m}{0}\PYG{o}{\PYGZcb{}}\PYG{+w}{ }\PYG{o}{\PYGZob{}}\PYG{n+nv}{\PYGZdl{}t}\PYG{+w}{ }\PYGZlt{}\PYG{+w}{ }\PYG{n+nv}{\PYGZdl{}N}\PYG{o}{\PYGZcb{}}\PYG{+w}{ }\PYG{o}{\PYGZob{}}incr\PYG{+w}{ }t\PYG{o}{\PYGZcb{}}\PYG{+w}{ }\PYG{o}{\PYGZob{}}
+\PYG{+w}{        }\PYG{n+nv}{\PYGZdl{}ns}\PYG{+w}{ }color\PYG{+w}{ }\PYG{n+nv}{\PYGZdl{}t}\PYG{+w}{ }green
+\PYG{+w}{        }\PYG{n+nb}{set}\PYG{+w}{ }tcp\PYG{o}{(}\PYG{n+nv}{\PYGZdl{}t}\PYG{o}{)}\PYG{+w}{ }\PYG{o}{[}\PYG{n+nv}{\PYGZdl{}ns}\PYG{+w}{ }create\PYGZhy{}connection\PYG{+w}{ }TCP/Reno\PYG{+w}{ }\PYG{n+nv}{\PYGZdl{}node\PYGZus{}}\PYG{o}{(}s\PYG{n+nv}{\PYGZdl{}t}\PYG{o}{)}\PYG{+w}{ }TCPSink\PYG{+w}{ }\PYG{n+nv}{\PYGZdl{}node\PYGZus{}}\PYG{o}{(}s\PYG{o}{[}expr\PYG{+w}{ }\PYG{n+nv}{\PYGZdl{}N}\PYG{+w}{ }+\PYG{+w}{ }\PYG{n+nv}{\PYGZdl{}t}\PYG{o}{])}\PYG{+w}{ }\PYG{n+nv}{\PYGZdl{}t}\PYG{o}{]}
+\PYG{+w}{        }\PYG{n+nv}{\PYGZdl{}tcp}\PYG{o}{(}\PYG{n+nv}{\PYGZdl{}t}\PYG{o}{)}\PYG{+w}{ }\PYG{n+nb}{set}\PYG{+w}{ }window\PYGZus{}\PYG{+w}{ }\PYG{l+m}{32}
+\PYG{+w}{        }\PYG{n+nv}{\PYGZdl{}tcp}\PYG{o}{(}\PYG{n+nv}{\PYGZdl{}t}\PYG{o}{)}\PYG{+w}{ }\PYG{n+nb}{set}\PYG{+w}{ }maxcwnd\PYGZus{}\PYG{+w}{ }\PYG{l+m}{32}
+\PYG{+w}{        }\PYG{n+nb}{set}\PYG{+w}{ }ftp\PYG{o}{(}\PYG{n+nv}{\PYGZdl{}t}\PYG{o}{)}\PYG{+w}{ }\PYG{o}{[}\PYG{n+nv}{\PYGZdl{}tcp}\PYG{o}{(}\PYG{n+nv}{\PYGZdl{}t}\PYG{o}{)}\PYG{+w}{ }attach\PYGZhy{}source\PYG{+w}{ }FTP\PYG{o}{]}
+\PYG{o}{\PYGZcb{}}
+
+proc\PYG{+w}{ }plotWindow\PYG{+w}{ }\PYG{o}{\PYGZob{}}tcpSource\PYG{+w}{ }file\PYG{o}{\PYGZcb{}}\PYG{+w}{ }\PYG{o}{\PYGZob{}}
+\PYG{+w}{   }global\PYG{+w}{ }ns
+\PYG{+w}{   }\PYG{n+nb}{set}\PYG{+w}{ }\PYG{n+nb}{time}\PYG{+w}{ }\PYG{l+m}{0}.01
+\PYG{+w}{   }\PYG{n+nb}{set}\PYG{+w}{ }now\PYG{+w}{ }\PYG{o}{[}\PYG{n+nv}{\PYGZdl{}ns}\PYG{+w}{ }now\PYG{o}{]}
+\PYG{+w}{   }\PYG{n+nb}{set}\PYG{+w}{ }cwnd\PYG{+w}{ }\PYG{o}{[}\PYG{n+nv}{\PYGZdl{}tcpSource}\PYG{+w}{ }\PYG{n+nb}{set}\PYG{+w}{ }cwnd\PYGZus{}\PYG{o}{]}
+\PYG{+w}{   }puts\PYG{+w}{ }\PYG{n+nv}{\PYGZdl{}file}\PYG{+w}{ }\PYG{l+s+s2}{\PYGZdq{}}\PYG{n+nv}{\PYGZdl{}now}\PYG{l+s+s2}{ }\PYG{n+nv}{\PYGZdl{}cwnd}\PYG{l+s+s2}{\PYGZdq{}}
+\PYG{+w}{   }\PYG{n+nv}{\PYGZdl{}ns}\PYG{+w}{ }at\PYG{+w}{ }\PYG{o}{[}expr\PYG{+w}{ }\PYG{n+nv}{\PYGZdl{}now}+\PYG{n+nv}{\PYGZdl{}time}\PYG{o}{]}\PYG{+w}{ }\PYG{l+s+s2}{\PYGZdq{}plotWindow }\PYG{n+nv}{\PYGZdl{}tcpSource}\PYG{l+s+s2}{ }\PYG{n+nv}{\PYGZdl{}file}\PYG{l+s+s2}{\PYGZdq{}}
+\PYG{o}{\PYGZcb{}}
+\PYG{l+s+sb}{```}
+\PYGZhy{}\PYG{+w}{ }queue.tcl
+\PYG{l+s+sb}{```}
+\PYG{n+nv}{\PYGZdl{}ns}\PYG{+w}{ }queue\PYGZhy{}limit\PYG{+w}{ }\PYG{n+nv}{\PYGZdl{}node\PYGZus{}}\PYG{o}{(}r0\PYG{o}{)}\PYG{+w}{ }\PYG{n+nv}{\PYGZdl{}node\PYGZus{}}\PYG{o}{(}r1\PYG{o}{)}\PYG{+w}{ }\PYG{l+m}{300}
+\PYG{n+nv}{\PYGZdl{}ns}\PYG{+w}{ }queue\PYGZhy{}limit\PYG{+w}{ }\PYG{n+nv}{\PYGZdl{}node\PYGZus{}}\PYG{o}{(}r1\PYG{o}{)}\PYG{+w}{ }\PYG{n+nv}{\PYGZdl{}node\PYGZus{}}\PYG{o}{(}r0\PYG{o}{)}\PYG{+w}{ }\PYG{l+m}{300}
+
+\PYG{n+nb}{set}\PYG{+w}{ }windowVsTime\PYG{+w}{ }\PYG{o}{[}open\PYG{+w}{ }output/WvsT\PYG{+w}{ }w\PYG{o}{]}
+\PYG{n+nb}{set}\PYG{+w}{ }qmon\PYG{+w}{ }\PYG{o}{[}\PYG{n+nv}{\PYGZdl{}ns}\PYG{+w}{ }monitor\PYGZhy{}queue\PYG{+w}{ }\PYG{n+nv}{\PYGZdl{}node\PYGZus{}}\PYG{o}{(}r0\PYG{o}{)}\PYG{+w}{ }\PYG{n+nv}{\PYGZdl{}node\PYGZus{}}\PYG{o}{(}r1\PYG{o}{)}\PYG{+w}{ }\PYG{o}{[}open\PYG{+w}{ }output/qm.out\PYG{+w}{ }w\PYG{o}{]]}
+\PYG{o}{[}\PYG{n+nv}{\PYGZdl{}ns}\PYG{+w}{ }link\PYG{+w}{ }\PYG{n+nv}{\PYGZdl{}node\PYGZus{}}\PYG{o}{(}r0\PYG{o}{)}\PYG{+w}{ }\PYG{n+nv}{\PYGZdl{}node\PYGZus{}}\PYG{o}{(}r1\PYG{o}{)]}\PYG{+w}{ }queue\PYGZhy{}sample\PYGZhy{}timeout
+
+\PYG{n+nb}{set}\PYG{+w}{ }redq\PYG{+w}{ }\PYG{o}{[[}\PYG{n+nv}{\PYGZdl{}ns}\PYG{+w}{ }link\PYG{+w}{ }\PYG{n+nv}{\PYGZdl{}node\PYGZus{}}\PYG{o}{(}r0\PYG{o}{)}\PYG{+w}{ }\PYG{n+nv}{\PYGZdl{}node\PYGZus{}}\PYG{o}{(}r1\PYG{o}{)]}\PYG{+w}{ }queue\PYG{o}{]}
+\PYG{n+nv}{\PYGZdl{}redq}\PYG{+w}{ }\PYG{n+nb}{set}\PYG{+w}{ }thresh\PYGZus{}\PYG{+w}{ }\PYG{l+m}{75}\PYG{+w}{ }\PYG{c+c1}{\PYGZsh{}q\PYGZus{}min}
+\PYG{n+nv}{\PYGZdl{}redq}\PYG{+w}{ }\PYG{n+nb}{set}\PYG{+w}{ }maxthresh\PYGZus{}\PYG{+w}{ }\PYG{l+m}{150}\PYG{+w}{  }\PYG{c+c1}{\PYGZsh{}q\PYGZus{}max}
+\PYG{n+nv}{\PYGZdl{}redq}\PYG{+w}{ }\PYG{n+nb}{set}\PYG{+w}{ }q\PYGZus{}weight\PYGZus{}\PYG{+w}{ }\PYG{l+m}{0}.002\PYG{+w}{ }\PYG{c+c1}{\PYGZsh{} q\PYGZus{}weight}
+\PYG{n+nv}{\PYGZdl{}redq}\PYG{+w}{ }\PYG{n+nb}{set}\PYG{+w}{ }linterm\PYGZus{}\PYG{+w}{ }\PYG{l+m}{10}\PYG{+w}{ }\PYG{c+c1}{\PYGZsh{} 1/p\PYGZus{}max}
+\PYG{n+nv}{\PYGZdl{}redq}\PYG{+w}{ }\PYG{n+nb}{set}\PYG{+w}{ }gentle\PYGZus{}\PYG{+w}{ }\PYG{n+nb}{false}\PYG{+w}{  }\PYG{c+c1}{\PYGZsh{}}
+\PYG{n+nv}{\PYGZdl{}redq}\PYG{+w}{ }\PYG{n+nb}{set}\PYG{+w}{ }drop\PYGZhy{}tail\PYGZus{}\PYG{+w}{ }\PYG{n+nb}{true}
+\PYG{n+nv}{\PYGZdl{}redq}\PYG{+w}{ }\PYG{n+nb}{set}\PYG{+w}{ }queue\PYGZhy{}in\PYGZhy{}bytes\PYG{+w}{ }\PYG{n+nb}{false}\PYG{+w}{ }\PYG{c+c1}{\PYGZsh{}очередь в паетах}
+\PYG{n+nv}{\PYGZdl{}redq}\PYG{+w}{ }\PYG{n+nb}{set}\PYG{+w}{ }mean\PYGZus{}pktsize\PYGZus{}\PYG{+w}{ }\PYG{l+m}{500}
+\PYG{n+nb}{set}\PYG{+w}{ }tchan\PYGZus{}\PYG{+w}{ }\PYG{o}{[}open\PYG{+w}{ }output/all.q\PYG{+w}{ }w\PYG{o}{]}
+\PYG{n+nv}{\PYGZdl{}redq}\PYG{+w}{ }trace\PYG{+w}{ }curq\PYGZus{}
+\PYG{n+nv}{\PYGZdl{}redq}\PYG{+w}{ }trace\PYG{+w}{ }ave\PYGZus{}
+\PYG{n+nv}{\PYGZdl{}redq}\PYG{+w}{ }attach\PYG{+w}{ }\PYG{n+nv}{\PYGZdl{}tchan\PYGZus{}}
+\PYG{l+s+sb}{```}
+\PYGZhy{}\PYG{+w}{ }timing.tcl
+\PYG{l+s+sb}{```}
+\PYG{k}{for}\PYG{+w}{ }\PYG{o}{\PYGZob{}}\PYG{n+nb}{set}\PYG{+w}{ }r\PYG{+w}{ }\PYG{l+m}{0}\PYG{o}{\PYGZcb{}}\PYG{+w}{ }\PYG{o}{\PYGZob{}}\PYG{n+nv}{\PYGZdl{}r}\PYG{+w}{ }\PYGZlt{}\PYG{+w}{ }\PYG{n+nv}{\PYGZdl{}N}\PYG{o}{\PYGZcb{}}\PYG{+w}{ }\PYG{o}{\PYGZob{}}incr\PYG{+w}{ }r\PYG{o}{\PYGZcb{}}\PYG{+w}{ }\PYG{o}{\PYGZob{}}
+\PYG{+w}{        }\PYG{n+nv}{\PYGZdl{}ns}\PYG{+w}{ }at\PYG{+w}{ }\PYG{l+m}{0}.0\PYG{+w}{ }\PYG{l+s+s2}{\PYGZdq{}}\PYG{n+nv}{\PYGZdl{}ftp}\PYG{l+s+s2}{(}\PYG{n+nv}{\PYGZdl{}r}\PYG{l+s+s2}{) start\PYGZdq{}}
+\PYG{+w}{        }\PYG{n+nv}{\PYGZdl{}ns}\PYG{+w}{ }at\PYG{+w}{ }\PYG{l+m}{1}.0\PYG{+w}{ }\PYG{l+s+s2}{\PYGZdq{}plotWindow }\PYG{n+nv}{\PYGZdl{}tcp}\PYG{l+s+s2}{(}\PYG{n+nv}{\PYGZdl{}r}\PYG{l+s+s2}{) }\PYG{n+nv}{\PYGZdl{}windowVsTime}\PYG{l+s+s2}{\PYGZdq{}}
+\PYG{+w}{        }\PYG{n+nv}{\PYGZdl{}ns}\PYG{+w}{ }at\PYG{+w}{ }\PYG{l+m}{24}.0\PYG{+w}{ }\PYG{l+s+s2}{\PYGZdq{}}\PYG{n+nv}{\PYGZdl{}ftp}\PYG{l+s+s2}{(}\PYG{n+nv}{\PYGZdl{}r}\PYG{l+s+s2}{) stop\PYGZdq{}}
+\PYG{o}{\PYGZcb{}}
+
+\PYG{n+nv}{\PYGZdl{}ns}\PYG{+w}{ }at\PYG{+w}{ }\PYG{l+m}{25}.0\PYG{+w}{ }\PYG{l+s+s2}{\PYGZdq{}finish\PYGZdq{}}
+\PYG{l+s+sb}{```}
+\PYGZhy{}\PYG{+w}{ }finish.tcl
+\PYG{l+s+sb}{```}
+\PYG{c+c1}{\PYGZsh{}Finish procedure}
+proc\PYG{+w}{ }finish\PYG{+w}{ }\PYG{o}{\PYGZob{}\PYGZcb{}}\PYG{+w}{ }\PYG{o}{\PYGZob{}}
+\PYG{+w}{   }global\PYG{+w}{ }ns\PYG{+w}{ }nf
+\PYG{+w}{   }\PYG{n+nv}{\PYGZdl{}ns}\PYG{+w}{ }flush\PYGZhy{}trace
+\PYG{+w}{   }close\PYG{+w}{ }\PYG{n+nv}{\PYGZdl{}nf}
+\PYG{+w}{   }global\PYG{+w}{ }tchan\PYGZus{}
+\PYG{+w}{   }\PYG{n+nb}{set}\PYG{+w}{ }awkCode\PYG{+w}{ }\PYG{o}{\PYGZob{}}
+\PYG{+w}{      }\PYG{o}{\PYGZob{}}\PYG{c+c1}{\PYGZsh{}запись данных в файлы очереди и средней очереди}
+\PYG{+w}{         }\PYG{k}{if}\PYG{+w}{ }\PYG{o}{(}\PYG{n+nv}{\PYGZdl{}1}\PYG{+w}{ }\PYG{o}{==}\PYG{+w}{ }\PYG{l+s+s2}{\PYGZdq{}Q\PYGZdq{}}\PYG{+w}{ }\PYG{o}{\PYGZam{}\PYGZam{}}\PYG{+w}{ }NF\PYGZgt{}2\PYG{o}{)}\PYG{+w}{ }\PYG{o}{\PYGZob{}}
+\PYG{+w}{            }print\PYG{+w}{ }\PYG{n+nv}{\PYGZdl{}2},\PYG{+w}{ }\PYG{n+nv}{\PYGZdl{}3}\PYG{+w}{ }\PYGZgt{}\PYGZgt{}\PYG{+w}{ }\PYG{l+s+s2}{\PYGZdq{}output/temp.q\PYGZdq{}}\PYG{p}{;}
+\PYG{+w}{            }\PYG{n+nb}{set}\PYG{+w}{ }end\PYG{+w}{ }\PYG{n+nv}{\PYGZdl{}2}
+\PYG{+w}{         }\PYG{o}{\PYGZcb{}}
+\PYG{+w}{         }\PYG{k}{else}\PYG{+w}{ }\PYG{k}{if}\PYG{+w}{ }\PYG{o}{(}\PYG{n+nv}{\PYGZdl{}1}\PYG{+w}{ }\PYG{o}{==}\PYG{+w}{ }\PYG{l+s+s2}{\PYGZdq{}a\PYGZdq{}}\PYG{+w}{ }\PYG{o}{\PYGZam{}\PYGZam{}}\PYG{+w}{ }NF\PYGZgt{}2\PYG{o}{)}
+\PYG{+w}{         }print\PYG{+w}{ }\PYG{n+nv}{\PYGZdl{}2},\PYG{+w}{ }\PYG{n+nv}{\PYGZdl{}3}\PYG{+w}{ }\PYGZgt{}\PYGZgt{}\PYG{+w}{ }\PYG{l+s+s2}{\PYGZdq{}output/temp.a\PYGZdq{}}\PYG{p}{;}
+\PYG{+w}{      }\PYG{o}{\PYGZcb{}}
+\PYG{+w}{   }\PYG{o}{\PYGZcb{}}
+
+\PYG{+w}{   }\PYG{n+nb}{set}\PYG{+w}{ }f\PYG{+w}{ }\PYG{o}{[}open\PYG{+w}{ }output/temp.queue\PYG{+w}{ }w\PYG{o}{]}
+\PYG{+w}{   }puts\PYG{+w}{ }\PYG{n+nv}{\PYGZdl{}f}\PYG{+w}{ }\PYG{l+s+s2}{\PYGZdq{}TitleText: RED\PYGZdq{}}
+\PYG{+w}{   }puts\PYG{+w}{ }\PYG{n+nv}{\PYGZdl{}f}\PYG{+w}{ }\PYG{l+s+s2}{\PYGZdq{}Device: Postscript\PYGZdq{}}
+
+\PYG{+w}{   }\PYG{k}{if}\PYG{+w}{ }\PYG{o}{\PYGZob{}}\PYG{+w}{ }\PYG{o}{[}info\PYG{+w}{ }exists\PYG{+w}{ }tchan\PYGZus{}\PYG{o}{]}\PYG{+w}{ }\PYG{o}{\PYGZcb{}}\PYG{+w}{ }\PYG{o}{\PYGZob{}}
+\PYG{+w}{      }close\PYG{+w}{ }\PYG{n+nv}{\PYGZdl{}tchan\PYGZus{}}
+\PYG{+w}{   }\PYG{o}{\PYGZcb{}}
+\PYG{+w}{   }\PYG{c+c1}{\PYGZsh{}обновление данных}
+\PYG{+w}{   }\PYG{n+nb}{exec}\PYG{+w}{ }rm\PYG{+w}{ }\PYGZhy{}f\PYG{+w}{ }output/temp.q\PYG{+w}{ }output/temp.a
+\PYG{+w}{   }\PYG{n+nb}{exec}\PYG{+w}{ }touch\PYG{+w}{ }output/temp.a\PYG{+w}{ }output/temp.q
+
+\PYG{+w}{   }\PYG{n+nb}{exec}\PYG{+w}{ }awk\PYG{+w}{ }\PYG{n+nv}{\PYGZdl{}awkCode}\PYG{+w}{ }output/all.q
+
+\PYG{+w}{   }puts\PYG{+w}{ }\PYG{n+nv}{\PYGZdl{}f}\PYG{+w}{ }\PYG{l+s+se}{\PYGZbs{}\PYGZdq{}}queue
+\PYG{+w}{   }\PYG{n+nb}{exec}\PYG{+w}{ }cat\PYG{+w}{ }output/temp.q\PYG{+w}{ }\PYGZgt{}@\PYG{+w}{ }\PYG{n+nv}{\PYGZdl{}f}
+\PYG{+w}{   }puts\PYG{+w}{ }\PYG{n+nv}{\PYGZdl{}f}\PYG{+w}{ }\PYG{l+s+se}{\PYGZbs{}n\PYGZbs{}\PYGZdq{}}ave\PYGZus{}queue
+\PYG{+w}{   }\PYG{n+nb}{exec}\PYG{+w}{ }cat\PYG{+w}{ }output/temp.a\PYG{+w}{ }\PYGZgt{}@\PYG{+w}{ }\PYG{n+nv}{\PYGZdl{}f}
+\PYG{+w}{   }close\PYG{+w}{ }\PYG{n+nv}{\PYGZdl{}f}
+\PYG{+w}{   }\PYG{c+c1}{\PYGZsh{} вывод в xgraph}
+\PYG{+w}{   }\PYG{n+nb}{exec}\PYG{+w}{ }xgraph\PYG{+w}{ }\PYGZhy{}bb\PYG{+w}{ }\PYGZhy{}tk\PYG{+w}{ }\PYGZhy{}x\PYG{+w}{ }\PYG{n+nb}{time}\PYG{+w}{ }\PYGZhy{}t\PYG{+w}{ }\PYG{l+s+s2}{\PYGZdq{}TCPRenoCWND\PYGZdq{}}\PYG{+w}{ }output/WvsT\PYG{+w}{ }\PYG{p}{\PYGZam{}}
+\PYG{+w}{   }\PYG{n+nb}{exec}\PYG{+w}{ }xgraph\PYG{+w}{ }\PYGZhy{}bb\PYG{+w}{ }\PYGZhy{}tk\PYG{+w}{ }\PYGZhy{}x\PYG{+w}{ }\PYG{n+nb}{time}\PYG{+w}{ }\PYGZhy{}y\PYG{+w}{ }queue\PYG{+w}{ }output/temp.queue\PYG{+w}{ }\PYG{p}{\PYGZam{}}
+\PYG{+w}{   }\PYG{n+nb}{exit}\PYG{+w}{ }\PYG{l+m}{0}
+\PYG{o}{\PYGZcb{}}
+\PYG{l+s+sb}{```}
+\PYGZhy{}\PYG{+w}{ }out.gp
+\PYG{l+s+sb}{```}
+\PYG{c+c1}{\PYGZsh{}!/usr/bin/gnuplot \PYGZhy{}persist}
+
+\PYG{c+c1}{\PYGZsh{}вывод графиков}
+\PYG{n+nb}{set}\PYG{+w}{ }terminal\PYG{+w}{ }postscript\PYG{+w}{ }eps
+\PYG{n+nb}{set}\PYG{+w}{ }output\PYG{+w}{ }\PYG{l+s+s2}{\PYGZdq{}images/queues.eps\PYGZdq{}}
+\PYG{n+nb}{set}\PYG{+w}{ }xlabel\PYG{+w}{ }\PYG{l+s+s2}{\PYGZdq{}Time, s\PYGZdq{}}
+\PYG{n+nb}{set}\PYG{+w}{ }ylabel\PYG{+w}{ }\PYG{l+s+s2}{\PYGZdq{}Queue Length [pkt]\PYGZdq{}}
+\PYG{n+nb}{set}\PYG{+w}{ }title\PYG{+w}{ }\PYG{l+s+s2}{\PYGZdq{}RED Queue\PYGZdq{}}
+plot\PYG{+w}{ }\PYG{l+s+s2}{\PYGZdq{}output/temp.q\PYGZdq{}}\PYG{+w}{ }with\PYG{+w}{ }lines\PYG{+w}{ }linestyle\PYG{+w}{ }\PYG{l+m}{1}\PYG{+w}{ }lt\PYG{+w}{ }\PYG{l+m}{1}\PYG{+w}{ }lw\PYG{+w}{ }\PYG{l+m}{2}\PYG{+w}{ }title\PYG{+w}{ }\PYG{l+s+s2}{\PYGZdq{}Queue length\PYGZdq{}},\PYG{+w}{ }\PYG{l+s+s2}{\PYGZdq{}output/temp.a\PYGZdq{}}\PYG{+w}{ }with\PYG{+w}{ }lines\PYG{+w}{ }linestyle\PYG{+w}{ }\PYG{l+m}{2}\PYG{+w}{ }lt\PYG{+w}{ }\PYG{l+m}{3}\PYG{+w}{ }lw\PYG{+w}{ }\PYG{l+m}{2}\PYG{+w}{ }title\PYG{+w}{ }\PYG{l+s+s2}{\PYGZdq{}Average queue length\PYGZdq{}}
+
+\PYG{n+nb}{set}\PYG{+w}{ }terminal\PYG{+w}{ }postscript\PYG{+w}{ }eps
+\PYG{n+nb}{set}\PYG{+w}{ }output\PYG{+w}{ }\PYG{l+s+s2}{\PYGZdq{}images/TCP.eps\PYGZdq{}}
+\PYG{n+nb}{set}\PYG{+w}{ }xlabel\PYG{+w}{ }\PYG{l+s+s2}{\PYGZdq{}Time (s)\PYGZdq{}}
+\PYG{n+nb}{set}\PYG{+w}{ }ylabel\PYG{+w}{ }\PYG{l+s+s2}{\PYGZdq{}Window size [pkt]\PYGZdq{}}
+\PYG{n+nb}{set}\PYG{+w}{ }title\PYG{+w}{ }\PYG{l+s+s2}{\PYGZdq{}TCPVsWindow\PYGZdq{}}
+plot\PYG{+w}{ }\PYG{l+s+s2}{\PYGZdq{}output/WvsT\PYGZdq{}}\PYG{+w}{ }with\PYG{+w}{ }lines\PYG{+w}{ }linestyle\PYG{+w}{ }\PYG{l+m}{1}\PYG{+w}{ }lt\PYG{+w}{ }\PYG{l+m}{1}\PYG{+w}{ }lw\PYG{+w}{ }\PYG{l+m}{2}\PYG{+w}{ }title\PYG{+w}{ }\PYG{l+s+s2}{\PYGZdq{}WvsT\PYGZdq{}}
+\PYG{l+s+sb}{```}
+\end{Verbatim}

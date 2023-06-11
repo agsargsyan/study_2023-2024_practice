@@ -1,0 +1,184 @@
+\chapter*{Приложения}
+\addcontentsline{toc}{chapter}{Приложения}
+
+%\begin{verbatim}
+
+\begin{minted}[linenos,tabsize=2,breaklines]{bash}
+- main.tcl
+```
+#Создать новый экземпляр объекта Symulator
+set ns [new Simulator]
+#Открыть трейс файл для nam
+set nf [open output/out.nam w]
+$ns namtrace-all $nf
+set N 20
+source "nodes.tcl"
+source "links.tcl"
+source "queue.tcl"
+source "connections.tcl"
+source "timing.tcl"
+source "nam.tcl"
+source "finish.tcl"                                                                                      
+#Запуск программы
+$ns run
+```
+- nodes.tcl
+```
+set node_(r0) [$ns node]
+set node_(r1) [$ns node]
+
+for {set i 0} {$i < $N} {incr i} {
+        set node_(s$i) [$ns node]
+        set node_(s[expr $N + $i]) [$ns node]
+        }
+```
+- links.tcl
+```
+for {set i 0} {$i < $N} {incr i} {
+        $ns duplex-link $node_(s$i) $node_(r0) 100Mb 20ms DropTail
+        $ns duplex-link $node_(s[expr $N + $i]) $node_(r1) 100Mb 20ms DropTail
+}
+
+$ns simplex-link $node_(r0) $node_(r1) 20Mb 15ms RED
+$ns simplex-link $node_(r1) $node_(r0) 15Mb 20ms DropTail
+```
+- nam.tcl
+```
+$node_(r0) color "red"
+$node_(r1) color "red"
+$node_(r0) label "RED"
+$node_(r1) shape "square"
+$node_(r0) label "square"
+
+$ns simplex-link-op $node_(r0) $node_(r1) orient right
+$ns simplex-link-op $node_(r1) $node_(r0) orient left
+$ns simplex-link-op $node_(r0) $node_(r1) queuePos 0
+$ns simplex-link-op $node_(r1) $node_(r0) queuePos 0
+
+for {set m 0} {$m < $N} {incr m} {
+        $ns duplex-link-op $node_(s$m) $node_(r0) orient right
+        $ns duplex-link-op $node_(s[expr $N + $m]) $node_(r1) orient left 
+}
+for {set i 0} {$i < $N} {incr i} {
+        $node_(s$i) color "blue"
+        $node_(s$i) label "ftp"
+}
+```
+- connections.tcl
+```
+for {set t 0} {$t < $N} {incr t} {
+        $ns color $t green
+        set tcp($t) [$ns create-connection TCP/Reno $node_(s$t) TCPSink $node_(s[expr $N + $t]) $t]
+        $tcp($t) set window_ 32
+        $tcp($t) set maxcwnd_ 32
+        set ftp($t) [$tcp($t) attach-source FTP]
+}
+
+proc plotWindow {tcpSource file} {
+   global ns
+   set time 0.01
+   set now [$ns now]
+   set cwnd [$tcpSource set cwnd_]
+   puts $file "$now $cwnd"
+   $ns at [expr $now+$time] "plotWindow $tcpSource $file"
+}
+```
+- queue.tcl
+```
+$ns queue-limit $node_(r0) $node_(r1) 300
+$ns queue-limit $node_(r1) $node_(r0) 300
+
+set windowVsTime [open output/WvsT w]
+set qmon [$ns monitor-queue $node_(r0) $node_(r1) [open output/qm.out w]]
+[$ns link $node_(r0) $node_(r1)] queue-sample-timeout
+
+set redq [[$ns link $node_(r0) $node_(r1)] queue]
+$redq set thresh_ 75 #q_min
+$redq set maxthresh_ 150  #q_max
+$redq set q_weight_ 0.002 # q_weight
+$redq set linterm_ 10 # 1/p_max
+$redq set gentle_ false  # 
+$redq set drop-tail_ true
+$redq set queue-in-bytes false #очередь в паетах
+$redq set mean_pktsize_ 500
+set tchan_ [open output/all.q w]
+$redq trace curq_
+$redq trace ave_
+$redq attach $tchan_
+```
+- timing.tcl
+```
+for {set r 0} {$r < $N} {incr r} {
+        $ns at 0.0 "$ftp($r) start"
+        $ns at 1.0 "plotWindow $tcp($r) $windowVsTime"
+        $ns at 24.0 "$ftp($r) stop"
+}
+
+$ns at 25.0 "finish"
+```
+- finish.tcl
+```
+#Finish procedure
+proc finish {} {
+   global ns nf
+   $ns flush-trace
+   close $nf
+   global tchan_
+   set awkCode {  
+      {#запись данных в файлы очереди и средней очереди
+         if ($1 == "Q" && NF>2) {
+            print $2, $3 >> "output/temp.q";
+            set end $2
+         }
+         else if ($1 == "a" && NF>2)
+         print $2, $3 >> "output/temp.a";
+      }
+   }
+
+   set f [open output/temp.queue w]
+   puts $f "TitleText: RED"
+   puts $f "Device: Postscript"
+
+   if { [info exists tchan_] } {
+      close $tchan_
+   }
+   #обновление данных
+   exec rm -f output/temp.q output/temp.a
+   exec touch output/temp.a output/temp.q
+
+   exec awk $awkCode output/all.q
+
+   puts $f \"queue
+   exec cat output/temp.q >@ $f
+   puts $f \n\"ave_queue
+   exec cat output/temp.a >@ $f
+   close $f
+   # вывод в xgraph
+   exec xgraph -bb -tk -x time -t "TCPRenoCWND" output/WvsT &
+   exec xgraph -bb -tk -x time -y queue output/temp.queue &
+   exit 0
+}
+```
+- out.gp
+```
+#!/usr/bin/gnuplot -persist
+
+#вывод графиков
+set terminal postscript eps
+set output "images/queues.eps"
+set xlabel "Time, s"
+set ylabel "Queue Length [pkt]"
+set title "RED Queue"
+plot "output/temp.q" with lines linestyle 1 lt 1 lw 2 title "Queue length", "output/temp.a" with lines linestyle 2 lt 3 lw 2 title "Average queue length"
+
+set terminal postscript eps
+set output "images/TCP.eps"
+set xlabel "Time (s)"
+set ylabel "Window size [pkt]"
+set title "TCPVsWindow"
+plot "output/WvsT" with lines linestyle 1 lt 1 lw 2 title "WvsT"
+```
+\end{minted}
+% \end{verbatim}
+
+
