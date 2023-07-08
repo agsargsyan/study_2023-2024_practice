@@ -3,6 +3,7 @@ proc finish {} {
    global ns nf
    $ns flush-trace
    close $nf
+   #close $packetLossFile
    global tchan_
    set awkCode {
       {
@@ -36,6 +37,7 @@ proc finish {} {
 
    exec xgraph -bb -tk -x time -t "TCPRenoCWND" output/WvsT &
    exec xgraph -bb -tk -x time -y queue output/temp.queue &
+   #exec xgraph -bb -tk -x time -y "Packet Loss" output/packet_loss.txt &
    exec nam output/out.nam &
    exit 0
 }

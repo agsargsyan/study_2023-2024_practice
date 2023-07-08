@@ -1,30 +1,32 @@
 \documentclass[
 a4paper,
 %13pt,
-%fontsize=13pt
+fontsize=13pt
 ]{report}
 
 \usepackage[T2A]{fontenc}
 \usepackage[utf8]{inputenc}
 \usepackage[russian]{babel}
 \usepackage{setspace}
-\usepackage[fontsize=13pt]{scrextend}
+\usepackage[fontsize=14pt]{scrextend}
 \usepackage[table,xcdraw]{xcolor}
 %\usepackage[hscale=0.78,vscale=0.8]{geometry} % margins
 \usepackage[
 left=30mm,
-right=15mm,
+right=10mm,
 bottom=20mm,
-top=20mm
+top=15mm
 ]{geometry}
 
 \usepackage{sectsty}
 \chaptertitlefont{\LARGE}
 
-% \usepackage{titlesec}
-% \titleformat{\chapter}
-%   {\normalfont\LARGE\bfseries}{\thechapter}{1em}{}
 %\titlespacing*{\chapter}{0pt}{3.5ex plus 1ex minus .2ex}{2.3ex plus .2ex}
+\usepackage{titlesec}
+\titleformat{\chapter}{\normalfont\LARGE\bfseries}{\thechapter}{1em}{}
+
+
+
 
 \usepackage{amsmath} 
 \usepackage{listings}
@@ -51,30 +53,17 @@ top=20mm
 \setcounter{page}{2}
 \tableofcontents
 \newpage
-
 %\input{abbrev}
-
-%\newpage
-
 \input{intro}
-
 %\newpage
 \input{ch01}
 
-%\newpage
-%\renewcommand{\chaptername}{RED}
 \input{ch02}
 
-%\clearpage
-%\newpage
-%\renewcommand{\chaptername}{Результаты}
- \input{ch03}
-
-%\newpage
+\input{ch03}
 
 \input{conclusion}
 
-%\newpage
 \renewcommand{\bibname}{Список литературы}
 \cleardoublepage
 \phantomsection

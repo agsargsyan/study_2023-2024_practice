@@ -1,9 +1,3 @@
-\chapter*{Приложения}
-\addcontentsline{toc}{chapter}{Приложения}
-
-%\begin{verbatim}
-
-\begin{minted}[linenos,tabsize=2,breaklines]{bash}
 - main.tcl
 ```
 #Создать новый экземпляр объекта Symulator
@@ -15,10 +9,10 @@ set N 20 # задаём 20 TCP источников и приемников
 source "nodes.tcl" #описание узлов
 source "links.tcl" #описание соединений
 source "queue.tcl" # jxthtlb
-source "connections.tcl" 
+source "connections.tcl"
 source "timing.tcl" #таймер
 source "nam.tcl" #визуализация
-source "finish.tcl"                                                                                       
+source "finish.tcl"
 #Запуск программы
 $ns run
 ```
@@ -57,7 +51,7 @@ $ns simplex-link-op $node_(r1) $node_(r0) queuePos 0
 
 for {set m 0} {$m < $N} {incr m} {
         $ns duplex-link-op $node_(s$m) $node_(r0) orient right
-        $ns duplex-link-op $node_(s[expr $N + $m]) $node_(r1) orient left 
+        $ns duplex-link-op $node_(s[expr $N + $m]) $node_(r1) orient left
 }
 for {set i 0} {$i < $N} {incr i} {
         $node_(s$i) color "blue"
@@ -97,7 +91,7 @@ $redq set thresh_ 75 #q_min
 $redq set maxthresh_ 150  #q_max
 $redq set q_weight_ 0.002 # q_weight
 $redq set linterm_ 10 # 1/p_max
-$redq set gentle_ false  # 
+$redq set gentle_ false  #
 $redq set drop-tail_ true
 $redq set queue-in-bytes false #очередь в паетах
 $redq set mean_pktsize_ 500
@@ -124,7 +118,7 @@ proc finish {} {
    $ns flush-trace
    close $nf
    global tchan_
-   set awkCode {  
+   set awkCode {
       {#запись данных в файлы очереди и средней очереди
          if ($1 == "Q" && NF>2) {
             print $2, $3 >> "output/temp.q";
@@ -178,26 +172,3 @@ set ylabel "Window size [pkt]"
 set title "TCPVsWindow"
 plot "output/WvsT" with lines linestyle 1 lt 1 lw 2 title "WvsT"
 ```
-\end{minted}
-% \end{verbatim}
-
-%\begin{verbatim}
-\begin{minted}[linenos,tabsize=2,breaklines]{C++}
-double REDQueue::calculate_p_new(double v_ave, double th_max, int gentle, double v_a, double v_b, double v_c, double v_d, double max_p)
-{
-        double p;
-        if (gentle && v_ave >= th_max) { //для модификации GRED
-                p = v_c * v_ave + v_d;
-        } else if (!gentle && v_ave >= th_max) { // Превысили пороговое значение в классическом RED
-                p = 2.0;
-        } else { // p в промежутке от 0 до max_p, тогда средний размер очереди в промежутке th_min до th_max
-                p = v_a * v_ave + v_b;
-                // p = (v_ave - th_min) / (th_max - th_min)
-                p *= max_p; 
-        }
-        if (p > 2.0) и // пакеты отбрасываюся
-                p = 2.0;
-        return p;
-}
-\end{minted}
-% \end{verbatim}

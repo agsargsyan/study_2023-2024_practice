@@ -27,7 +27,7 @@
 Смоделировав сеть с указанными параметрами и запустив gnuplot-скрипт,
 я получил следующий график (рис.~\ref{fig:3.1}).
 
-\begin{figure}[!h]
+\begin{figure}[!ht]
   \centering
   \includegraphics[width=0.6\linewidth]{image/queues_75-150_classic.eps}
   \caption{График длины очереди и средней длины очереди на
@@ -47,7 +47,7 @@
 пороговых значениях и при одинаковых остальных параметрах
 (рис.~\ref{fig:3.2}).
 
-\begin{figure}[!h]
+\begin{figure}[!ht]
   \centering
   \includegraphics[width=0.6\linewidth]{image/av_queues_maxthresh.eps}
   \caption{График средней длины очереди для разных пороговых значений}
@@ -62,14 +62,14 @@
 качестве очереди RED, GRED, NLRED,
 RARED (рис.~\ref{fig:3.3},~\ref{fig:3.4},~\ref{fig:3.5},~\ref{fig:3.6}).
 
-\begin{figure}[!h]
+\begin{figure}[!ht]
   \centering
   \includegraphics[width=0.6\linewidth]{image/av_queues_classic_gentle.eps}
   \caption{Средняя длина очереди RED и GRED при одинаковых условиях}
   \label{fig:3.3}
 \end{figure}
 
-\begin{figure}[!h]
+\begin{figure}[!ht]
   \centering
   \includegraphics[width=0.6\linewidth]{image/av_queues_3types.eps}
   \caption{Средняя длина очереди RED, GRED, ARED при одинаковых условиях}
@@ -100,14 +100,14 @@ RARED (рис.~\ref{fig:3.3},~\ref{fig:3.4},~\ref{fig:3.5},~\ref{fig:3.6}).
 Смоделировали сеть при разных TCP(Reno, Vegas и Newreno)
 (рис.~\ref{fig:3.7},~\ref{fig:3.8},~\ref{fig:3.9}).
 
-\begin{figure}[!h]
+\begin{figure}[!ht]
   \centering
   \includegraphics[width=0.6\linewidth]{image/av_queues_tcp.eps}
   \caption{График длины очередей на линке (R0-R1) при разных TCP}
   \label{fig:3.7}
 \end{figure}
 
-\begin{figure}[!h]
+\begin{figure}[!ht]
   \centering
   \includegraphics[width=0.6\linewidth]{image/TCP_75-150_classic.eps}
   \caption{График размера TCP-окна для всех источников (TCP типа TCP/Reno)}

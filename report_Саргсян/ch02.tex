@@ -59,26 +59,6 @@ p_{b} = \begin{cases}
 файл). Вероятность отбрасывания пакета прописана в функции
 double \begin{verbatim} REDQueue::calculate_p_ne файла red.cc. \end{verbatim}
 
-%\begin{verbatim}
-\begin{minted}[linenos,tabsize=2,breaklines]{C++}
-double REDQueue::calculate_p_new(double v_ave, double th_max, int gentle, double v_a, double v_b, double v_c, double v_d, double max_p)
-{
-        double p;
-        if (gentle && v_ave >= th_max) { //для модификации GRED
-                p = v_c * v_ave + v_d;
-        } else if (!gentle && v_ave >= th_max) { // Превысили пороговое значение в классическом RED
-                p = 2.0;
-        } else { // p в промежутке от 0 до max_p, тогда средний размер очереди в промежутке th_min до th_max
-                p = v_a * v_ave + v_b;
-                // p = (v_ave - th_min) / (th_max - th_min)
-                p *= max_p; 
-        }
-        if (p > 2.0) и // пакеты отбрасываюся
-                p = 2.0;
-        return p;
-}
-\end{minted}
-% \end{verbatim}
 
 \section{GRED} 
 
@@ -213,7 +193,7 @@ $\beta$ раз:
 p_{\max} = \left\{
   \begin{aligned}
     & p_{\max}+\alpha, \ \hat{q}>\hat{q_{t}}, \ p_{\max} \leqslant 0,5, \\
-    & \beta * p_{\max}, \ \hat{q}<\hat{q_{t}}, \ p_{\max} \geqslant 0,01, 
+    & \beta p_{\max}, \ \hat{q}<\hat{q_{t}}, \ p_{\max} \geqslant 0,01, 
   \end{aligned}
 \right.
 \end{equation}
