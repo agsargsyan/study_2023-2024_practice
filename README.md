@@ -17,6 +17,8 @@
 - Hyperbola RED
 - RED-QL
 - TRED
-- RED-e
-- Improved RED
-- Smart RED
+- SmRED
+- POWARED
+- FARED
+- DSRED
+  
