@@ -100,21 +100,33 @@ struct edp {
                                 /*  average */
 	double alpha;           /* adaptive RED: additive param for max_p */
 	double beta;            /* adaptive RED: multip param for max_p */
+	double omega;
 	double interval;	/* adaptive RED: interval for adaptations */
 	double targetdelay;     /* adaptive RED: target queue size */
 	double top;		/* adaptive RED: upper bound for max_p */
 	double bottom;		/* adaptive RED: lower bound for max_p */
+
+	int pwk;		/*powared param*/
+	int pwb;		/*powared param*/
+	int bf_size;		/*powared param*/
+	
 				/* 0 for automatic setting */
 	int feng_adaptive;	/* adaptive RED: Use the Feng et al. version */
 	int refined_adaptive;	/* Added by Mohit P. Tahiliani for Refined Adaptive RED (Re-ARED) */
-	int stabilized_adaptive;/* Added Stabillized Adaptive RED (SARED) */
+	int fast_adaptive;	/* Added for Fast adaptive RED (FARED)*/
 	int nonlinear;		/* Added for Nonlinear RED (NLRED) */
 	int hyperbola;		/* Added for Hyperbola RED (HRED)*/
 	int quadratic_linear;   /* Added for Quadratic linear RED*/
 	int three_sections;	/* Added for 3sections RED*/
 	int exponential;	/* Added for exponential RED*/
 	int improved;		/* Added for improved RED*/
-	int smart;		/* Added for smart RED*/	
+	int smart;		/* Added for smart RED*/
+	int modified;		/* Added for modified RED*/
+	int server_fairness;	/* Added for SF-RED*/
+	int powared;		/* Added for Powared*/
+	int double_slope;	/* Added for DS-RED*/
+	
+		
 	/*
 	 * Computed as a function of user supplied paramters.
 	 */
@@ -164,6 +176,8 @@ class REDQueue : public Queue {
 	double estimator(int nqueued, int m, double ave, double q_w);
 	void updateMaxP(double new_ave, double now);
 	void updateMaxP_refined_adaptive(double new_ave, double now);
+	void updateMaxP_fast_adaptive(double new_ave, double now);
+	void updateMaxP_powared(double new_ave, double now);
 	void updateMaxP_stabilized_adaptive(double new_ave, double now);
 	void updateMaxPFeng(double new_ave);
 	int drop_early(Packet* pkt);

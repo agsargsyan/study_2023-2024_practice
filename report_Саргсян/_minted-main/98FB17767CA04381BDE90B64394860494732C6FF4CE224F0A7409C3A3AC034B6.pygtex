@@ -1,0 +1,14 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+
+\PYG{+w}{	}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{feng\PYGZus{}adaptive}\PYG{p}{;}\PYG{+w}{	}\PYG{c+cm}{/* adaptive RED: Use the Feng et al. version */}
+\PYG{+w}{	}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{refined\PYGZus{}adaptive}\PYG{p}{;}\PYG{+w}{	}\PYG{c+cm}{/* Added by Mohit P. Tahiliani for Refined Adaptive RED (Re\PYGZhy{}ARED) */}
+\PYG{+w}{	}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{stabilized\PYGZus{}adaptive}\PYG{p}{;}\PYG{c+cm}{/* Added Stabillized Adaptive RED (SARED) */}
+\PYG{+w}{	}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{nonlinear}\PYG{p}{;}\PYG{+w}{		}\PYG{c+cm}{/* Added for Nonlinear RED (NLRED) */}
+\PYG{+w}{	}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{hyperbola}\PYG{p}{;}\PYG{+w}{		}\PYG{c+cm}{/* Added for Hyperbola RED (HRED)*/}
+\PYG{+w}{	}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{quadratic\PYGZus{}linear}\PYG{p}{;}\PYG{+w}{   }\PYG{c+cm}{/* Added for Quadratic linear RED*/}
+\PYG{+w}{	}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{three\PYGZus{}sections}\PYG{p}{;}\PYG{+w}{	}\PYG{c+cm}{/* Added for 3sections RED*/}
+\PYG{+w}{	}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{exponential}\PYG{p}{;}\PYG{+w}{	}\PYG{c+cm}{/* Added for exponential RED*/}
+\PYG{+w}{	}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{improved}\PYG{p}{;}\PYG{+w}{		}\PYG{c+cm}{/* Added for improved RED*/}
+\PYG{+w}{	}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{smart}\PYG{p}{;}\PYG{+w}{		}\PYG{c+cm}{/* Added for smart RED*/}
+\PYG{+w}{	}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{modified}\PYG{p}{;}\PYG{+w}{		}\PYG{c+cm}{/* Added for modified RED*/}\PYG{+w}{	}
+\end{Verbatim}

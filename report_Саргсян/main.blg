@@ -1,27 +1,61 @@
-This is BibTeXu: a UTF-8 Big BibTeX version 0.99d
-Implementation:  C for Unix
-Release version: 3.71 (04 mar 2019)
-Compiled with:   ICU version 70.1
-
+This is BibTeX, Version 0.99d (TeX Live 2022/dev/Debian)
+Capacity: max_strings=200000, hash_size=200000, hash_prime=170003
 The top-level auxiliary file: main.aux
 The style file: ugost2008l.bst
-Reallocated glb_str_ptr (elt_size=8) to 10 items from 0.
-Reallocated global_strs (elt_size=200001) to 10 items from 0.
-Reallocated glb_str_end (elt_size=8) to 10 items from 0.
-Reallocated wiz_functions (elt_size=8) to 6000 items from 3000.
-Reallocated singl_function (elt_size=8) to 100 items from 50.
+Reallocated wiz_functions (elt_size=4) to 6000 items from 3000.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
 Database file #1: bib.bib
-Reallocated singl_function (elt_size=8) to 100 items from 50.
-"\"can't start a style-file command---line 2593 of file ugost2008l.bst
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Warning--unknown month in RED2
+Warning--unknown month in NLRED1
+Warning--unknown month in NLRED2
+Warning--unknown month in TRED
+Warning--unknown month in REDQL
+Warning--unknown month in SmRED
+Warning--unknown month in DSRED
+"\" can't start a style-file command---line 2593 of file ugost2008l.bst
  : 
  : \endinput
 (Error may have been on previous line)
-
-Here's how much of BibTeX's memory you used:
- Cites:                 4 out of 750
- Fields:              167 out of 5000
- Hash table:       199383 out of 200000
- Strings:            1593 out of 200000
- Free string pool:  16053 out of 65000
- Wizard functions:   5590 out of 6000
+You've used 15 entries,
+            5590 wiz_defined-function locations,
+            1704 strings with 19066 characters,
+and the built_in function-call counts, 6648 in all, are:
+= -- 892
+> -- 176
+< -- 14
++ -- 63
+- -- 48
+* -- 478
+:= -- 690
+add.period$ -- 69
+call.type$ -- 15
+change.case$ -- 0
+chr.to.int$ -- 0
+cite$ -- 22
+duplicate$ -- 314
+empty$ -- 680
+format.name$ -- 48
+if$ -- 1783
+int.to.chr$ -- 0
+int.to.str$ -- 15
+missing$ -- 0
+newline$ -- 114
+num.names$ -- 16
+pop$ -- 80
+preamble$ -- 1
+purify$ -- 0
+quote$ -- 0
+skip$ -- 250
+stack$ -- 0
+substring$ -- 306
+swap$ -- 247
+text.length$ -- 16
+text.prefix$ -- 0
+top$ -- 0
+type$ -- 0
+warning$ -- 7
+while$ -- 43
+width$ -- 17
+write$ -- 244
 (There was 1 error message)

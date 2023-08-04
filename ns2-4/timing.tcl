@@ -5,3 +5,4 @@ for {set r 0} {$r < $N} {incr r} {
 }
 
 $ns at 25.0 "finish"
+

@@ -49,83 +49,68 @@
 
 \begin{figure}[!ht]
   \centering
-  \includegraphics[width=0.6\linewidth]{image/av_queues_maxthresh.eps}
+  \includegraphics[width=0.7\linewidth]{image/av_queues_maxthresh.eps}
   \caption{График средней длины очереди для разных пороговых значений}
   \label{fig:3.2}
 \end{figure}
 
-Как видно из графика, %уменьшение
+Как видно из графика,
 увеличение диапазона между $q_{\min}$ и $q_{\max}$ способствует
 увелечению длины очереди на линке.
 
-Для сравнений различных модификаций смоделировали сеть, задав в
-качестве очереди RED, GRED, NLRED,
-RARED (рис.~\ref{fig:3.3},~\ref{fig:3.4},~\ref{fig:3.5},~\ref{fig:3.6}).
+Для сравнений модификаций мы смоделировали сети и вывели графики очередей для всех реализованных модификаций
+(рис.~\ref{fig:3.3},~\ref{fig:3.4},~\ref{fig:3.5},~\ref{fig:3.6}, ~\ref{fig:3.7}).
+
 
 \begin{figure}[!ht]
   \centering
-  \includegraphics[width=0.6\linewidth]{image/av_queues_classic_gentle.eps}
-  \caption{Средняя длина очереди RED и GRED при одинаковых условиях}
+  \includegraphics[width=0.7\linewidth]{image/av_queues_1GNl.eps}
+  \caption{График средневзвешанной экспоненциальной очереди для RED, GRED, NLRED}
   \label{fig:3.3}
 \end{figure}
 
-\begin{figure}[!ht]
-  \centering
-  \includegraphics[width=0.6\linewidth]{image/av_queues_3types.eps}
-  \caption{Средняя длина очереди RED, GRED, ARED при одинаковых условиях}
-  \label{fig:3.4}
-\end{figure}
+Как мы видим в ~\ref{fig:3.3}, GRED и NLRED после достижения стационарного состояния имеют более модификации выдают довольно близкие значения, хотя классический алгоритм всё же более жестко отбрасывает т пакеты.
 
 \begin{figure}[!ht]
   \centering
-  \includegraphics[width=0.6\linewidth]{image/queues_3types.eps}
-  \caption{Длина очереди RED, GRED, ARED при одинаковых условиях}
+  \includegraphics[width=0.7\linewidth]{image/av_queues_HTNl.eps}
+  \caption{График средневзвешанной экспоненциальной очереди для HRED, TRED, NLRED}
+  \label{fig:3.4}
+\end{figure}
+
+Расмматривая нелинейные модификации ~\ref{fig:3.4}, мы видим, что HRED наиболее подходящая модификация для сетей, где потеря пакетов не является значительной пролемой, а TRED показывает результаты, по значению средние с другими модификациями, увеличивает пропускную способность при
+низкой нагрузке и уменьшает задержку при высокой нагрузке.  
+
+Изучая адаптивные модификации ~\ref{fig:3.5},~\ref{fig:3.6}, ~\ref{fig:3.7}. Алгоритм Feng ARED показывает наименьшую амплитуду при достижении стационарного состояния. FARED и RARED имеют одинаковый алгоритм и отличаются только двумя коэфицентами, но RARED отбрасывает гораздо меньше пакетов. Powared показывает самую большую среднюю длину очереди и из вышеперчисленных показывет наибольший разброс между данными.
+
+
+\begin{figure}[!ht]
+  \centering
+  \includegraphics[width=0.7\linewidth]{image/av_queues_adaptive1.eps}
+  \caption{График средневзвешанной экспоненциальной очереди для адаптивных алгоритмов}
   \label{fig:3.5}
 \end{figure}
 
 \begin{figure}[!ht]
   \centering
-  \includegraphics[width=0.6\linewidth]{image/av_queues_classic_nonlinear.eps}
-  \caption{Средняя длина очереди RED, NLRED при одинаковых условиях}
+  \includegraphics[width=0.7\linewidth]{image/av_queues_adaptive2.eps}
+  \caption{График средневзвешанной экспоненциальной очереди для адаптивных алгоритмов}
   \label{fig:3.6}
 \end{figure}
 
-Различие между RARED с остальными модификациями легко объяснить его
-автоматическим выбором минимального и максимального пороговых
-величин. Средняя очередь при Gentle RED до стационарного состояния
-гораздо выше, что обьяснется его более мягким
-алгоритмом. Моделирование NLRED не показало никаких различий с
-классическим RED, что указывет на неработаспособность патча.
-
-Смоделировали сеть при разных TCP(Reno, Vegas и Newreno)
-(рис.~\ref{fig:3.7},~\ref{fig:3.8},~\ref{fig:3.9}).
-
 \begin{figure}[!ht]
   \centering
-  \includegraphics[width=0.6\linewidth]{image/av_queues_tcp.eps}
-  \caption{График длины очередей на линке (R0-R1) при разных TCP}
+  \includegraphics[width=0.7\linewidth]{image/av_queues_adaptive3.eps}
+  \caption{График средневзвешанной экспоненциальной очереди для адаптивных алгоритмов}
   \label{fig:3.7}
 \end{figure}
 
-\begin{figure}[!ht]
-  \centering
-  \includegraphics[width=0.6\linewidth]{image/TCP_75-150_classic.eps}
-  \caption{График размера TCP-окна для всех источников (TCP типа TCP/Reno)}
-  \label{fig:3.8}
-\end{figure}
 
-\begin{figure}[!ht]
-  \centering
-  \includegraphics[width=0.6\linewidth]{image/TCP_vegas.eps}
-  \caption{График размера TCP-окна для всех источников (TCP типа TCP/Vegas)}
-  \label{fig:3.9}
-\end{figure}
 
-Такое заметное отличие TCP/Vegas от TCP/Reno и TCP/Newreno объясняется
-тем, что он использует альтернативный подход к управлению
-перегрузкой. Вместо использования потери пакетов в качестве индикатора
-перегрузки сети он анализирует задержку пакетов в сети и использует
-данную информацию для определения, происходит ли перегрузка в сети.
+
+
+
+
 
 
 

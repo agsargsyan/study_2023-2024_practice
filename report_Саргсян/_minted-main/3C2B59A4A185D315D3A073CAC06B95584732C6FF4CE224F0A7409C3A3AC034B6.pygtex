@@ -1,0 +1,79 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+
+\PYG{k+kt}{void}\PYG{+w}{ }\PYG{n+nf}{REDQueue::updateMaxP}\PYG{p}{(}\PYG{k+kt}{double}\PYG{+w}{ }\PYG{n}{new\PYGZus{}ave}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{double}\PYG{+w}{ }\PYG{n}{now}\PYG{p}{)}
+\PYG{p}{\PYGZob{}}
+\PYG{+w}{	}\PYG{k+kt}{double}\PYG{+w}{ }\PYG{n}{part}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{l+m+mf}{0.4}\PYG{o}{*}\PYG{p}{(}\PYG{n}{edp\PYGZus{}}\PYG{p}{.}\PYG{n}{th\PYGZus{}max}\PYG{+w}{ }\PYG{o}{\PYGZhy{}}\PYG{+w}{ }\PYG{n}{edp\PYGZus{}}\PYG{p}{.}\PYG{n}{th\PYGZus{}min}\PYG{p}{);}
+\PYG{+w}{	}\PYG{c+c1}{// AIMD rule to keep target Q\PYGZti{}1/2(th\PYGZus{}min+th\PYGZus{}max)}
+\PYG{+w}{	}\PYG{k}{if}\PYG{+w}{ }\PYG{p}{(}\PYG{+w}{ }\PYG{n}{new\PYGZus{}ave}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{n}{edp\PYGZus{}}\PYG{p}{.}\PYG{n}{th\PYGZus{}min}\PYG{+w}{ }\PYG{o}{+}\PYG{+w}{ }\PYG{n}{part}\PYG{+w}{ }\PYG{o}{\PYGZam{}\PYGZam{}}\PYG{+w}{ }\PYG{n}{edv\PYGZus{}}\PYG{p}{.}\PYG{n}{cur\PYGZus{}max\PYGZus{}p}\PYG{+w}{ }\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{n}{edp\PYGZus{}}\PYG{p}{.}\PYG{n}{bottom}\PYG{p}{)}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{		}\PYG{c+c1}{// we increase the average queue size, so decrease max\PYGZus{}p}
+\PYG{+w}{		}\PYG{n}{edv\PYGZus{}}\PYG{p}{.}\PYG{n}{cur\PYGZus{}max\PYGZus{}p}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{edv\PYGZus{}}\PYG{p}{.}\PYG{n}{cur\PYGZus{}max\PYGZus{}p}\PYG{+w}{ }\PYG{o}{*}\PYG{+w}{ }\PYG{n}{edp\PYGZus{}}\PYG{p}{.}\PYG{n}{beta}\PYG{p}{;}
+\PYG{+w}{		}\PYG{n}{edv\PYGZus{}}\PYG{p}{.}\PYG{n}{lastset}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{now}\PYG{p}{;}
+\PYG{+w}{	}\PYG{p}{\PYGZcb{}}\PYG{+w}{ }\PYG{k}{else}\PYG{+w}{ }\PYG{k}{if}\PYG{+w}{ }\PYG{p}{(}\PYG{n}{new\PYGZus{}ave}\PYG{+w}{ }\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{n}{edp\PYGZus{}}\PYG{p}{.}\PYG{n}{th\PYGZus{}max}\PYG{+w}{ }\PYG{o}{\PYGZhy{}}\PYG{+w}{ }\PYG{n}{part}\PYG{+w}{ }\PYG{o}{\PYGZam{}\PYGZam{}}\PYG{+w}{ }\PYG{n}{edp\PYGZus{}}\PYG{p}{.}\PYG{n}{top}\PYG{+w}{ }\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{n}{edv\PYGZus{}}\PYG{p}{.}\PYG{n}{cur\PYGZus{}max\PYGZus{}p}\PYG{+w}{ }\PYG{p}{)}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{		}\PYG{c+c1}{// we decrease the average queue size, so increase max\PYGZus{}p}
+\PYG{+w}{		}\PYG{k+kt}{double}\PYG{+w}{ }\PYG{n}{alpha}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{edp\PYGZus{}}\PYG{p}{.}\PYG{n}{alpha}\PYG{p}{;}
+\PYG{+w}{                        }\PYG{k}{if}\PYG{+w}{ }\PYG{p}{(}\PYG{+w}{ }\PYG{n}{alpha}\PYG{+w}{ }\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{l+m+mf}{0.25}\PYG{o}{*}\PYG{n}{edv\PYGZus{}}\PYG{p}{.}\PYG{n}{cur\PYGZus{}max\PYGZus{}p}\PYG{+w}{ }\PYG{p}{)}
+\PYG{+w}{			}\PYG{n}{alpha}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{l+m+mf}{0.25}\PYG{o}{*}\PYG{n}{edv\PYGZus{}}\PYG{p}{.}\PYG{n}{cur\PYGZus{}max\PYGZus{}p}\PYG{p}{;}
+\PYG{+w}{		}\PYG{n}{edv\PYGZus{}}\PYG{p}{.}\PYG{n}{cur\PYGZus{}max\PYGZus{}p}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{edv\PYGZus{}}\PYG{p}{.}\PYG{n}{cur\PYGZus{}max\PYGZus{}p}\PYG{+w}{ }\PYG{o}{+}\PYG{+w}{ }\PYG{n}{alpha}\PYG{p}{;}
+\PYG{+w}{		}\PYG{n}{edv\PYGZus{}}\PYG{p}{.}\PYG{n}{lastset}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{now}\PYG{p}{;}
+\PYG{+w}{	}\PYG{p}{\PYGZcb{}}
+\PYG{p}{\PYGZcb{}}
+
+\PYG{k+kt}{void}\PYG{+w}{ }\PYG{n+nf}{REDQueue::updateMaxP\PYGZus{}refined\PYGZus{}adaptive}\PYG{p}{(}\PYG{k+kt}{double}\PYG{+w}{ }\PYG{n}{new\PYGZus{}ave}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{double}\PYG{+w}{ }\PYG{n}{now}\PYG{p}{)}
+\PYG{p}{\PYGZob{}}
+\PYG{+w}{  	}\PYG{k+kt}{double}\PYG{+w}{ }\PYG{n}{part}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{l+m+mf}{0.48}\PYG{o}{*}\PYG{p}{(}\PYG{n}{edp\PYGZus{}}\PYG{p}{.}\PYG{n}{th\PYGZus{}max}\PYG{+w}{ }\PYG{o}{\PYGZhy{}}\PYG{+w}{ }\PYG{n}{edp\PYGZus{}}\PYG{p}{.}\PYG{n}{th\PYGZus{}min}\PYG{p}{);}
+\PYG{+w}{ 	}\PYG{k}{if}\PYG{+w}{ }\PYG{p}{(}\PYG{+w}{ }\PYG{n}{new\PYGZus{}ave}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{n}{edp\PYGZus{}}\PYG{p}{.}\PYG{n}{th\PYGZus{}min}\PYG{+w}{ }\PYG{o}{+}\PYG{+w}{ }\PYG{n}{part}\PYG{+w}{ }\PYG{o}{\PYGZam{}\PYGZam{}}\PYG{+w}{ }\PYG{n}{edv\PYGZus{}}\PYG{p}{.}\PYG{n}{cur\PYGZus{}max\PYGZus{}p}\PYG{+w}{ }\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{n}{edp\PYGZus{}}\PYG{p}{.}\PYG{n}{bottom}\PYG{p}{)}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{ 		}\PYG{n}{edv\PYGZus{}}\PYG{p}{.}\PYG{n}{cur\PYGZus{}max\PYGZus{}p}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{edv\PYGZus{}}\PYG{p}{.}\PYG{n}{cur\PYGZus{}max\PYGZus{}p}\PYG{+w}{ }\PYG{o}{*}\PYG{+w}{ }\PYG{p}{(}\PYG{l+m+mf}{1.0}\PYG{+w}{ }\PYG{o}{\PYGZhy{}}\PYG{+w}{ }\PYG{p}{(}\PYG{l+m+mf}{0.17}\PYG{+w}{ }\PYG{o}{*}\PYG{+w}{ }\PYG{p}{((}\PYG{n}{edp\PYGZus{}}\PYG{p}{.}\PYG{n}{th\PYGZus{}min}\PYG{+w}{ }\PYG{o}{+}\PYG{+w}{ }\PYG{n}{part}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{\PYGZhy{}}\PYG{+w}{ }\PYG{n}{new\PYGZus{}ave}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{/}\PYG{+w}{ }\PYG{p}{((}\PYG{n}{edp\PYGZus{}}\PYG{p}{.}\PYG{n}{th\PYGZus{}min}\PYG{+w}{ }\PYG{o}{+}\PYG{+w}{ }\PYG{n}{part}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{\PYGZhy{}}\PYG{+w}{ }\PYG{n}{edp\PYGZus{}}\PYG{p}{.}\PYG{n}{th\PYGZus{}min}\PYG{p}{)));}
+\PYG{+w}{ 		}\PYG{n}{edv\PYGZus{}}\PYG{p}{.}\PYG{n}{lastset}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{now}\PYG{p}{;}
+\PYG{+w}{ 		}\PYG{k+kt}{double}\PYG{+w}{ }\PYG{n}{maxp}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{edv\PYGZus{}}\PYG{p}{.}\PYG{n}{cur\PYGZus{}max\PYGZus{}p}\PYG{p}{;}
+\PYG{+w}{ 	}\PYG{p}{\PYGZcb{}}\PYG{+w}{ }\PYG{k}{else}\PYG{+w}{ }\PYG{k}{if}\PYG{+w}{ }\PYG{p}{(}\PYG{n}{new\PYGZus{}ave}\PYG{+w}{ }\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{n}{edp\PYGZus{}}\PYG{p}{.}\PYG{n}{th\PYGZus{}max}\PYG{+w}{ }\PYG{o}{\PYGZhy{}}\PYG{+w}{ }\PYG{n}{part}\PYG{+w}{ }\PYG{o}{\PYGZam{}\PYGZam{}}\PYG{+w}{ }\PYG{n}{edp\PYGZus{}}\PYG{p}{.}\PYG{n}{top}\PYG{+w}{ }\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{n}{edv\PYGZus{}}\PYG{p}{.}\PYG{n}{cur\PYGZus{}max\PYGZus{}p}\PYG{+w}{ }\PYG{p}{)}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{ 		}\PYG{k+kt}{double}\PYG{+w}{ }\PYG{n}{alpha}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{edp\PYGZus{}}\PYG{p}{.}\PYG{n}{alpha}\PYG{p}{;}
+\PYG{+w}{ 		}\PYG{n}{alpha}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{l+m+mf}{0.25}\PYG{+w}{ }\PYG{o}{*}\PYG{+w}{ }\PYG{n}{edv\PYGZus{}}\PYG{p}{.}\PYG{n}{cur\PYGZus{}max\PYGZus{}p}\PYG{+w}{ }\PYG{o}{*}\PYG{+w}{ }\PYG{p}{((}\PYG{n}{new\PYGZus{}ave}\PYG{+w}{ }\PYG{o}{\PYGZhy{}}\PYG{+w}{ }\PYG{p}{(}\PYG{n}{edp\PYGZus{}}\PYG{p}{.}\PYG{n}{th\PYGZus{}max}\PYG{+w}{ }\PYG{o}{\PYGZhy{}}\PYG{+w}{ }\PYG{n}{part}\PYG{p}{))}\PYG{+w}{ }\PYG{o}{/}\PYG{+w}{ }\PYG{p}{(}\PYG{n}{edp\PYGZus{}}\PYG{p}{.}\PYG{n}{th\PYGZus{}max}\PYG{+w}{ }\PYG{o}{\PYGZhy{}}\PYG{+w}{ }\PYG{n}{part}\PYG{p}{));}
+\PYG{+w}{ 		}\PYG{n}{edv\PYGZus{}}\PYG{p}{.}\PYG{n}{cur\PYGZus{}max\PYGZus{}p}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{edv\PYGZus{}}\PYG{p}{.}\PYG{n}{cur\PYGZus{}max\PYGZus{}p}\PYG{+w}{ }\PYG{o}{+}\PYG{+w}{ }\PYG{n}{alpha}\PYG{p}{;}
+\PYG{+w}{ 		}\PYG{n}{edv\PYGZus{}}\PYG{p}{.}\PYG{n}{lastset}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{now}\PYG{p}{;}
+\PYG{+w}{ 		}\PYG{k+kt}{double}\PYG{+w}{ }\PYG{n}{maxp}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{edv\PYGZus{}}\PYG{p}{.}\PYG{n}{cur\PYGZus{}max\PYGZus{}p}\PYG{p}{;}
+\PYG{+w}{ 	}\PYG{p}{\PYGZcb{}}
+\PYG{p}{\PYGZcb{}}
+
+
+\PYG{k+kt}{void}\PYG{+w}{ }\PYG{n+nf}{REDQueue::updateMaxP\PYGZus{}powared}\PYG{p}{(}\PYG{k+kt}{double}\PYG{+w}{ }\PYG{n}{new\PYGZus{}ave}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{double}\PYG{+w}{ }\PYG{n}{now}\PYG{p}{)}
+\PYG{p}{\PYGZob{}}
+\PYG{+w}{  	}\PYG{k+kt}{double}\PYG{+w}{ }\PYG{n}{target}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{l+m+mf}{0.5}\PYG{o}{*}\PYG{p}{(}\PYG{n}{edp\PYGZus{}}\PYG{p}{.}\PYG{n}{th\PYGZus{}max}\PYG{+w}{ }\PYG{o}{+}\PYG{+w}{ }\PYG{n}{edp\PYGZus{}}\PYG{p}{.}\PYG{n}{th\PYGZus{}min}\PYG{p}{);}
+\PYG{+w}{  	}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{k}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{edp\PYGZus{}}\PYG{p}{.}\PYG{n}{pwk}\PYG{p}{;}
+\PYG{+w}{  	}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{b}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{edp\PYGZus{}}\PYG{p}{.}\PYG{n}{pwb}\PYG{p}{;}
+\PYG{+w}{  	}\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{r}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{edp\PYGZus{}}\PYG{p}{.}\PYG{n}{bf\PYGZus{}size}\PYG{p}{;}
+\PYG{+w}{  	}\PYG{k+kt}{double}\PYG{+w}{ }\PYG{n}{v\PYGZus{}ave}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{edv\PYGZus{}}\PYG{p}{.}\PYG{n}{v\PYGZus{}ave}\PYG{p}{;}
+\PYG{+w}{  	}
+\PYG{+w}{  	}
+\PYG{+w}{  	}
+\PYG{+w}{  	}\PYG{k+kt}{double}\PYG{+w}{ }\PYG{n}{delta1}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{abs}\PYG{p}{(}\PYG{n}{pow}\PYG{p}{((}\PYG{n}{v\PYGZus{}ave}\PYG{+w}{ }\PYG{o}{\PYGZhy{}}\PYG{+w}{ }\PYG{n}{target}\PYG{p}{)}\PYG{o}{/}\PYG{p}{(}\PYG{n}{b}\PYG{+w}{ }\PYG{o}{*}\PYG{+w}{ }\PYG{n}{target}\PYG{p}{),}\PYG{+w}{ }\PYG{n}{k}\PYG{p}{));}
+\PYG{+w}{  	}\PYG{k+kt}{double}\PYG{+w}{ }\PYG{n}{delta2}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{abs}\PYG{p}{(}\PYG{n}{pow}\PYG{p}{((}\PYG{n}{target}\PYG{+w}{ }\PYG{o}{\PYGZhy{}}\PYG{+w}{ }\PYG{n}{v\PYGZus{}ave}\PYG{p}{)}\PYG{o}{/}\PYG{p}{(}\PYG{n}{b}\PYG{+w}{ }\PYG{o}{*}\PYG{+w}{ }\PYG{p}{(}\PYG{n}{r}\PYG{+w}{ }\PYG{o}{\PYGZhy{}}\PYG{n}{target}\PYG{p}{)),}\PYG{+w}{ }\PYG{n}{k}\PYG{p}{));}
+\PYG{+w}{ 	}
+\PYG{+w}{ 	}\PYG{k}{if}\PYG{+w}{ }\PYG{p}{(}\PYG{+w}{ }\PYG{n}{new\PYGZus{}ave}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{n}{target}\PYG{+w}{ }\PYG{o}{\PYGZam{}\PYGZam{}}\PYG{+w}{ }\PYG{n}{edv\PYGZus{}}\PYG{p}{.}\PYG{n}{cur\PYGZus{}max\PYGZus{}p}\PYG{+w}{ }\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{n}{edp\PYGZus{}}\PYG{p}{.}\PYG{n}{bottom}\PYG{p}{)}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{ 		}\PYG{n}{edv\PYGZus{}}\PYG{p}{.}\PYG{n}{cur\PYGZus{}max\PYGZus{}p}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{edv\PYGZus{}}\PYG{p}{.}\PYG{n}{cur\PYGZus{}max\PYGZus{}p}\PYG{+w}{ }\PYG{o}{\PYGZhy{}}\PYG{+w}{ }\PYG{n}{delta1}\PYG{p}{;}
+\PYG{+w}{ 		}\PYG{n}{edv\PYGZus{}}\PYG{p}{.}\PYG{n}{lastset}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{now}\PYG{p}{;}
+\PYG{+w}{ 		}\PYG{k+kt}{double}\PYG{+w}{ }\PYG{n}{maxp}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{edv\PYGZus{}}\PYG{p}{.}\PYG{n}{cur\PYGZus{}max\PYGZus{}p}\PYG{p}{;}
+\PYG{+w}{ 	}\PYG{p}{\PYGZcb{}}\PYG{+w}{ }\PYG{k}{else}\PYG{+w}{ }\PYG{k}{if}\PYG{+w}{ }\PYG{p}{(}\PYG{n}{new\PYGZus{}ave}\PYG{+w}{ }\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{n}{target}\PYG{+w}{ }\PYG{o}{\PYGZam{}\PYGZam{}}\PYG{+w}{ }\PYG{n}{edp\PYGZus{}}\PYG{p}{.}\PYG{n}{top}\PYG{+w}{ }\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{n}{edv\PYGZus{}}\PYG{p}{.}\PYG{n}{cur\PYGZus{}max\PYGZus{}p}\PYG{+w}{ }\PYG{p}{)}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{ 		}\PYG{n}{edv\PYGZus{}}\PYG{p}{.}\PYG{n}{cur\PYGZus{}max\PYGZus{}p}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{edv\PYGZus{}}\PYG{p}{.}\PYG{n}{cur\PYGZus{}max\PYGZus{}p}\PYG{+w}{ }\PYG{o}{+}\PYG{+w}{ }\PYG{n}{delta2}\PYG{p}{;}
+\PYG{+w}{ 		}\PYG{n}{edv\PYGZus{}}\PYG{p}{.}\PYG{n}{lastset}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{now}\PYG{p}{;}
+\PYG{+w}{ 		}\PYG{k+kt}{double}\PYG{+w}{ }\PYG{n}{maxp}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{edv\PYGZus{}}\PYG{p}{.}\PYG{n}{cur\PYGZus{}max\PYGZus{}p}\PYG{p}{;}
+\PYG{+w}{ 	}\PYG{p}{\PYGZcb{}}
+\PYG{p}{\PYGZcb{}}
+
+\PYG{k+kt}{void}\PYG{+w}{ }\PYG{n+nf}{REDQueue::updateMaxP\PYGZus{}fast\PYGZus{}adaptive}\PYG{p}{(}\PYG{k+kt}{double}\PYG{+w}{ }\PYG{n}{new\PYGZus{}ave}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{double}\PYG{+w}{ }\PYG{n}{now}\PYG{p}{)\PYGZob{}}
+\PYG{+w}{	  	}\PYG{k+kt}{double}\PYG{+w}{ }\PYG{n}{part}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{l+m+mf}{0.48}\PYG{o}{*}\PYG{p}{(}\PYG{n}{edp\PYGZus{}}\PYG{p}{.}\PYG{n}{th\PYGZus{}max}\PYG{+w}{ }\PYG{o}{\PYGZhy{}}\PYG{+w}{ }\PYG{n}{edp\PYGZus{}}\PYG{p}{.}\PYG{n}{th\PYGZus{}min}\PYG{p}{);}
+\PYG{+w}{		}\PYG{k}{if}\PYG{+w}{ }\PYG{p}{(}\PYG{+w}{ }\PYG{n}{new\PYGZus{}ave}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{n}{edp\PYGZus{}}\PYG{p}{.}\PYG{n}{th\PYGZus{}min}\PYG{+w}{ }\PYG{o}{+}\PYG{+w}{ }\PYG{n}{part}\PYG{+w}{ }\PYG{o}{\PYGZam{}\PYGZam{}}\PYG{+w}{ }\PYG{n}{edv\PYGZus{}}\PYG{p}{.}\PYG{n}{cur\PYGZus{}max\PYGZus{}p}\PYG{+w}{ }\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{n}{edp\PYGZus{}}\PYG{p}{.}\PYG{n}{bottom}\PYG{p}{)}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{ 		}\PYG{n}{edv\PYGZus{}}\PYG{p}{.}\PYG{n}{cur\PYGZus{}max\PYGZus{}p}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{edv\PYGZus{}}\PYG{p}{.}\PYG{n}{cur\PYGZus{}max\PYGZus{}p}\PYG{+w}{ }\PYG{o}{*}\PYG{+w}{ }\PYG{p}{(}\PYG{l+m+mf}{1.0}\PYG{+w}{ }\PYG{o}{\PYGZhy{}}\PYG{+w}{ }\PYG{p}{(}\PYG{l+m+mf}{0.0385}\PYG{+w}{ }\PYG{o}{*}\PYG{+w}{ }\PYG{p}{((}\PYG{n}{edp\PYGZus{}}\PYG{p}{.}\PYG{n}{th\PYGZus{}min}\PYG{+w}{ }\PYG{o}{+}\PYG{+w}{ }\PYG{n}{part}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{\PYGZhy{}}\PYG{+w}{ }\PYG{n}{new\PYGZus{}ave}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{/}\PYG{+w}{ }\PYG{p}{((}\PYG{n}{edp\PYGZus{}}\PYG{p}{.}\PYG{n}{th\PYGZus{}min}\PYG{+w}{ }\PYG{o}{+}\PYG{+w}{ }\PYG{n}{part}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{\PYGZhy{}}\PYG{+w}{ }\PYG{n}{edp\PYGZus{}}\PYG{p}{.}\PYG{n}{th\PYGZus{}min}\PYG{p}{)));}
+\PYG{+w}{ 		}\PYG{n}{edv\PYGZus{}}\PYG{p}{.}\PYG{n}{lastset}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{now}\PYG{p}{;}
+\PYG{+w}{ 		}\PYG{k+kt}{double}\PYG{+w}{ }\PYG{n}{maxp}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{edv\PYGZus{}}\PYG{p}{.}\PYG{n}{cur\PYGZus{}max\PYGZus{}p}\PYG{p}{;}
+\PYG{+w}{ 	}\PYG{p}{\PYGZcb{}}\PYG{+w}{ }\PYG{k}{else}\PYG{+w}{ }\PYG{k}{if}\PYG{+w}{ }\PYG{p}{(}\PYG{n}{new\PYGZus{}ave}\PYG{+w}{ }\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{n}{edp\PYGZus{}}\PYG{p}{.}\PYG{n}{th\PYGZus{}max}\PYG{+w}{ }\PYG{o}{\PYGZhy{}}\PYG{+w}{ }\PYG{n}{part}\PYG{+w}{ }\PYG{o}{\PYGZam{}\PYGZam{}}\PYG{+w}{ }\PYG{n}{edp\PYGZus{}}\PYG{p}{.}\PYG{n}{top}\PYG{+w}{ }\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{n}{edv\PYGZus{}}\PYG{p}{.}\PYG{n}{cur\PYGZus{}max\PYGZus{}p}\PYG{+w}{ }\PYG{p}{)}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{ 		}\PYG{k+kt}{double}\PYG{+w}{ }\PYG{n}{alpha}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{edp\PYGZus{}}\PYG{p}{.}\PYG{n}{alpha}\PYG{p}{;}
+\PYG{+w}{ 		}\PYG{n}{alpha}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{l+m+mf}{0.0412}\PYG{+w}{ }\PYG{o}{*}\PYG{+w}{ }\PYG{n}{edv\PYGZus{}}\PYG{p}{.}\PYG{n}{cur\PYGZus{}max\PYGZus{}p}\PYG{+w}{ }\PYG{o}{*}\PYG{+w}{ }\PYG{p}{(}\PYG{n}{new\PYGZus{}ave}\PYG{+w}{ }\PYG{o}{\PYGZhy{}}\PYG{+w}{ }\PYG{n}{part}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{/}\PYG{+w}{ }\PYG{n}{part}\PYG{p}{;}
+\PYG{+w}{ 		}\PYG{n}{edv\PYGZus{}}\PYG{p}{.}\PYG{n}{cur\PYGZus{}max\PYGZus{}p}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{edv\PYGZus{}}\PYG{p}{.}\PYG{n}{cur\PYGZus{}max\PYGZus{}p}\PYG{+w}{ }\PYG{o}{+}\PYG{+w}{ }\PYG{n}{alpha}\PYG{p}{;}
+\PYG{+w}{ 		}\PYG{n}{edv\PYGZus{}}\PYG{p}{.}\PYG{n}{lastset}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{now}\PYG{p}{;}
+\PYG{+w}{ 		}\PYG{k+kt}{double}\PYG{+w}{ }\PYG{n}{maxp}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{edv\PYGZus{}}\PYG{p}{.}\PYG{n}{cur\PYGZus{}max\PYGZus{}p}\PYG{p}{;}
+\PYG{+w}{ 	}\PYG{p}{\PYGZcb{}}
+
+
+\PYG{p}{\PYGZcb{}}
+
+\end{Verbatim}

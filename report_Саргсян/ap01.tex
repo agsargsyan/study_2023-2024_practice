@@ -1,49 +1,78 @@
 \chapter*{Приложения}
 \addcontentsline{toc}{chapter}{Приложения}
 
-%\begin{verbatim}
+Ссылка на репозиторий: 
+\url{https://github.com/agsargsyan/study_2022-2023_practice}
+
+\section*{Программа симуляции}
 
 \begin{minted}[linenos,tabsize=2,breaklines]{bash}
 - main.tcl
 ```
 #Создать новый экземпляр объекта Symulator
 set ns [new Simulator]
-#Открыть трейс файл для nam
+
+#Открыть трейс файл для nam, файл слишком большой, так что временно закомментируем
 set nf [open output/out.nam w]
 $ns namtrace-all $nf
-set N 20 # задаём 20 TCP источников и приемников
-source "nodes.tcl" #описание узлов
-source "links.tcl" #описание соединений
-source "queue.tcl" # jxthtlb
-source "connections.tcl" 
-source "timing.tcl" #таймер
-source "nam.tcl" #визуализация
-source "finish.tcl"                                                                                       
+
+#количество источников 
+set N 20
+
+#создание узлов
+source "nodes.tcl"
+
+#очередь		
+source "queue.tcl"
+
+#настройка времени моделирования  		
+source "timing.tcl" 		
+
+#визуализация
+source "nam.tcl"   		
+
+#процедура finish
+source "finish.tcl"                                                                         
+
 #Запуск программы
 $ns run
+
+ 
 ```
 - nodes.tcl
 ```
-set node_(r0) [$ns node]
-set node_(r1) [$ns node]
+set node_(r0) [$ns node]  #первый маршрутизатор
+set node_(r1) [$ns node]  #второй маршрутизатор	
 
 for {set i 0} {$i < $N} {incr i} {
-        set node_(s$i) [$ns node]
-        set node_(s[expr $N + $i]) [$ns node]
-        }
-```
-- links.tcl
-```
+	set node_(s$i) [$ns node] 		#источник
+	set node_(s[expr $N + $i]) [$ns node]	#приемник
+	}
+
+#линки между маршрутизаторами и другими узлами(размер буфера, время, тип очереди)
 for {set i 0} {$i < $N} {incr i} {
-        $ns duplex-link $node_(s$i) $node_(r0) 100Mb 20ms DropTail
-        $ns duplex-link $node_(s[expr $N + $i]) $node_(r1) 100Mb 20ms DropTail
+	$ns duplex-link $node_(s$i) $node_(r0) 100Mb 20ms DropTail
+	$ns duplex-link $node_(s[expr $N + $i]) $node_(r1) 100Mb 20ms DropTail
 }
 
+#линки между маршрутизаторами(размер буфера, время, тип очереди)
 $ns simplex-link $node_(r0) $node_(r1) 20Mb 15ms RED
 $ns simplex-link $node_(r1) $node_(r0) 15Mb 20ms DropTail
+
+# Агенты и приложения:
+for {set t 0} {$t < $N} {incr t} {
+	$ns color $t green
+	set tcp($t) [$ns create-connection TCP/Reno $node_(s$t) TCPSink $node_(s[expr $N + $t]) $t]
+	$tcp($t) set window_ 32
+	$tcp($t) set maxcwnd_ 32
+	set ftp($t) [$tcp($t) attach-source FTP]
+}
+
 ```
+
 - nam.tcl
 ```
+#визуализация цветов, формы, располажения узлов в nam
 $node_(r0) color "red"
 $node_(r1) color "red"
 $node_(r0) label "RED"
@@ -56,24 +85,31 @@ $ns simplex-link-op $node_(r0) $node_(r1) queuePos 0
 $ns simplex-link-op $node_(r1) $node_(r0) queuePos 0
 
 for {set m 0} {$m < $N} {incr m} {
-        $ns duplex-link-op $node_(s$m) $node_(r0) orient right
-        $ns duplex-link-op $node_(s[expr $N + $m]) $node_(r1) orient left 
-}
-for {set i 0} {$i < $N} {incr i} {
-        $node_(s$i) color "blue"
-        $node_(s$i) label "ftp"
-}
-```
-- connections.tcl
-```
-for {set t 0} {$t < $N} {incr t} {
-        $ns color $t green
-        set tcp($t) [$ns create-connection TCP/Reno $node_(s$t) TCPSink $node_(s[expr $N + $t]) $t]
-        $tcp($t) set window_ 32
-        $tcp($t) set maxcwnd_ 32
-        set ftp($t) [$tcp($t) attach-source FTP]
+	$ns duplex-link-op $node_(s$m) $node_(r0) orient right
+	$ns duplex-link-op $node_(s[expr $N + $m]) $node_(r1) orient left 
 }
 
+for {set i 0} {$i < $N} {incr i} {
+	$node_(s$i) color "blue"
+	$node_(s$i) label "ftp"
+
+}
+```
+
+- queue.tcl
+```
+#Лимит очереди
+$ns queue-limit $node_(r0) $node_(r1) 300
+$ns queue-limit $node_(r1) $node_(r0) 300
+
+
+# Мониторинг размера окна TCP
+set windowVsTime [open output/WvsT w]
+set qmon [$ns monitor-queue $node_(r0) $node_(r1) [open output/qm.out w]]
+[$ns link $node_(r0) $node_(r1)] queue-sample-timeout
+
+
+# Формирование файла с данными о размере окна TCP
 proc plotWindow {tcpSource file} {
    global ns
    set time 0.01
@@ -82,40 +118,53 @@ proc plotWindow {tcpSource file} {
    puts $file "$now $cwnd"
    $ns at [expr $now+$time] "plotWindow $tcpSource $file"
 }
-```
-- queue.tcl
-```
-$ns queue-limit $node_(r0) $node_(r1) 300
-$ns queue-limit $node_(r1) $node_(r0) 300
 
-set windowVsTime [open output/WvsT w]
-set qmon [$ns monitor-queue $node_(r0) $node_(r1) [open output/qm.out w]]
-[$ns link $node_(r0) $node_(r1)] queue-sample-timeout
-
+# Мониторинг очереди:
 set redq [[$ns link $node_(r0) $node_(r1)] queue]
-$redq set thresh_ 75 #q_min
-$redq set maxthresh_ 150  #q_max
-$redq set q_weight_ 0.002 # q_weight
-$redq set linterm_ 10 # 1/p_max
-$redq set gentle_ false  # 
+$redq set thresh_ 75
+$redq set maxthresh_ 150
+$redq set q_weight_ 0.002
+$redq set linterm_ 10
 $redq set drop-tail_ true
-$redq set queue-in-bytes false #очередь в паетах
-$redq set mean_pktsize_ 500
+
+$redq set queue-in-bytes false
 set tchan_ [open output/all.q w]
 $redq trace curq_
 $redq trace ave_
 $redq attach $tchan_
+
+#Для реализации разных модификаций RED,
+$redq set gentle_ false 
+
+#$redq set nonlinear_ 1
+#$redq set hyperbola_ 1 
+#$redq set quadratic_linear_ 1
+#$redq set three_sections_ 1
+#$redq set exponential_ 1
+#$redq set smart_ 1
+#$redq set double_slope_ 1
+
+# Группа адаптивных алгоритмов
+#$redq set adaptive_ 1
+#$redq set feng_adaptive_ 1
+#$redq set refined_adaptive_ 1
+#$redq set fast_adaptive_ 1
+#$redq set powared_ 1
+
 ```
+
 - timing.tcl
 ```
+#Задаем время симуляции
 for {set r 0} {$r < $N} {incr r} {
-        $ns at 0.0 "$ftp($r) start"
+        $ns at 0.0 "$ftp($r) start" 
         $ns at 1.0 "plotWindow $tcp($r) $windowVsTime"
         $ns at 24.0 "$ftp($r) stop"
 }
 
 $ns at 25.0 "finish"
 ```
+
 - finish.tcl
 ```
 #Finish procedure
@@ -158,46 +207,248 @@ proc finish {} {
    exec xgraph -bb -tk -x time -y queue output/temp.queue &
    exit 0
 }
-```
-- out.gp
-```
-#!/usr/bin/gnuplot -persist
-
-#вывод графиков
-set terminal postscript eps
-set output "images/queues.eps"
-set xlabel "Time, s"
-set ylabel "Queue Length [pkt]"
-set title "RED Queue"
-plot "output/temp.q" with lines linestyle 1 lt 1 lw 2 title "Queue length", "output/temp.a" with lines linestyle 2 lt 3 lw 2 title "Average queue length"
-
-set terminal postscript eps
-set output "images/TCP.eps"
-set xlabel "Time (s)"
-set ylabel "Window size [pkt]"
-set title "TCPVsWindow"
-plot "output/WvsT" with lines linestyle 1 lt 1 lw 2 title "WvsT"
-```
 \end{minted}
 % \end{verbatim}
 
-%\begin{verbatim}
+
+\section*{red.cc adaptive REDs}
+
 \begin{minted}[linenos,tabsize=2,breaklines]{C++}
-double REDQueue::calculate_p_new(double v_ave, double th_max, int gentle, double v_a, double v_b, double v_c, double v_d, double max_p)
+
+void REDQueue::updateMaxP(double new_ave, double now)
 {
-        double p;
-        if (gentle && v_ave >= th_max) { //для модификации GRED
-                p = v_c * v_ave + v_d;
-        } else if (!gentle && v_ave >= th_max) { // Превысили пороговое значение в классическом RED
-                p = 2.0;
-        } else { // p в промежутке от 0 до max_p, тогда средний размер очереди в промежутке th_min до th_max
+	double part = 0.4*(edp_.th_max - edp_.th_min);
+	// AIMD rule to keep target Q~1/2(th_min+th_max)
+	if ( new_ave < edp_.th_min + part && edv_.cur_max_p > edp_.bottom) {
+		// we increase the average queue size, so decrease max_p
+		edv_.cur_max_p = edv_.cur_max_p * edp_.beta;
+		edv_.lastset = now;
+	} else if (new_ave > edp_.th_max - part && edp_.top > edv_.cur_max_p ) {
+		// we decrease the average queue size, so increase max_p
+		double alpha = edp_.alpha;
+                        if ( alpha > 0.25*edv_.cur_max_p )
+			alpha = 0.25*edv_.cur_max_p;
+		edv_.cur_max_p = edv_.cur_max_p + alpha;
+		edv_.lastset = now;
+	} 
+}
+
+void REDQueue::updateMaxP_refined_adaptive(double new_ave, double now)
+{
+  	double part = 0.48*(edp_.th_max - edp_.th_min);
+ 	if ( new_ave < edp_.th_min + part && edv_.cur_max_p > edp_.bottom) {
+ 		edv_.cur_max_p = edv_.cur_max_p * (1.0 - (0.17 * ((edp_.th_min + part) - new_ave) / ((edp_.th_min + part) - edp_.th_min))); 
+ 		edv_.lastset = now;
+ 		double maxp = edv_.cur_max_p;
+ 	} else if (new_ave > edp_.th_max - part && edp_.top > edv_.cur_max_p ) {
+ 		double alpha = edp_.alpha;
+ 		alpha = 0.25 * edv_.cur_max_p * ((new_ave - (edp_.th_max - part)) / (edp_.th_max - part));
+ 		edv_.cur_max_p = edv_.cur_max_p + alpha;
+ 		edv_.lastset = now;
+ 		double maxp = edv_.cur_max_p;
+ 	}
+}
+
+
+void REDQueue::updateMaxP_powared(double new_ave, double now)
+{
+  	double target = 0.5*(edp_.th_max + edp_.th_min);
+  	int k = edp_.pwk;
+  	int b = edp_.pwb;
+  	int r = edp_.bf_size;
+  	double v_ave = edv_.v_ave;
+  	
+  	
+  	
+  	double delta1 = abs(pow((v_ave - target)/(b * target), k));
+  	double delta2 = abs(pow((target - v_ave)/(b * (r -target)), k));
+ 	
+ 	if ( new_ave < target && edv_.cur_max_p > edp_.bottom) {
+ 		edv_.cur_max_p = edv_.cur_max_p - delta1; 
+ 		edv_.lastset = now;
+ 		double maxp = edv_.cur_max_p; 
+ 	} else if (new_ave > target && edp_.top > edv_.cur_max_p ) {
+ 		edv_.cur_max_p = edv_.cur_max_p + delta2;
+ 		edv_.lastset = now;
+ 		double maxp = edv_.cur_max_p;
+ 	}
+}
+
+void REDQueue::updateMaxP_fast_adaptive(double new_ave, double now){
+	  	double part = 0.48*(edp_.th_max - edp_.th_min);
+		if ( new_ave < edp_.th_min + part && edv_.cur_max_p > edp_.bottom) {
+ 		edv_.cur_max_p = edv_.cur_max_p * (1.0 - (0.0385 * ((edp_.th_min + part) - new_ave) / ((edp_.th_min + part) - edp_.th_min))); 
+ 		edv_.lastset = now;
+ 		double maxp = edv_.cur_max_p;
+ 	} else if (new_ave > edp_.th_max - part && edp_.top > edv_.cur_max_p ) {
+ 		double alpha = edp_.alpha;
+ 		alpha = 0.0412 * edv_.cur_max_p * (new_ave - part) / part;
+ 		edv_.cur_max_p = edv_.cur_max_p + alpha;
+ 		edv_.lastset = now;
+ 		double maxp = edv_.cur_max_p;
+ 	}
+
+
+}
+
+\end{minted}
+
+\section*{red.cc calculate drop probability}
+
+\begin{minted}[linenos,tabsize=2,breaklines]{C++}
+/*
+ * Calculate the drop probability.
+ */
+double
+REDQueue::calculate_p_new(double v_ave, double th_max, int gentle, double v_a, 
+	double v_b, double v_c, double v_d, double max_p)
+{	
+	double target;
+	double exponenta = 2.7182818285;
+	double th_min = edp_.th_min;
+	double p;
+	if (gentle && v_ave >= th_max) {
+		// p ranges from max_p to 1 as the average queue
+		// size ranges from th_max to twice th_max 
+		p = v_c * v_ave + v_d;
+        } else if (!gentle && v_ave >= th_max) { 
+                // OLD: p continues to range linearly above max_p as
+                // the average queue size ranges above th_max.
+                // NEW: p is set to 1.0 
+                p = 1.0;
+        } else if (edp_.quadratic_linear == 1) {
+        	target = 2 * ((th_min + th_max)/3) - th_min;
+        	if(v_ave < target){
+        		p = 9 * max_p * ((v_ave-th_min)/(2*(th_max-2*th_min))) * ((v_ave-th_min)/(2*(th_max-2*th_min)));
+        	} else if (v_ave >= target) {
+        		p = max_p + 3*(1-max_p)*((v_ave-target)/(th_max+th_min));
+        	}
+        } else if (edp_.improved == 1) {
+        	target = ((th_min + th_max)/3) + th_min;
+        	if(v_ave < target){
+        		p = 9 * max_p * ((v_ave-th_min)/(th_max + th_min)) * ((v_ave-th_min)/(th_max + th_min));
+        	} else if (v_ave >= target) {
+        		p = max_p + 3*(1-max_p)*(v_ave-target)/(2*(th_max - 2 * th_min));
+        	}
+        } else if (edp_.smart == 1) {
+        	target = ((th_max - th_min)/2) + th_min;
+        	if(v_ave < target){
+        		p = max_p * pow(((v_ave-th_min)/(th_max - th_min)), 2);
+        	} else if (v_ave >= target) {
+        		p = max_p * pow(((v_ave-th_min)/(th_max - th_min)), 0.5);
+        	}
+        } else if (edp_.three_sections == 1){
+        	double delta = (th_min+th_max/3);
+        	if (v_ave < (th_min + delta)){
+        		p = 9 * max_p * pow((v_ave-th_min)/(th_max-th_min), 3) ;
+        		}
+        	else if ((v_ave >= th_min + delta) && (v_ave < th_min + 2 * delta)){
+        		p = max_p * (v_ave-th_min)/(th_max-th_min);
+        		}
+        	else if (v_ave >= th_min + 2* delta){
+        		p =  9 * max_p * pow((v_ave-th_min)/(th_max-th_min), 3) + max_p;
+        	} 
+        }
+        else if (edp_.double_slope == 1) {
+        	double a = (2-2* edp_.omega)/(th_max - th_min);
+        	double b = (2 * edp_.omega)/(th_max - th_min);
+        	target = ((th_max + th_min)/2);
+        	if(v_ave < target){
+        		p = a * (v_ave-th_min);
+        	} else if (v_ave >= target) {
+        		p = 1 - edp_.omega + b * (v_ave - target);
+        	}
+        }
+        else {
+                // p ranges from 0 to max_p as the average queue
+                // size ranges from th_min to th_max 
                 p = v_a * v_ave + v_b;
                 // p = (v_ave - th_min) / (th_max - th_min)
+                
+                /* Added by Mohit P. Tahiliani for Nonlinear RED (NLRED) - Start */
+				if(edp_.nonlinear == 1){
+					p *= p;		// This ensures probability is a quadratic function of "average queue size" as specified in NLRED Paper
+				}
+				else if (edp_.hyperbola == 1){
+					p *= 1/p;	// This ensures probability is a hyperbola function of "average queue size" as specified in HRED Paper
+				}
+				else if (edp_.exponential == 1){ // Used for RED_e
+					p = (pow(exponenta, v_ave)-pow(exponenta, th_min))/(pow(exponenta, th_max)-pow(exponenta, th_min));
+				}
                 p *= max_p; 
         }
-        if (p > 2.0) и // пакеты отбрасываюся
-                p = 2.0;
-        return p;
+	if (p > 1.0)
+		p = 1.0;
+	return p;
 }
 \end{minted}
-% \end{verbatim}
+
+\section*{red.h}
+
+\begin{minted}[linenos,tabsize=2,breaklines]{C++}
+
+	int feng_adaptive;	/* adaptive RED: Use the Feng et al. version */
+	int refined_adaptive;	/* Added by Mohit P. Tahiliani for Refined Adaptive RED (Re-ARED) */
+	int stabilized_adaptive;/* Added Stabillized Adaptive RED (SARED) */
+	int nonlinear;		/* Added for Nonlinear RED (NLRED) */
+	int hyperbola;		/* Added for Hyperbola RED (HRED)*/
+	int quadratic_linear;   /* Added for Quadratic linear RED*/
+	int three_sections;	/* Added for 3sections RED*/
+	int exponential;	/* Added for exponential RED*/
+	int improved;		/* Added for improved RED*/
+	int smart;		/* Added for smart RED*/
+	int modified;		/* Added for modified RED*/	 
+\end{minted}
+
+\section*{ns-default.tcl}
+
+\begin{minted}[linenos,tabsize=2,breaklines]{C++}
+
+/*Added for new RED alghorithms*/
+
+Queue/RED set nonlinear_ 0
+Queue/RED set hyperbola_ 0
+Queue/RED set quadratic_linear_ 0
+Queue/RED set three_sections_ 0
+Queue/RED set exponential_ 0
+Queue/RED set improved_ 0
+Queue/RED set smart_ 0
+Queue/RED set modified_ 0
+\end{minted}
+
+
+\section*{out.gp}
+
+\begin{minted}[linenos,tabsize=2,breaklines]{C++}
+#! /usr/bin/gnuplot -persist
+set terminal postscript eps enhanced adobeglyphnames
+set output "test.ps"
+set encoding utf8
+
+set xrange [0:26]
+
+set terminal postscript eps
+set output "av_queues_1GNl.eps"
+set xlabel "Время [c]"
+set ylabel "Длина очереди [пакеты]"
+set title "Средневзвешенная очередь на линке при разных алгоритмах"
+plot "classic.a" with lines linestyle 1 lt 1 lw 2 title "RED", "gentle.a" with lines linestyle 1 lt 2 lw 2 title "GRED", "nonlinear.a" with lines linestyle 1 lt 3 lw 2 title "NLRED" 
+
+set terminal postscript eps
+set output "av_queues_HTNl.eps"
+set xlabel "Время [c]"
+set ylabel "Длина очереди [пакеты]"
+set title "Средневзвешенная очередь на линке при разных алгоритмах"
+plot "hyperbola.a" with lines linestyle 1 lt 1 lw 2 title "HRED", "3.a" with lines linestyle 1 lt 2 lw 2 title "TRED", "nonlinear.a" with lines linestyle 1 lt 3 lw 2 title "NLRED" 
+\end{minted}
+
+
+
+
+
+
+
+
+
+
+

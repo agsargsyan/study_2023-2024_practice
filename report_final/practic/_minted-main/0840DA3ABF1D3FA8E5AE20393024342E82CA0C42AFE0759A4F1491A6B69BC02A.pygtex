@@ -1,4 +1,0 @@
-\begin{Verbatim}[commandchars=\\\{\}]
-    polyconvert \PYGZhy{}\PYGZhy{}osm\PYGZhy{}files filename.osm \PYGZhy{}\PYGZhy{}net\PYGZhy{}file filename.net.xml, \PYGZhy{}\PYGZhy{}type\PYGZhy{}file osmPolyconvert.typ.xml \PYGZhy{}o filename.poly.xml
-    python /home/directory/sumo\PYGZhy{}x.x/tools/randomtrips.py \PYGZhy{}n fileName.net.xml \PYGZhy{}r, fileName.rou.xml \PYGZhy{}e \PYG{l+m}{50} \PYGZhy{}l
-\end{Verbatim}

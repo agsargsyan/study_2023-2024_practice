@@ -1,4 +1,4 @@
-{\begin{thebibliography}{1}
+\begin{thebibliography}{10}
 \def\selectlanguageifdefined#1{
 \expandafter\ifx\csname date#1\endcsname\relax
 \else\selectlanguage{#1}\fi}
@@ -14,87 +14,149 @@
 \cyrdash\hskip.2em plus 0.1em\ignorespaces}
 \renewcommand{\newblock}{\ignorespaces}
 
-\bibitem{NS1}
-\selectlanguageifdefined{english}
-loyd, Sally and Fall, Kevin Ns Simulator Tests for Random Early Detection (RED) Queue Management \BibDash 
-\newblock 1997. \BibDash  
-\newblock April. 
-
-\bibitem{NS2}
-\selectlanguageifdefined{english}
-The VINT and Project The ns Manual (formerly ns Notes and Documentation) \BibDash
-\newblock 2011. \BibDash
-\newblock November.
-
 \bibitem{RED1}
 \selectlanguageifdefined{english}
-Floyd S., Jacobson V. Random Early Detection Gateways for Congestion // IEEE/ACM Transactions on Networking. \BibDash
-\newblock IEEE. \BibDash
+Floyd~S. and Jacobson~V. Random early detection gateways for congestion
+  avoidance~// \href{https://doi.org/10.1109/90.251892}{\BibEmph{{IEEE}/{ACM}
+  Transactions on Networking}}. \BibDash
 \newblock 1993. \BibDash
-\newblock November. \BibDash 
-\newblock Т. 1, № 4. \BibDash
-\newblock С. 397–413. \BibDash
-\newblock doi:10.1109/90.251892. 
+\newblock Vol.~1, no.~4. \BibDash
+\newblock P.~397--413.
 
 \bibitem{RED2}
 \selectlanguageifdefined{english}
-Abouzeid A., Roy S. Modeling random early detection in a differentiated services
-network q // Computer Networks ed. by Roberts J. \BibDash
-\newblock IEEE. \BibDash
-\newblock 2002. \BibDash
-\newblock November \BibDash
-\newblock Т. 40, № 4. \BibDash
-\newblock С. 537–556. \BibDash
-\newblock doi:10.1016/S1389-1286(02)00295-5. 
- 
+Abouzeid~Alhussein~A. and Roy~Sumit. Modeling random early detection in a
+  differentiated services network~//
+  \href{https://doi.org/10.1016/s1389-1286(02)00295-5}{\BibEmph{Computer
+  Networks}}. \BibDash
+\newblock 2002. \BibDash nov. \BibDash
+\newblock Vol.~40, no.~4. \BibDash
+\newblock P.~537--556.
+
 \bibitem{GRED}
 \selectlanguageifdefined{english}
-Hamadneh N. и др. Revisiting the Gentle Parameter of the Random Early
-Detection (RED) for TCP Congestion Control // Journal of Communications.
-Engineering \BibDash
-\newblock Engineering and Technology Publishing. \BibDash
+Hamadneh~Nabhan, Al-Kasassbeh~Mouhammd, Obiedat~Ibrahim, and
+  BaniKhalaf~Mustafa. Revisiting the Gentle Parameter of the Random Early
+  Detection ({RED}) for {TCP} Congestion Control~//
+  \href{https://doi.org/10.12720/jcm.14.3.229-235}{\BibEmph{Journal of
+  Communications}}. \BibDash
 \newblock 2019. \BibDash
-\newblock Т. 40, № 4. \BibDash
-\newblock С. 229–235 \BibDash
-\newblock doi:10.12720/jcm.14.3.
+\newblock P.~229--235.
 
 \bibitem{WRED}
 \selectlanguageifdefined{english}
-Hamadneh, Nabhan and Murray, David and Dixon, Michael and Cole, Peter 
-Weighted RED (WTRED) Strategy for TCP Congestion Control // ICIEIS 2011 \BibDash
+Hamadneh~Nabhan, Murray~David, Dixon~Michael, and Cole~Peter.
+  \href{https://doi.org/10.1007/978-3-642-25453-6_37}{Weighted RED (WTRED)
+  Strategy for TCP Congestion Control}~// ICIEIS 2011~/ ed.\ by\ Abd~A. and
+  et~al.~Manaf. \BibDash
 \newblock Springer. \BibDash
 \newblock 2011. \BibDash
-\newblock Т. 2. \BibDash
-\newblock С. 421–434 \BibDash
-\newblock doi:110.1007/978-3-642-25453-6-37.
+\newblock Vol.~II of \BibEmph{Part}. \BibDash
+\newblock P.~421--434.
 
 \bibitem{NLRED1}
 \selectlanguageifdefined{english}
-Lingyun Lu and Yang Xiao and Seok Woo and Kiseon Kim Nonlinear AQM for Multiple RED Routers // 2008 Third International
-Conference on Convergence and Hybrid Information Technology. \BibDash
-\newblock IEEE. \BibDash
-\newblock 2008. \BibDash
-\newblock November \BibDash
-\newblock doi:10.1109/iccit.2008.68. 
+Zhou~Kaiyu, Yeung~Kwan~L., and Li~Victor~O.K. Nonlinear {RED}: A simple yet
+  efficient active queue management scheme~//
+  \href{https://doi.org/10.1016/j.comnet.2006.04.007}{\BibEmph{Computer
+  Networks}}. \BibDash
+\newblock 2006. \BibDash 12. \BibDash
+\newblock Vol.~50, no.~18. \BibDash
+\newblock P.~3784--3794.
 
 \bibitem{NLRED2}
 \selectlanguageifdefined{english}
-Kaiyu Zhou and Kwan L. Yeung and Victor O.K. Li Nonlinear RED: A simple yet efficient active queue management scheme // Computer Networks ed. by Roberts J. \BibDash
-\newblock Elsevier {BV}. \BibDash
-\newblock 2006. \BibDash
-\newblock December. \BibDash
-\newblock Т. 50, № 18. \BibDash
-\newblock С. 3784-3794. \BibDash
-\newblock doi:10.1016/j.comnet.2006.04.007. 
+Lu~Lingyun, Xiao~Yang, Woo~Seok, and Kim~Kiseon.
+  \href{https://doi.org/10.1109/iccit.2008.68}{Nonlinear {AQM} for Multiple
+  {RED} Routers}~// 2008 Third International Conference on Convergence and
+  Hybrid Information Technology. \BibDash
+\newblock {IEEE}. \BibDash
+\newblock 2008. \BibDash 11.
+
+\bibitem{HRED}
+\selectlanguageifdefined{english}
+Hu~Liujia and Kshemkalyani~A.D.
+  \href{https://doi.org/10.1109/icccn.2004.1401681}{{HRED}: a simple and
+  efficient active queue management algorithm}~// Proceedings. 13th
+  International Conference on Computer Communications and Networks ({IEEE} Cat.
+  No.04EX969). \BibDash
+\newblock {IEEE}. \BibDash
+\newblock 2004.
+
+\bibitem{TRED}
+\selectlanguageifdefined{english}
+Feng~Chen-Wei, Huang~Lian-Fen, Xu~Cheng, and Chang~Yao-Chung. Congestion
+  Control Scheme Performance Analysis Based on Nonlinear {RED}~//
+  \href{https://doi.org/10.1109/jsyst.2014.2375314}{\BibEmph{{IEEE} Systems
+  Journal}}. \BibDash
+\newblock 2017. \BibDash dec. \BibDash
+\newblock Vol.~11, no.~4. \BibDash
+\newblock P.~2247--2254.
+
+\bibitem{REDQL}
+\selectlanguageifdefined{english}
+Kumhar~Dharamdas, kumar~Avanish, and Kewat~Anil. {QRED}: an enhancement
+  approach for congestion control in network communications~//
+  \href{https://doi.org/10.1007/s41870-020-00538-1}{\BibEmph{International
+  Journal of Information Technology}}. \BibDash
+\newblock 2020. \BibDash oct. \BibDash
+\newblock Vol.~13, no.~1. \BibDash
+\newblock P.~221--227.
+
+\bibitem{SmRED}
+\selectlanguageifdefined{english}
+Paul~Anup~Kumar, Kawakami~Hidehiko, Tachibana~Atsuo, and Hasegawa~Teruyuki.
+  \href{https://doi.org/10.1109/ccece.2016.7726792}{An {AQM} based congestion
+  control for {eNB} {RLC} in 4G/{LTE} network}~// 2016 {IEEE} Canadian
+  Conference on Electrical and Computer Engineering ({CCECE}). \BibDash
+\newblock {IEEE}. \BibDash
+\newblock 2016. \BibDash may.
+
+\bibitem{DSRED}
+\selectlanguageifdefined{english}
+ZHENG~B. DSRED: A New Queue Management Scheme for the Next Generation
+  Internet~// \href{https://doi.org/10.1093/ietcom/e89-b.3.764}{\BibEmph{IEICE
+  Transactions on Communications}}. \BibDash
+\newblock 2006. \BibDash 3. \BibDash
+\newblock Vol. E89-B, no.~3. \BibDash
+\newblock P.~764--774.
+
+\bibitem{ARED}
+\selectlanguageifdefined{english}
+Feng~W.-C., Kandlur~D.D., Saha~D., and Shin~K.G.
+  \href{https://doi.org/10.1109/infcom.1999.752150}{A self-configuring {RED}
+  gateway}~// {IEEE} {INFOCOM} {\textquotesingle}99. Conference on Computer
+  Communications. Proceedings. Eighteenth Annual Joint Conference of the {IEEE}
+  Computer and Communications Societies. The Future is Now (Cat. No.99CH36320).
+  \BibDash
+\newblock {IEEE}. \BibDash
+\newblock 1999.
 
 \bibitem{RARED}
 \selectlanguageifdefined{english}
-Kim', Tae-Hoon and Lee', Kee-Hyun Refined Adaptive RED in TCP/IP Networks // SICE-ICASE International Joint Conference 2006 Oct. 18-2 1, 2006 in Bexco, Busan, Koreas\BibDash
-\newblock IEEE. \BibDash
-\newblock 2006. \BibDash
-\newblock October. \BibDash
-\newblock doi:10.1109/SICE.2006.314633. 
+Kim~Tae-Hoon and Lee~Kee-Hyun.
+  \href{https://doi.org/10.1109/SICE.2006.314633}{{Refined Adaptive RED in
+  TCP/IP Networks}}~// SICE-ICASE International Joint Conference 2006 Oct. 18-2
+  1, 2006 in Bexco, Busan, Korea. \BibDash
+\newblock {IEEE}. \BibDash
+\newblock 2006.
+
+\bibitem{Powared}
+\selectlanguageifdefined{english}
+Ng~B.K., Uddin~Md.~Safi, Abusin~A.A.Y.~Malik, and Chieng~D.
+  \href{https://doi.org/10.1109/apcc.2005.1554179}{{POWARED} for Non-Linear
+  Adaptive {RED}}~// 2005 Asia-Pacific Conference on Communications. \BibDash
+\newblock {IEEE}. \BibDash
+\newblock 2005.
+
+\bibitem{Tahiliani_2012}
+\selectlanguageifdefined{english}
+Tahiliani~Mohit~P., Shet~K.~C., and Basavaraju~T.~G. {FARED}: Fast Adapting
+  {RED} Gateways for {TCP}/{IP} Networks~//
+  \href{https://doi.org/10.1109/90.251892}{\BibEmph{{IEEE}/{ACM} Transactions
+  on Networking}}. \BibDash
+\newblock 2012. \BibDash
+\newblock Vol.~1, no.~4. \BibDash
+\newblock P.~435--443.
 
 \end{thebibliography}
-
-

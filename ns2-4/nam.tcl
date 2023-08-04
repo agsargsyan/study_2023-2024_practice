@@ -1,3 +1,4 @@
+#визуализация цветов, формы, располажения узлов в nam
 $node_(r0) color "red"
 $node_(r1) color "red"
 $node_(r0) label "RED"

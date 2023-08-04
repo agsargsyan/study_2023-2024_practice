@@ -158,14 +158,21 @@ Queue/RED set cur_max_p_ 0
 Queue/RED set summarystats_ false
 ### Adaptive RED.
 Queue/RED set alpha_ 0.01
-Queue/RED set beta_ 0.9 
+Queue/RED set beta_ 0.9
+Queue/RED set omega_ 0.5 
 Queue/RED set adaptive_ 0
 Queue/RED set interval_ 0.5
 Queue/RED set targetdelay_ 0.005
 Queue/RED set top_ 0.5
 Queue/RED set bottom_ 0
 Queue/RED set refined_adaptive_ 0
+Queue/RED set fast_adaptive_ 0
 Queue/RED set stabilized_adaptive_ 0
+Queue/RED set powared_ 0
+Queue/RED set pwk_ 2
+Queue/RED set pwb_ 2
+Queue/RED set bf_size_ 200
+ 
 
 ### Queue/RED/bottom_ was changed from 0.01 to 0 on June 23, 2004,
 ###   for automatic configuration.
@@ -180,6 +187,9 @@ Queue/RED set three_sections_ 0
 Queue/RED set exponential_ 0
 Queue/RED set improved_ 0
 Queue/RED set smart_ 0
+Queue/RED set modified_ 0
+Queue/RED set server_fairness_ 0
+Queue/RED set double_slope_ 0
 
 
 Queue/RED/RIO set bytes_ false

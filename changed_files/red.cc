@@ -123,15 +123,23 @@ REDQueue::REDQueue(const char * trace) : link_(NULL), de_drop_(NULL), EDTrace(NU
 	bind("beta_", &edp_.beta);                  // adaptive red param
 	bind("interval_", &edp_.interval);	    // adaptive red param
 	bind("feng_adaptive_",&edp_.feng_adaptive); // adaptive red variant
- 	bind("refined_adaptive_",&edp_.refined_adaptive); // Used for Refined Adaptive RED (Re-ARED)
- 	bind("stabilized_adaptive_",&edp_.stabilized_adaptive); // Used for Refined Adaptive RED (S-ARED)
-	bind("nonlinear_",&edp_.nonlinear); // Used for Nonlinear RED (NLRED)
-	bind("hyperbola_",&edp_.hyperbola); // Used for Hyperbola RED (HRED)
-	bind("quadratic_linear_",&edp_.quadratic_linear); //Used for Quadratic_linear(Red-QL)
-	bind("three_sections_",&edp_.three_sections); //Used for Three sections RED
-	bind("exponential_",&edp_.exponential);	    // Used for exponential RED
-	bind("improved_",&edp_.improved);	    // Used for improved RED
-	bind("smart_",&edp_.smart);		    // Used for smart RED
+	bind("omega_",&edp_.omega);		    // DS-RED mod
+ 	bind("refined_adaptive_",&edp_.refined_adaptive); 	// Used for Refined Adaptive RED (Re-ARED)
+ 	bind("fast_adaptive_",&edp_.fast_adaptive); 		// Used for Fast Adaptive RED (Re-ARED)
+ 	bind("powared_",&edp_.powared); 			// Used for Powared
+ 	bind("pwk_",&edp_.pwk);					// Powared param
+ 	bind("pwb_",&edp_.pwb);					// Powared param
+ 	bind("bf_size_",&edp_.bf_size);				// buffer size
+	bind("nonlinear_",&edp_.nonlinear); 			// Used for Nonlinear RED (NLRED)
+	bind("hyperbola_",&edp_.hyperbola); 			// Used for Hyperbola RED (HRED)
+	bind("quadratic_linear_",&edp_.quadratic_linear); 	// Used for Quadratic_linear(Red-QL)
+	bind("three_sections_",&edp_.three_sections); 		// Used for Three sections RED
+	bind("exponential_",&edp_.exponential);	    		// Used for exponential RED
+	bind("improved_",&edp_.improved);	    		// Used for improved RED
+	bind("smart_",&edp_.smart);		    		// Used for smart RED
+	bind("modified_",&edp_.modified);			// Used for MD-RED
+	bind("server_fairness_",&edp_.server_fairness);		// Used for SF-RED
+	bind("double_slope_",&edp_.double_slope);		// Used for DS-RED
 	bind("targetdelay_", &edp_.targetdelay);    // target delay
 	bind("top_", &edp_.top);		    // maximum for max_p	
 	bind("bottom_", &edp_.bottom);		    // minimum for max_p	
@@ -158,7 +166,7 @@ REDQueue::REDQueue(const char * trace) : link_(NULL), de_drop_(NULL), EDTrace(NU
 	bind_bool("ns1_compat_", &ns1_compat_);	    // ns-1 compatibility
 	//	_RENAMED("ns1-compat_", "ns1_compat_");
 
-	bind("ave_", &edv_.v_ave);		    // average queue sie
+	bind("ave_", &edv_.v_ave);		    // average queue size
 	bind("prob1_", &edv_.v_prob1);		    // dropping probability
 	bind("curq_", &curq_);			    // current queue size
 	bind("cur_max_p_", &edv_.cur_max_p);        // current max_p
@@ -182,20 +190,6 @@ REDQueue::REDQueue(const char * trace) : link_(NULL), de_drop_(NULL), EDTrace(NU
  * and didn't seem worth the trouble...
  */
  
-/* double max(double a, double b){
- 	if (a>b){
- 		return a;
- 	}
- 	else return b;
- }
- 
- double min(double a, double b){
- 	if (a<b){
- 		return a;
- 	}
- 	else return b;
- }
- */
 void REDQueue::initialize_params()
 {
 /*
@@ -268,6 +262,10 @@ void REDQueue::initParams()
 	edp_.cautious = 0;
 	edp_.alpha = 0.0;
 	edp_.beta = 0.0;
+	edp_.omega = 0.5;
+	edp_.pwk = 2;
+	edp_.pwb = 2;
+	edp_.bf_size = 100;
 	edp_.interval = 0.0;
 	edp_.targetdelay = 0.0;
 	edp_.top = 0.0;
@@ -275,13 +273,19 @@ void REDQueue::initParams()
 	edp_.feng_adaptive = 0;
 	edp_.nonlinear = 0; 		// Added for Nonlinear RED (NLRED)
 	edp_.refined_adaptive = 0; 	// Added for Refined Adaptive RED (Re-ARED)
-	edp_.stabilized_adaptive = 0; 	// Added for stabilized_ Adaptive RED (S-ARED)
+	edp_.fast_adaptive = 0;		// Added for Fast Adaptive RED (FARED)
+	edp_.powared = 0;		// Added for Powared
 	edp_.hyperbola = 0; 		// Added for Hyperbola RED(HRED)
 	edp_.quadratic_linear = 0;	// Added for RED qyadratic linear (RED-QL)
-	edp_.three_sections = 0;
+	edp_.three_sections = 0;	// Added for TRED
+	edp_.exponential = 0;		// Added for RED-e
+	edp_.improved = 0;		// Added for IRED
+	edp_.smart = 0;			// Added for Smart RED
+	edp_.modified = 0;		// Added for Modified RED
+	edp_.server_fairness = 0;	// Added for Server based RED (SF-RED)
+	edp_.double_slope = 0;		// Added for Double slope RED (DS-RED)
 	edp_.ptc = 0.0;
 	edp_.delay = 0.0;
-	
 	edv_.v_ave = 0.0;
 	edv_.v_prob1 = 0.0;
 	edv_.v_slope = 0.0;
@@ -300,8 +304,6 @@ void REDQueue::initParams()
 
 void REDQueue::reset()
 {
-	
-        //printf("3: th_min_pkts: %5.2f\n", edp_.th_min_pkts); 
 	/*
 	 * Compute the "packet time constant" if we know the
 	 * link bandwidth.  The ptc is the max number of (avg sized)
@@ -415,60 +417,62 @@ void REDQueue::updateMaxP(double new_ave, double now)
 void REDQueue::updateMaxP_refined_adaptive(double new_ave, double now)
 {
   	double part = 0.48*(edp_.th_max - edp_.th_min);
- 	// AIMD rule to keep target Q~1/2(th_min+th_max)
- 	
  	if ( new_ave < edp_.th_min + part && edv_.cur_max_p > edp_.bottom) {
- 		// we increase the average queue size, so decrease max_p
  		edv_.cur_max_p = edv_.cur_max_p * (1.0 - (0.17 * ((edp_.th_min + part) - new_ave) / ((edp_.th_min + part) - edp_.th_min))); 
  		edv_.lastset = now;
  		double maxp = edv_.cur_max_p;
- 		//printf("%f\t%f\n",now,maxp); 
  	} else if (new_ave > edp_.th_max - part && edp_.top > edv_.cur_max_p ) {
- 		// we decrease the average queue size, so increase max_p
  		double alpha = edp_.alpha;
  		alpha = 0.25 * edv_.cur_max_p * ((new_ave - (edp_.th_max - part)) / (edp_.th_max - part));
  		edv_.cur_max_p = edv_.cur_max_p + alpha;
  		edv_.lastset = now;
  		double maxp = edv_.cur_max_p;
- 		//printf("%f\t%f\n",now,maxp); 
  	}
 }
 
-void REDQueue::updateMaxP_stabilized_adaptive(double new_ave, double now)
-{
-    double part = 0.48 * (edp_.th_max - edp_.th_min);
 
-    if (new_ave < edp_.th_min + part && edv_.cur_max_p > edp_.bottom) {
-        // Increase the average queue size, so decrease max_p
-        double decrease_factor = 0.17 * ((edp_.th_min + part) - new_ave) / ((edp_.th_min + part) - edp_.th_min);
-        edv_.cur_max_p = edv_.cur_max_p * (1.0 - decrease_factor);
-        edv_.lastset = now;
-        double maxp = edv_.cur_max_p;
-        // printf("%f\t%f\n", now, maxp);
-    } else if (new_ave > edp_.th_max - part && edp_.top > edv_.cur_max_p) {
-        // Decrease the average queue size, so increase max_p
-        double alpha = 0.25 * edv_.cur_max_p * ((new_ave - (edp_.th_max - part)) / (edp_.th_max - part));
-        edv_.cur_max_p = edv_.cur_max_p + alpha;
-        edv_.lastset = now;
-        double maxp = edv_.cur_max_p;
-        // printf("%f\t%f\n", now, maxp);
-    }
-    // Additional stabilization logic for the adaptive RED
-    double diff = edp_.th_max - edp_.th_min;
-    if (edv_.cur_max_p > (edp_.th_min + 0.5 * diff)) {
-        // Limit cur_max_p to not exceed upper threshold
-        if (edv_.cur_max_p < edp_.top){
-        	edv_.cur_max_p = edp_.top;
-        }
-      //  edv_.cur_max_p = min(edv_.cur_max_p, edp_.top);
-    } else {
-        // Limit cur_max_p to not fall below lower threshold
-         if (edv_.cur_max_p > edp_.top){
-        	edv_.cur_max_p = edp_.top;
-        }
-        //edv_.cur_max_p = max(edv_.cur_max_p, edp_.bottom);
-    }
+void REDQueue::updateMaxP_powared(double new_ave, double now)
+{
+  	double target = 0.5*(edp_.th_max + edp_.th_min);
+  	int k = edp_.pwk;
+  	int b = edp_.pwb;
+  	int r = edp_.bf_size;
+  	double v_ave = edv_.v_ave;
+  	
+  	
+  	
+  	double delta1 = abs(pow((v_ave - target)/(b * target), k));
+  	double delta2 = abs(pow((target - v_ave)/(b * (r -target)), k));
+ 	
+ 	if ( new_ave < target && edv_.cur_max_p > edp_.bottom) {
+ 		edv_.cur_max_p = edv_.cur_max_p - delta1; 
+ 		edv_.lastset = now;
+ 		double maxp = edv_.cur_max_p; 
+ 	} else if (new_ave > target && edp_.top > edv_.cur_max_p ) {
+ 		edv_.cur_max_p = edv_.cur_max_p + delta2;
+ 		edv_.lastset = now;
+ 		double maxp = edv_.cur_max_p;
+ 	}
 }
+
+void REDQueue::updateMaxP_fast_adaptive(double new_ave, double now){
+	  	double part = 0.48*(edp_.th_max - edp_.th_min);
+		if ( new_ave < edp_.th_min + part && edv_.cur_max_p > edp_.bottom) {
+ 		edv_.cur_max_p = edv_.cur_max_p * (1.0 - (0.0385 * ((edp_.th_min + part) - new_ave) / ((edp_.th_min + part) - edp_.th_min))); 
+ 		edv_.lastset = now;
+ 		double maxp = edv_.cur_max_p;
+ 	} else if (new_ave > edp_.th_max - part && edp_.top > edv_.cur_max_p ) {
+ 		double alpha = edp_.alpha;
+ 		alpha = 0.0412 * edv_.cur_max_p * (new_ave - part) / part;
+ 		edv_.cur_max_p = edv_.cur_max_p + alpha;
+ 		edv_.lastset = now;
+ 		double maxp = edv_.cur_max_p;
+ 	}
+
+
+}
+
+
 
 /*
  * Compute the average queue size.
@@ -491,8 +495,10 @@ double REDQueue::estimator(int nqueued, int m, double ave, double q_w)
 			updateMaxPFeng(new_ave);
 		else if ((edp_.refined_adaptive == 1) && (now > edv_.lastset + edp_.interval))
   			updateMaxP_refined_adaptive(new_ave, now);
-  		else if ((edp_.stabilized_adaptive == 1) && (now > edv_.lastset + edp_.interval))
-  			updateMaxP_stabilized_adaptive(new_ave, now);	
+  		else if ((edp_.powared == 1) && (now > edv_.lastset + edp_.interval))
+  			updateMaxP_powared(new_ave, now);
+  		else if ((edp_.fast_adaptive == 1) && (now > edv_.lastset + edp_.interval))
+  			updateMaxP_fast_adaptive(new_ave, now);	
 		else if (now > edv_.lastset + edp_.interval)
 			updateMaxP(new_ave, now);
 	}
@@ -576,6 +582,16 @@ REDQueue::calculate_p_new(double v_ave, double th_max, int gentle, double v_a,
         	else if (v_ave >= th_min + 2* delta){
         		p =  9 * max_p * pow((v_ave-th_min)/(th_max-th_min), 3) + max_p;
         	} 
+        }
+        else if (edp_.double_slope == 1) {
+        	double a = (2-2* edp_.omega)/(th_max - th_min);
+        	double b = (2 * edp_.omega)/(th_max - th_min);
+        	target = ((th_max + th_min)/2);
+        	if(v_ave < target){
+        		p = a * (v_ave-th_min);
+        	} else if (v_ave >= target) {
+        		p = 1 - edp_.omega + b * (v_ave - target);
+        	}
         }
         else {
                 // p ranges from 0 to max_p as the average queue
