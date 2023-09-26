@@ -116,7 +116,6 @@ UDP:
 
 ![виртуальная машина mininet](image/mininet4.png){ #fig:004 width=70% height=70% }
 
-
 3. Настроил соединения X11 для суперпользователя
 
 ![Настройка соединения X11 для суперпользователя](image/mininet5.png){ #fig:005 width=70% height=70% }
@@ -132,7 +131,7 @@ UDP:
 ![ping от первого хоста ко второму](image/mininet7.png){ #fig:007 width=70% height=70% }
 
 3. Установил приложение iperf3 
-
+ 
 ![Установка iperf3](image/mininet8.png){ #fig:008 width=70% height=70% }
 
 4. Смоделировал простую тополгию с двумя хостами и коммутатром
@@ -150,6 +149,14 @@ UDP:
 ![Окно перегрузки](image/cwnd.png){ #fig:012 width=70% height=70% }
 
 ![Количество переданных байтов](image/bytes.png){ #fig:013 width=70% height=70% }
+
+7. С помощью API Mininet создал простейшую топологию сети, состоящую из двух хостов 
+и коммутатора с назначенной по умолчанию mininet сетью 10.0.0.0/8 и получил результаты
+
+![Топология в API Mininet](image/mininet13.png){ #fig:013 width=70% height=70% }
+
+![Результаты](image/mininet15.png){ #fig:014 width=70% height=70% }
+
 
 
 

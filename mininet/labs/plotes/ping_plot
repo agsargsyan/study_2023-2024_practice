@@ -1,0 +1,9 @@
+#!/usr/bin/gnuplot --persist
+set terminal postscript eps enhanced adobeglyphnames
+set encoding utf8
+
+set output 'ping.eps'
+set xlabel "Sequence number"
+set ylabel "Delay (ms)"
+set title "Delays"
+plot "simple.dat" with lines linestyle 1 lt 1 lw 2 title "simple", "jitter.dat" with lines linestyle 1 lt 2 lw 2 title "jitter", "change.dat" with lines linestyle 1 lt 3 lw 2 title "change"  

@@ -1,0 +1,84 @@
+\documentclass[
+a4paper,
+%13pt,
+fontsize=13pt
+]{report}
+
+\usepackage[T2A]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[russian]{babel}
+\usepackage{setspace}
+\usepackage[fontsize=14pt]{scrextend}
+\usepackage[table,xcdraw]{xcolor}
+%\usepackage[hscale=0.78,vscale=0.8]{geometry} % margins
+\usepackage[
+left=30mm,
+right=10mm,
+bottom=20mm,
+top=15mm
+]{geometry}
+
+\usepackage{sectsty}
+\chaptertitlefont{\LARGE}
+
+%\titlespacing*{\chapter}{0pt}{3.5ex plus 1ex minus .2ex}{2.3ex plus .2ex}
+\usepackage{titlesec}
+\titleformat{\chapter}{\normalfont\LARGE\bfseries}{\thechapter}{1em}{}
+
+
+
+
+\usepackage{amsmath} 
+\usepackage{listings}
+\usepackage{pdflscape}
+\usepackage{graphicx}
+\usepackage{subfig}
+\usepackage[hidelinks]{hyperref}
+%\usepackage[colorlinks = true, linkcolor=black, urlcolor=black]{hyperref}
+\usepackage{amssymb}
+\usepackage[numbers]{natbib}
+\usepackage{enumerate}
+%\usepackage{color}
+
+\usepackage{verbatim}
+\usepackage{minted}
+
+%\renewcommand{\thefigure}{\arabic{section}.\arabic{figure}}
+%\renewcommand{\thetable}{\arabic{section}.\arabic{table}}
+
+\begin{document}
+\onehalfspacing
+\input{title}
+%\newpage
+\setcounter{page}{2}
+\tableofcontents
+\newpage
+%\input{abbrev}
+\input{intro}
+%\newpage
+\input{ch01}
+
+%\input{ch02}
+
+\input{ch03}
+
+\input{conclusion}
+
+\renewcommand{\bibname}{Список литературы}
+\cleardoublepage
+\phantomsection
+\addcontentsline{toc}{chapter}{Список литературы}
+\bibliography{bib}
+
+\bibliographystyle{ugost2008l} 
+% \bibliographystyle{plain} 
+% \bibliographystyle{gost2008l} 
+
+\appendix
+
+\input{ap01}
+
+\appendix
+ %\newpage
+
+\end{document}
