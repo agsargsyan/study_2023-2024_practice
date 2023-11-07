@@ -1,0 +1,22 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c+cp}{\PYGZsh{}! /usr/bin/gnuplot \PYGZhy{}persist}
+\PYG{n}{set}\PYG{+w}{ }\PYG{n}{terminal}\PYG{+w}{ }\PYG{n}{postscript}\PYG{+w}{ }\PYG{n}{eps}\PYG{+w}{ }\PYG{n}{enhanced}\PYG{+w}{ }\PYG{n}{adobeglyphnames}
+\PYG{n}{set}\PYG{+w}{ }\PYG{n}{output}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{}test.ps\PYGZdq{}}
+\PYG{n}{set}\PYG{+w}{ }\PYG{n}{encoding}\PYG{+w}{ }\PYG{n}{utf8}
+
+\PYG{n}{set}\PYG{+w}{ }\PYG{n}{xrange}\PYG{+w}{ }\PYG{p}{[}\PYG{l+m+mi}{0}\PYG{o}{:}\PYG{l+m+mi}{26}\PYG{p}{]}
+
+\PYG{n}{set}\PYG{+w}{ }\PYG{n}{terminal}\PYG{+w}{ }\PYG{n}{postscript}\PYG{+w}{ }\PYG{n}{eps}
+\PYG{n}{set}\PYG{+w}{ }\PYG{n}{output}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{}av\PYGZus{}queues\PYGZus{}1GNl.eps\PYGZdq{}}
+\PYG{n}{set}\PYG{+w}{ }\PYG{n}{xlabel}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{}Время [c]\PYGZdq{}}
+\PYG{n}{set}\PYG{+w}{ }\PYG{n}{ylabel}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{}Длина очереди [пакеты]\PYGZdq{}}
+\PYG{n}{set}\PYG{+w}{ }\PYG{n}{title}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{}Средневзвешенная очередь на линке при разных алгоритмах\PYGZdq{}}
+\PYG{n}{plot}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{}classic.a\PYGZdq{}}\PYG{+w}{ }\PYG{n}{with}\PYG{+w}{ }\PYG{n}{lines}\PYG{+w}{ }\PYG{n}{linestyle}\PYG{+w}{ }\PYG{l+m+mi}{1}\PYG{+w}{ }\PYG{n}{lt}\PYG{+w}{ }\PYG{l+m+mi}{1}\PYG{+w}{ }\PYG{n}{lw}\PYG{+w}{ }\PYG{l+m+mi}{2}\PYG{+w}{ }\PYG{n}{title}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{}RED\PYGZdq{}}\PYG{p}{,}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{}gentle.a\PYGZdq{}}\PYG{+w}{ }\PYG{n}{with}\PYG{+w}{ }\PYG{n}{lines}\PYG{+w}{ }\PYG{n}{linestyle}\PYG{+w}{ }\PYG{l+m+mi}{1}\PYG{+w}{ }\PYG{n}{lt}\PYG{+w}{ }\PYG{l+m+mi}{2}\PYG{+w}{ }\PYG{n}{lw}\PYG{+w}{ }\PYG{l+m+mi}{2}\PYG{+w}{ }\PYG{n}{title}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{}GRED\PYGZdq{}}\PYG{p}{,}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{}nonlinear.a\PYGZdq{}}\PYG{+w}{ }\PYG{n}{with}\PYG{+w}{ }\PYG{n}{lines}\PYG{+w}{ }\PYG{n}{linestyle}\PYG{+w}{ }\PYG{l+m+mi}{1}\PYG{+w}{ }\PYG{n}{lt}\PYG{+w}{ }\PYG{l+m+mi}{3}\PYG{+w}{ }\PYG{n}{lw}\PYG{+w}{ }\PYG{l+m+mi}{2}\PYG{+w}{ }\PYG{n}{title}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{}NLRED\PYGZdq{}}
+
+\PYG{n}{set}\PYG{+w}{ }\PYG{n}{terminal}\PYG{+w}{ }\PYG{n}{postscript}\PYG{+w}{ }\PYG{n}{eps}
+\PYG{n}{set}\PYG{+w}{ }\PYG{n}{output}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{}av\PYGZus{}queues\PYGZus{}HTNl.eps\PYGZdq{}}
+\PYG{n}{set}\PYG{+w}{ }\PYG{n}{xlabel}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{}Время [c]\PYGZdq{}}
+\PYG{n}{set}\PYG{+w}{ }\PYG{n}{ylabel}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{}Длина очереди [пакеты]\PYGZdq{}}
+\PYG{n}{set}\PYG{+w}{ }\PYG{n}{title}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{}Средневзвешенная очередь на линке при разных алгоритмах\PYGZdq{}}
+\PYG{n}{plot}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{}hyperbola.a\PYGZdq{}}\PYG{+w}{ }\PYG{n}{with}\PYG{+w}{ }\PYG{n}{lines}\PYG{+w}{ }\PYG{n}{linestyle}\PYG{+w}{ }\PYG{l+m+mi}{1}\PYG{+w}{ }\PYG{n}{lt}\PYG{+w}{ }\PYG{l+m+mi}{1}\PYG{+w}{ }\PYG{n}{lw}\PYG{+w}{ }\PYG{l+m+mi}{2}\PYG{+w}{ }\PYG{n}{title}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{}HRED\PYGZdq{}}\PYG{p}{,}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{}3.a\PYGZdq{}}\PYG{+w}{ }\PYG{n}{with}\PYG{+w}{ }\PYG{n}{lines}\PYG{+w}{ }\PYG{n}{linestyle}\PYG{+w}{ }\PYG{l+m+mi}{1}\PYG{+w}{ }\PYG{n}{lt}\PYG{+w}{ }\PYG{l+m+mi}{2}\PYG{+w}{ }\PYG{n}{lw}\PYG{+w}{ }\PYG{l+m+mi}{2}\PYG{+w}{ }\PYG{n}{title}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{}TRED\PYGZdq{}}\PYG{p}{,}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{}nonlinear.a\PYGZdq{}}\PYG{+w}{ }\PYG{n}{with}\PYG{+w}{ }\PYG{n}{lines}\PYG{+w}{ }\PYG{n}{linestyle}\PYG{+w}{ }\PYG{l+m+mi}{1}\PYG{+w}{ }\PYG{n}{lt}\PYG{+w}{ }\PYG{l+m+mi}{3}\PYG{+w}{ }\PYG{n}{lw}\PYG{+w}{ }\PYG{l+m+mi}{2}\PYG{+w}{ }\PYG{n}{title}\PYG{+w}{ }\PYG{l+s}{\PYGZdq{}NLRED\PYGZdq{}}
+\end{Verbatim}

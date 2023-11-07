@@ -1,0 +1,12 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+
+\PYG{c+c1}{\PYGZsh{}!/usr/bin/gnuplot \PYGZhy{}\PYGZhy{}persist}
+
+\PYG{n+nb}{set} terminal png crop
+\PYG{n+nb}{set} output \PYG{l+s+s1}{\PYGZsq{}ping.pdf\PYGZsq{}}
+\PYG{n+nb}{set} xlabel \PYG{l+s+s2}{\PYGZdq{}Sequence number\PYGZdq{}}
+\PYG{n+nb}{set} ylabel \PYG{l+s+s2}{\PYGZdq{}Delay (ms)\PYGZdq{}}
+\PYG{n+nb}{set} grid
+plot \PYG{l+s+s2}{\PYGZdq{}ping.dat\PYGZdq{}} with lines
+
+\end{Verbatim}

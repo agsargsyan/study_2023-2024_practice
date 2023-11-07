@@ -1,0 +1,18 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{k+kt}{double}\PYG{+w}{ }\PYG{n+nf}{REDQueue::calculate\PYGZus{}p\PYGZus{}new}\PYG{p}{(}\PYG{k+kt}{double}\PYG{+w}{ }\PYG{n}{v\PYGZus{}ave}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{double}\PYG{+w}{ }\PYG{n}{th\PYGZus{}max}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{gentle}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{double}\PYG{+w}{ }\PYG{n}{v\PYGZus{}a}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{double}\PYG{+w}{ }\PYG{n}{v\PYGZus{}b}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{double}\PYG{+w}{ }\PYG{n}{v\PYGZus{}c}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{double}\PYG{+w}{ }\PYG{n}{v\PYGZus{}d}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{double}\PYG{+w}{ }\PYG{n}{max\PYGZus{}p}\PYG{p}{)}
+\PYG{p}{\PYGZob{}}
+\PYG{+w}{        }\PYG{k+kt}{double}\PYG{+w}{ }\PYG{n}{p}\PYG{p}{;}
+\PYG{+w}{        }\PYG{k}{if}\PYG{+w}{ }\PYG{p}{(}\PYG{n}{gentle}\PYG{+w}{ }\PYG{o}{\PYGZam{}\PYGZam{}}\PYG{+w}{ }\PYG{n}{v\PYGZus{}ave}\PYG{+w}{ }\PYG{o}{\PYGZgt{}=}\PYG{+w}{ }\PYG{n}{th\PYGZus{}max}\PYG{p}{)}\PYG{+w}{ }\PYG{p}{\PYGZob{}}\PYG{+w}{ }\PYG{c+c1}{//для модификации GRED}
+\PYG{+w}{                }\PYG{n}{p}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{v\PYGZus{}c}\PYG{+w}{ }\PYG{o}{*}\PYG{+w}{ }\PYG{n}{v\PYGZus{}ave}\PYG{+w}{ }\PYG{o}{+}\PYG{+w}{ }\PYG{n}{v\PYGZus{}d}\PYG{p}{;}
+\PYG{+w}{        }\PYG{p}{\PYGZcb{}}\PYG{+w}{ }\PYG{k}{else}\PYG{+w}{ }\PYG{k}{if}\PYG{+w}{ }\PYG{p}{(}\PYG{o}{!}\PYG{n}{gentle}\PYG{+w}{ }\PYG{o}{\PYGZam{}\PYGZam{}}\PYG{+w}{ }\PYG{n}{v\PYGZus{}ave}\PYG{+w}{ }\PYG{o}{\PYGZgt{}=}\PYG{+w}{ }\PYG{n}{th\PYGZus{}max}\PYG{p}{)}\PYG{+w}{ }\PYG{p}{\PYGZob{}}\PYG{+w}{ }\PYG{c+c1}{// Превысили пороговое значение в классическом RED}
+\PYG{+w}{                }\PYG{n}{p}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{l+m+mf}{2.0}\PYG{p}{;}
+\PYG{+w}{        }\PYG{p}{\PYGZcb{}}\PYG{+w}{ }\PYG{k}{else}\PYG{+w}{ }\PYG{p}{\PYGZob{}}\PYG{+w}{ }\PYG{c+c1}{// p в промежутке от 0 до max\PYGZus{}p, тогда средний размер очереди в промежутке th\PYGZus{}min до th\PYGZus{}max}
+\PYG{+w}{                }\PYG{n}{p}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{v\PYGZus{}a}\PYG{+w}{ }\PYG{o}{*}\PYG{+w}{ }\PYG{n}{v\PYGZus{}ave}\PYG{+w}{ }\PYG{o}{+}\PYG{+w}{ }\PYG{n}{v\PYGZus{}b}\PYG{p}{;}
+\PYG{+w}{                }\PYG{c+c1}{// p = (v\PYGZus{}ave \PYGZhy{} th\PYGZus{}min) / (th\PYGZus{}max \PYGZhy{} th\PYGZus{}min)}
+\PYG{+w}{                }\PYG{n}{p}\PYG{+w}{ }\PYG{o}{*=}\PYG{+w}{ }\PYG{n}{max\PYGZus{}p}\PYG{p}{;}
+\PYG{+w}{        }\PYG{p}{\PYGZcb{}}
+\PYG{+w}{        }\PYG{k}{if}\PYG{+w}{ }\PYG{p}{(}\PYG{n}{p}\PYG{+w}{ }\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{l+m+mf}{2.0}\PYG{p}{)}\PYG{+w}{ }\PYG{n}{и}\PYG{+w}{ }\PYG{c+c1}{// пакеты отбрасываюся}
+\PYG{+w}{                }\PYG{n}{p}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{l+m+mf}{2.0}\PYG{p}{;}
+\PYG{+w}{        }\PYG{k}{return}\PYG{+w}{ }\PYG{n}{p}\PYG{p}{;}
+\PYG{p}{\PYGZcb{}}
+\end{Verbatim}

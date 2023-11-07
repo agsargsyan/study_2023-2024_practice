@@ -1,0 +1,13 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+
+\PYG{c+cm}{/*Added for new RED alghorithms*/}
+
+\PYG{n}{Queue}\PYG{o}{/}\PYG{n}{RED}\PYG{+w}{ }\PYG{n}{set}\PYG{+w}{ }\PYG{n}{nonlinear\PYGZus{}}\PYG{+w}{ }\PYG{l+m+mi}{0}
+\PYG{n}{Queue}\PYG{o}{/}\PYG{n}{RED}\PYG{+w}{ }\PYG{n}{set}\PYG{+w}{ }\PYG{n}{hyperbola\PYGZus{}}\PYG{+w}{ }\PYG{l+m+mi}{0}
+\PYG{n}{Queue}\PYG{o}{/}\PYG{n}{RED}\PYG{+w}{ }\PYG{n}{set}\PYG{+w}{ }\PYG{n}{quadratic\PYGZus{}linear\PYGZus{}}\PYG{+w}{ }\PYG{l+m+mi}{0}
+\PYG{n}{Queue}\PYG{o}{/}\PYG{n}{RED}\PYG{+w}{ }\PYG{n}{set}\PYG{+w}{ }\PYG{n}{three\PYGZus{}sections\PYGZus{}}\PYG{+w}{ }\PYG{l+m+mi}{0}
+\PYG{n}{Queue}\PYG{o}{/}\PYG{n}{RED}\PYG{+w}{ }\PYG{n}{set}\PYG{+w}{ }\PYG{n}{exponential\PYGZus{}}\PYG{+w}{ }\PYG{l+m+mi}{0}
+\PYG{n}{Queue}\PYG{o}{/}\PYG{n}{RED}\PYG{+w}{ }\PYG{n}{set}\PYG{+w}{ }\PYG{n}{improved\PYGZus{}}\PYG{+w}{ }\PYG{l+m+mi}{0}
+\PYG{n}{Queue}\PYG{o}{/}\PYG{n}{RED}\PYG{+w}{ }\PYG{n}{set}\PYG{+w}{ }\PYG{n}{smart\PYGZus{}}\PYG{+w}{ }\PYG{l+m+mi}{0}
+\PYG{n}{Queue}\PYG{o}{/}\PYG{n}{RED}\PYG{+w}{ }\PYG{n}{set}\PYG{+w}{ }\PYG{n}{modified\PYGZus{}}\PYG{+w}{ }\PYG{l+m+mi}{0}
+\end{Verbatim}

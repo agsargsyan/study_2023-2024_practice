@@ -1,0 +1,17 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+all: clean ping.dat ping.pdf plot
+
+ping.dat:
+	sudo python lab\PYGZus{}netem\PYGZus{}i.py
+	sudo chown mininet:mininet ping.dat
+
+ping.pdf: ping.dat
+	  ./ping\PYGZus{}plot
+
+plot: iperf\PYGZus{}result.json
+	plot\PYGZus{}iperf.sh iperf\PYGZus{}result.json
+
+clean:
+	\PYGZhy{}rm \PYGZhy{}f *.dat *.pdf *.json *.csv
+	\PYGZhy{}rm \PYGZhy{}rf results
+\end{Verbatim}

@@ -1,0 +1,87 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c+cm}{/*}
+\PYG{c+cm}{ * Calculate the drop probability.}
+\PYG{c+cm}{ */}
+\PYG{k+kt}{double}
+\PYG{n+nf}{REDQueue::calculate\PYGZus{}p\PYGZus{}new}\PYG{p}{(}\PYG{k+kt}{double}\PYG{+w}{ }\PYG{n}{v\PYGZus{}ave}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{double}\PYG{+w}{ }\PYG{n}{th\PYGZus{}max}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{int}\PYG{+w}{ }\PYG{n}{gentle}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{double}\PYG{+w}{ }\PYG{n}{v\PYGZus{}a}\PYG{p}{,}
+\PYG{+w}{	}\PYG{k+kt}{double}\PYG{+w}{ }\PYG{n}{v\PYGZus{}b}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{double}\PYG{+w}{ }\PYG{n}{v\PYGZus{}c}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{double}\PYG{+w}{ }\PYG{n}{v\PYGZus{}d}\PYG{p}{,}\PYG{+w}{ }\PYG{k+kt}{double}\PYG{+w}{ }\PYG{n}{max\PYGZus{}p}\PYG{p}{)}
+\PYG{p}{\PYGZob{}}\PYG{+w}{	}
+\PYG{+w}{	}\PYG{k+kt}{double}\PYG{+w}{ }\PYG{n}{target}\PYG{p}{;}
+\PYG{+w}{	}\PYG{k+kt}{double}\PYG{+w}{ }\PYG{n}{exponenta}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{l+m+mf}{2.7182818285}\PYG{p}{;}
+\PYG{+w}{	}\PYG{k+kt}{double}\PYG{+w}{ }\PYG{n}{th\PYGZus{}min}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{edp\PYGZus{}}\PYG{p}{.}\PYG{n}{th\PYGZus{}min}\PYG{p}{;}
+\PYG{+w}{	}\PYG{k+kt}{double}\PYG{+w}{ }\PYG{n}{p}\PYG{p}{;}
+\PYG{+w}{	}\PYG{k}{if}\PYG{+w}{ }\PYG{p}{(}\PYG{n}{gentle}\PYG{+w}{ }\PYG{o}{\PYGZam{}\PYGZam{}}\PYG{+w}{ }\PYG{n}{v\PYGZus{}ave}\PYG{+w}{ }\PYG{o}{\PYGZgt{}=}\PYG{+w}{ }\PYG{n}{th\PYGZus{}max}\PYG{p}{)}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{		}\PYG{c+c1}{// p ranges from max\PYGZus{}p to 1 as the average queue}
+\PYG{+w}{		}\PYG{c+c1}{// size ranges from th\PYGZus{}max to twice th\PYGZus{}max}
+\PYG{+w}{		}\PYG{n}{p}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{v\PYGZus{}c}\PYG{+w}{ }\PYG{o}{*}\PYG{+w}{ }\PYG{n}{v\PYGZus{}ave}\PYG{+w}{ }\PYG{o}{+}\PYG{+w}{ }\PYG{n}{v\PYGZus{}d}\PYG{p}{;}
+\PYG{+w}{        }\PYG{p}{\PYGZcb{}}\PYG{+w}{ }\PYG{k}{else}\PYG{+w}{ }\PYG{k}{if}\PYG{+w}{ }\PYG{p}{(}\PYG{o}{!}\PYG{n}{gentle}\PYG{+w}{ }\PYG{o}{\PYGZam{}\PYGZam{}}\PYG{+w}{ }\PYG{n}{v\PYGZus{}ave}\PYG{+w}{ }\PYG{o}{\PYGZgt{}=}\PYG{+w}{ }\PYG{n}{th\PYGZus{}max}\PYG{p}{)}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{                }\PYG{c+c1}{// OLD: p continues to range linearly above max\PYGZus{}p as}
+\PYG{+w}{                }\PYG{c+c1}{// the average queue size ranges above th\PYGZus{}max.}
+\PYG{+w}{                }\PYG{c+c1}{// NEW: p is set to 1.0}
+\PYG{+w}{                }\PYG{n}{p}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{l+m+mf}{1.0}\PYG{p}{;}
+\PYG{+w}{        }\PYG{p}{\PYGZcb{}}\PYG{+w}{ }\PYG{k}{else}\PYG{+w}{ }\PYG{k}{if}\PYG{+w}{ }\PYG{p}{(}\PYG{n}{edp\PYGZus{}}\PYG{p}{.}\PYG{n}{quadratic\PYGZus{}linear}\PYG{+w}{ }\PYG{o}{==}\PYG{+w}{ }\PYG{l+m+mi}{1}\PYG{p}{)}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{        	}\PYG{n}{target}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{l+m+mi}{2}\PYG{+w}{ }\PYG{o}{*}\PYG{+w}{ }\PYG{p}{((}\PYG{n}{th\PYGZus{}min}\PYG{+w}{ }\PYG{o}{+}\PYG{+w}{ }\PYG{n}{th\PYGZus{}max}\PYG{p}{)}\PYG{o}{/}\PYG{l+m+mi}{3}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{\PYGZhy{}}\PYG{+w}{ }\PYG{n}{th\PYGZus{}min}\PYG{p}{;}
+\PYG{+w}{        	}\PYG{k}{if}\PYG{p}{(}\PYG{n}{v\PYGZus{}ave}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{n}{target}\PYG{p}{)\PYGZob{}}
+\PYG{+w}{        		}\PYG{n}{p}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{l+m+mi}{9}\PYG{+w}{ }\PYG{o}{*}\PYG{+w}{ }\PYG{n}{max\PYGZus{}p}\PYG{+w}{ }\PYG{o}{*}\PYG{+w}{ }\PYG{p}{((}\PYG{n}{v\PYGZus{}ave}\PYG{o}{\PYGZhy{}}\PYG{n}{th\PYGZus{}min}\PYG{p}{)}\PYG{o}{/}\PYG{p}{(}\PYG{l+m+mi}{2}\PYG{o}{*}\PYG{p}{(}\PYG{n}{th\PYGZus{}max}\PYG{l+m+mi}{\PYGZhy{}2}\PYG{o}{*}\PYG{n}{th\PYGZus{}min}\PYG{p}{)))}\PYG{+w}{ }\PYG{o}{*}\PYG{+w}{ }\PYG{p}{((}\PYG{n}{v\PYGZus{}ave}\PYG{o}{\PYGZhy{}}\PYG{n}{th\PYGZus{}min}\PYG{p}{)}\PYG{o}{/}\PYG{p}{(}\PYG{l+m+mi}{2}\PYG{o}{*}\PYG{p}{(}\PYG{n}{th\PYGZus{}max}\PYG{l+m+mi}{\PYGZhy{}2}\PYG{o}{*}\PYG{n}{th\PYGZus{}min}\PYG{p}{)));}
+\PYG{+w}{        	}\PYG{p}{\PYGZcb{}}\PYG{+w}{ }\PYG{k}{else}\PYG{+w}{ }\PYG{k}{if}\PYG{+w}{ }\PYG{p}{(}\PYG{n}{v\PYGZus{}ave}\PYG{+w}{ }\PYG{o}{\PYGZgt{}=}\PYG{+w}{ }\PYG{n}{target}\PYG{p}{)}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{        		}\PYG{n}{p}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{max\PYGZus{}p}\PYG{+w}{ }\PYG{o}{+}\PYG{+w}{ }\PYG{l+m+mi}{3}\PYG{o}{*}\PYG{p}{(}\PYG{l+m+mi}{1}\PYG{o}{\PYGZhy{}}\PYG{n}{max\PYGZus{}p}\PYG{p}{)}\PYG{o}{*}\PYG{p}{((}\PYG{n}{v\PYGZus{}ave}\PYG{o}{\PYGZhy{}}\PYG{n}{target}\PYG{p}{)}\PYG{o}{/}\PYG{p}{(}\PYG{n}{th\PYGZus{}max}\PYG{o}{+}\PYG{n}{th\PYGZus{}min}\PYG{p}{));}
+\PYG{+w}{        	}\PYG{p}{\PYGZcb{}}
+\PYG{+w}{        }\PYG{p}{\PYGZcb{}}\PYG{+w}{ }\PYG{k}{else}\PYG{+w}{ }\PYG{k}{if}\PYG{+w}{ }\PYG{p}{(}\PYG{n}{edp\PYGZus{}}\PYG{p}{.}\PYG{n}{improved}\PYG{+w}{ }\PYG{o}{==}\PYG{+w}{ }\PYG{l+m+mi}{1}\PYG{p}{)}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{        	}\PYG{n}{target}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{p}{((}\PYG{n}{th\PYGZus{}min}\PYG{+w}{ }\PYG{o}{+}\PYG{+w}{ }\PYG{n}{th\PYGZus{}max}\PYG{p}{)}\PYG{o}{/}\PYG{l+m+mi}{3}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{+}\PYG{+w}{ }\PYG{n}{th\PYGZus{}min}\PYG{p}{;}
+\PYG{+w}{        	}\PYG{k}{if}\PYG{p}{(}\PYG{n}{v\PYGZus{}ave}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{n}{target}\PYG{p}{)\PYGZob{}}
+\PYG{+w}{        		}\PYG{n}{p}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{l+m+mi}{9}\PYG{+w}{ }\PYG{o}{*}\PYG{+w}{ }\PYG{n}{max\PYGZus{}p}\PYG{+w}{ }\PYG{o}{*}\PYG{+w}{ }\PYG{p}{((}\PYG{n}{v\PYGZus{}ave}\PYG{o}{\PYGZhy{}}\PYG{n}{th\PYGZus{}min}\PYG{p}{)}\PYG{o}{/}\PYG{p}{(}\PYG{n}{th\PYGZus{}max}\PYG{+w}{ }\PYG{o}{+}\PYG{+w}{ }\PYG{n}{th\PYGZus{}min}\PYG{p}{))}\PYG{+w}{ }\PYG{o}{*}\PYG{+w}{ }\PYG{p}{((}\PYG{n}{v\PYGZus{}ave}\PYG{o}{\PYGZhy{}}\PYG{n}{th\PYGZus{}min}\PYG{p}{)}\PYG{o}{/}\PYG{p}{(}\PYG{n}{th\PYGZus{}max}\PYG{+w}{ }\PYG{o}{+}\PYG{+w}{ }\PYG{n}{th\PYGZus{}min}\PYG{p}{));}
+\PYG{+w}{        	}\PYG{p}{\PYGZcb{}}\PYG{+w}{ }\PYG{k}{else}\PYG{+w}{ }\PYG{k}{if}\PYG{+w}{ }\PYG{p}{(}\PYG{n}{v\PYGZus{}ave}\PYG{+w}{ }\PYG{o}{\PYGZgt{}=}\PYG{+w}{ }\PYG{n}{target}\PYG{p}{)}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{        		}\PYG{n}{p}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{max\PYGZus{}p}\PYG{+w}{ }\PYG{o}{+}\PYG{+w}{ }\PYG{l+m+mi}{3}\PYG{o}{*}\PYG{p}{(}\PYG{l+m+mi}{1}\PYG{o}{\PYGZhy{}}\PYG{n}{max\PYGZus{}p}\PYG{p}{)}\PYG{o}{*}\PYG{p}{(}\PYG{n}{v\PYGZus{}ave}\PYG{o}{\PYGZhy{}}\PYG{n}{target}\PYG{p}{)}\PYG{o}{/}\PYG{p}{(}\PYG{l+m+mi}{2}\PYG{o}{*}\PYG{p}{(}\PYG{n}{th\PYGZus{}max}\PYG{+w}{ }\PYG{o}{\PYGZhy{}}\PYG{+w}{ }\PYG{l+m+mi}{2}\PYG{+w}{ }\PYG{o}{*}\PYG{+w}{ }\PYG{n}{th\PYGZus{}min}\PYG{p}{));}
+\PYG{+w}{        	}\PYG{p}{\PYGZcb{}}
+\PYG{+w}{        }\PYG{p}{\PYGZcb{}}\PYG{+w}{ }\PYG{k}{else}\PYG{+w}{ }\PYG{k}{if}\PYG{+w}{ }\PYG{p}{(}\PYG{n}{edp\PYGZus{}}\PYG{p}{.}\PYG{n}{smart}\PYG{+w}{ }\PYG{o}{==}\PYG{+w}{ }\PYG{l+m+mi}{1}\PYG{p}{)}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{        	}\PYG{n}{target}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{p}{((}\PYG{n}{th\PYGZus{}max}\PYG{+w}{ }\PYG{o}{\PYGZhy{}}\PYG{+w}{ }\PYG{n}{th\PYGZus{}min}\PYG{p}{)}\PYG{o}{/}\PYG{l+m+mi}{2}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{+}\PYG{+w}{ }\PYG{n}{th\PYGZus{}min}\PYG{p}{;}
+\PYG{+w}{        	}\PYG{k}{if}\PYG{p}{(}\PYG{n}{v\PYGZus{}ave}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{n}{target}\PYG{p}{)\PYGZob{}}
+\PYG{+w}{        		}\PYG{n}{p}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{max\PYGZus{}p}\PYG{+w}{ }\PYG{o}{*}\PYG{+w}{ }\PYG{n}{pow}\PYG{p}{(((}\PYG{n}{v\PYGZus{}ave}\PYG{o}{\PYGZhy{}}\PYG{n}{th\PYGZus{}min}\PYG{p}{)}\PYG{o}{/}\PYG{p}{(}\PYG{n}{th\PYGZus{}max}\PYG{+w}{ }\PYG{o}{\PYGZhy{}}\PYG{+w}{ }\PYG{n}{th\PYGZus{}min}\PYG{p}{)),}\PYG{+w}{ }\PYG{l+m+mi}{2}\PYG{p}{);}
+\PYG{+w}{        	}\PYG{p}{\PYGZcb{}}\PYG{+w}{ }\PYG{k}{else}\PYG{+w}{ }\PYG{k}{if}\PYG{+w}{ }\PYG{p}{(}\PYG{n}{v\PYGZus{}ave}\PYG{+w}{ }\PYG{o}{\PYGZgt{}=}\PYG{+w}{ }\PYG{n}{target}\PYG{p}{)}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{        		}\PYG{n}{p}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{max\PYGZus{}p}\PYG{+w}{ }\PYG{o}{*}\PYG{+w}{ }\PYG{n}{pow}\PYG{p}{(((}\PYG{n}{v\PYGZus{}ave}\PYG{o}{\PYGZhy{}}\PYG{n}{th\PYGZus{}min}\PYG{p}{)}\PYG{o}{/}\PYG{p}{(}\PYG{n}{th\PYGZus{}max}\PYG{+w}{ }\PYG{o}{\PYGZhy{}}\PYG{+w}{ }\PYG{n}{th\PYGZus{}min}\PYG{p}{)),}\PYG{+w}{ }\PYG{l+m+mf}{0.5}\PYG{p}{);}
+\PYG{+w}{        	}\PYG{p}{\PYGZcb{}}
+\PYG{+w}{        }\PYG{p}{\PYGZcb{}}\PYG{+w}{ }\PYG{k}{else}\PYG{+w}{ }\PYG{k}{if}\PYG{+w}{ }\PYG{p}{(}\PYG{n}{edp\PYGZus{}}\PYG{p}{.}\PYG{n}{three\PYGZus{}sections}\PYG{+w}{ }\PYG{o}{==}\PYG{+w}{ }\PYG{l+m+mi}{1}\PYG{p}{)\PYGZob{}}
+\PYG{+w}{        	}\PYG{k+kt}{double}\PYG{+w}{ }\PYG{n}{delta}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{p}{(}\PYG{n}{th\PYGZus{}min}\PYG{o}{+}\PYG{n}{th\PYGZus{}max}\PYG{o}{/}\PYG{l+m+mi}{3}\PYG{p}{);}
+\PYG{+w}{        	}\PYG{k}{if}\PYG{+w}{ }\PYG{p}{(}\PYG{n}{v\PYGZus{}ave}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{p}{(}\PYG{n}{th\PYGZus{}min}\PYG{+w}{ }\PYG{o}{+}\PYG{+w}{ }\PYG{n}{delta}\PYG{p}{))\PYGZob{}}
+\PYG{+w}{        		}\PYG{n}{p}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{l+m+mi}{9}\PYG{+w}{ }\PYG{o}{*}\PYG{+w}{ }\PYG{n}{max\PYGZus{}p}\PYG{+w}{ }\PYG{o}{*}\PYG{+w}{ }\PYG{n}{pow}\PYG{p}{((}\PYG{n}{v\PYGZus{}ave}\PYG{o}{\PYGZhy{}}\PYG{n}{th\PYGZus{}min}\PYG{p}{)}\PYG{o}{/}\PYG{p}{(}\PYG{n}{th\PYGZus{}max}\PYG{o}{\PYGZhy{}}\PYG{n}{th\PYGZus{}min}\PYG{p}{),}\PYG{+w}{ }\PYG{l+m+mi}{3}\PYG{p}{)}\PYG{+w}{ }\PYG{p}{;}
+\PYG{+w}{        		}\PYG{p}{\PYGZcb{}}
+\PYG{+w}{        	}\PYG{k}{else}\PYG{+w}{ }\PYG{k}{if}\PYG{+w}{ }\PYG{p}{((}\PYG{n}{v\PYGZus{}ave}\PYG{+w}{ }\PYG{o}{\PYGZgt{}=}\PYG{+w}{ }\PYG{n}{th\PYGZus{}min}\PYG{+w}{ }\PYG{o}{+}\PYG{+w}{ }\PYG{n}{delta}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{\PYGZam{}\PYGZam{}}\PYG{+w}{ }\PYG{p}{(}\PYG{n}{v\PYGZus{}ave}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{n}{th\PYGZus{}min}\PYG{+w}{ }\PYG{o}{+}\PYG{+w}{ }\PYG{l+m+mi}{2}\PYG{+w}{ }\PYG{o}{*}\PYG{+w}{ }\PYG{n}{delta}\PYG{p}{))\PYGZob{}}
+\PYG{+w}{        		}\PYG{n}{p}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{max\PYGZus{}p}\PYG{+w}{ }\PYG{o}{*}\PYG{+w}{ }\PYG{p}{(}\PYG{n}{v\PYGZus{}ave}\PYG{o}{\PYGZhy{}}\PYG{n}{th\PYGZus{}min}\PYG{p}{)}\PYG{o}{/}\PYG{p}{(}\PYG{n}{th\PYGZus{}max}\PYG{o}{\PYGZhy{}}\PYG{n}{th\PYGZus{}min}\PYG{p}{);}
+\PYG{+w}{        		}\PYG{p}{\PYGZcb{}}
+\PYG{+w}{        	}\PYG{k}{else}\PYG{+w}{ }\PYG{k}{if}\PYG{+w}{ }\PYG{p}{(}\PYG{n}{v\PYGZus{}ave}\PYG{+w}{ }\PYG{o}{\PYGZgt{}=}\PYG{+w}{ }\PYG{n}{th\PYGZus{}min}\PYG{+w}{ }\PYG{o}{+}\PYG{+w}{ }\PYG{l+m+mi}{2}\PYG{o}{*}\PYG{+w}{ }\PYG{n}{delta}\PYG{p}{)\PYGZob{}}
+\PYG{+w}{        		}\PYG{n}{p}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{  }\PYG{l+m+mi}{9}\PYG{+w}{ }\PYG{o}{*}\PYG{+w}{ }\PYG{n}{max\PYGZus{}p}\PYG{+w}{ }\PYG{o}{*}\PYG{+w}{ }\PYG{n}{pow}\PYG{p}{((}\PYG{n}{v\PYGZus{}ave}\PYG{o}{\PYGZhy{}}\PYG{n}{th\PYGZus{}min}\PYG{p}{)}\PYG{o}{/}\PYG{p}{(}\PYG{n}{th\PYGZus{}max}\PYG{o}{\PYGZhy{}}\PYG{n}{th\PYGZus{}min}\PYG{p}{),}\PYG{+w}{ }\PYG{l+m+mi}{3}\PYG{p}{)}\PYG{+w}{ }\PYG{o}{+}\PYG{+w}{ }\PYG{n}{max\PYGZus{}p}\PYG{p}{;}
+\PYG{+w}{        	}\PYG{p}{\PYGZcb{}}
+\PYG{+w}{        }\PYG{p}{\PYGZcb{}}
+\PYG{+w}{        }\PYG{k}{else}\PYG{+w}{ }\PYG{k}{if}\PYG{+w}{ }\PYG{p}{(}\PYG{n}{edp\PYGZus{}}\PYG{p}{.}\PYG{n}{double\PYGZus{}slope}\PYG{+w}{ }\PYG{o}{==}\PYG{+w}{ }\PYG{l+m+mi}{1}\PYG{p}{)}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{        	}\PYG{k+kt}{double}\PYG{+w}{ }\PYG{n}{a}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{p}{(}\PYG{l+m+mi}{2\PYGZhy{}2}\PYG{o}{*}\PYG{+w}{ }\PYG{n}{edp\PYGZus{}}\PYG{p}{.}\PYG{n}{omega}\PYG{p}{)}\PYG{o}{/}\PYG{p}{(}\PYG{n}{th\PYGZus{}max}\PYG{+w}{ }\PYG{o}{\PYGZhy{}}\PYG{+w}{ }\PYG{n}{th\PYGZus{}min}\PYG{p}{);}
+\PYG{+w}{        	}\PYG{k+kt}{double}\PYG{+w}{ }\PYG{n}{b}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{p}{(}\PYG{l+m+mi}{2}\PYG{+w}{ }\PYG{o}{*}\PYG{+w}{ }\PYG{n}{edp\PYGZus{}}\PYG{p}{.}\PYG{n}{omega}\PYG{p}{)}\PYG{o}{/}\PYG{p}{(}\PYG{n}{th\PYGZus{}max}\PYG{+w}{ }\PYG{o}{\PYGZhy{}}\PYG{+w}{ }\PYG{n}{th\PYGZus{}min}\PYG{p}{);}
+\PYG{+w}{        	}\PYG{n}{target}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{p}{((}\PYG{n}{th\PYGZus{}max}\PYG{+w}{ }\PYG{o}{+}\PYG{+w}{ }\PYG{n}{th\PYGZus{}min}\PYG{p}{)}\PYG{o}{/}\PYG{l+m+mi}{2}\PYG{p}{);}
+\PYG{+w}{        	}\PYG{k}{if}\PYG{p}{(}\PYG{n}{v\PYGZus{}ave}\PYG{+w}{ }\PYG{o}{\PYGZlt{}}\PYG{+w}{ }\PYG{n}{target}\PYG{p}{)\PYGZob{}}
+\PYG{+w}{        		}\PYG{n}{p}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{a}\PYG{+w}{ }\PYG{o}{*}\PYG{+w}{ }\PYG{p}{(}\PYG{n}{v\PYGZus{}ave}\PYG{o}{\PYGZhy{}}\PYG{n}{th\PYGZus{}min}\PYG{p}{);}
+\PYG{+w}{        	}\PYG{p}{\PYGZcb{}}\PYG{+w}{ }\PYG{k}{else}\PYG{+w}{ }\PYG{k}{if}\PYG{+w}{ }\PYG{p}{(}\PYG{n}{v\PYGZus{}ave}\PYG{+w}{ }\PYG{o}{\PYGZgt{}=}\PYG{+w}{ }\PYG{n}{target}\PYG{p}{)}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{        		}\PYG{n}{p}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{l+m+mi}{1}\PYG{+w}{ }\PYG{o}{\PYGZhy{}}\PYG{+w}{ }\PYG{n}{edp\PYGZus{}}\PYG{p}{.}\PYG{n}{omega}\PYG{+w}{ }\PYG{o}{+}\PYG{+w}{ }\PYG{n}{b}\PYG{+w}{ }\PYG{o}{*}\PYG{+w}{ }\PYG{p}{(}\PYG{n}{v\PYGZus{}ave}\PYG{+w}{ }\PYG{o}{\PYGZhy{}}\PYG{+w}{ }\PYG{n}{target}\PYG{p}{);}
+\PYG{+w}{        	}\PYG{p}{\PYGZcb{}}
+\PYG{+w}{        }\PYG{p}{\PYGZcb{}}
+\PYG{+w}{        }\PYG{k}{else}\PYG{+w}{ }\PYG{p}{\PYGZob{}}
+\PYG{+w}{                }\PYG{c+c1}{// p ranges from 0 to max\PYGZus{}p as the average queue}
+\PYG{+w}{                }\PYG{c+c1}{// size ranges from th\PYGZus{}min to th\PYGZus{}max}
+\PYG{+w}{                }\PYG{n}{p}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{n}{v\PYGZus{}a}\PYG{+w}{ }\PYG{o}{*}\PYG{+w}{ }\PYG{n}{v\PYGZus{}ave}\PYG{+w}{ }\PYG{o}{+}\PYG{+w}{ }\PYG{n}{v\PYGZus{}b}\PYG{p}{;}
+\PYG{+w}{                }\PYG{c+c1}{// p = (v\PYGZus{}ave \PYGZhy{} th\PYGZus{}min) / (th\PYGZus{}max \PYGZhy{} th\PYGZus{}min)}
+
+\PYG{+w}{                }\PYG{c+cm}{/* Added by Mohit P. Tahiliani for Nonlinear RED (NLRED) \PYGZhy{} Start */}
+\PYG{+w}{				}\PYG{k}{if}\PYG{p}{(}\PYG{n}{edp\PYGZus{}}\PYG{p}{.}\PYG{n}{nonlinear}\PYG{+w}{ }\PYG{o}{==}\PYG{+w}{ }\PYG{l+m+mi}{1}\PYG{p}{)\PYGZob{}}
+\PYG{+w}{					}\PYG{n}{p}\PYG{+w}{ }\PYG{o}{*=}\PYG{+w}{ }\PYG{n}{p}\PYG{p}{;}\PYG{+w}{		}\PYG{c+c1}{// This ensures probability is a quadratic function of \PYGZdq{}average queue size\PYGZdq{} as specified in NLRED Paper}
+\PYG{+w}{				}\PYG{p}{\PYGZcb{}}
+\PYG{+w}{				}\PYG{k}{else}\PYG{+w}{ }\PYG{k}{if}\PYG{+w}{ }\PYG{p}{(}\PYG{n}{edp\PYGZus{}}\PYG{p}{.}\PYG{n}{hyperbola}\PYG{+w}{ }\PYG{o}{==}\PYG{+w}{ }\PYG{l+m+mi}{1}\PYG{p}{)\PYGZob{}}
+\PYG{+w}{					}\PYG{n}{p}\PYG{+w}{ }\PYG{o}{*=}\PYG{+w}{ }\PYG{l+m+mi}{1}\PYG{o}{/}\PYG{n}{p}\PYG{p}{;}\PYG{+w}{	}\PYG{c+c1}{// This ensures probability is a hyperbola function of \PYGZdq{}average queue size\PYGZdq{} as specified in HRED Paper}
+\PYG{+w}{				}\PYG{p}{\PYGZcb{}}
+\PYG{+w}{				}\PYG{k}{else}\PYG{+w}{ }\PYG{k}{if}\PYG{+w}{ }\PYG{p}{(}\PYG{n}{edp\PYGZus{}}\PYG{p}{.}\PYG{n}{exponential}\PYG{+w}{ }\PYG{o}{==}\PYG{+w}{ }\PYG{l+m+mi}{1}\PYG{p}{)\PYGZob{}}\PYG{+w}{ }\PYG{c+c1}{// Used for RED\PYGZus{}e}
+\PYG{+w}{					}\PYG{n}{p}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{p}{(}\PYG{n}{pow}\PYG{p}{(}\PYG{n}{exponenta}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{v\PYGZus{}ave}\PYG{p}{)}\PYG{o}{\PYGZhy{}}\PYG{n}{pow}\PYG{p}{(}\PYG{n}{exponenta}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{th\PYGZus{}min}\PYG{p}{))}\PYG{o}{/}\PYG{p}{(}\PYG{n}{pow}\PYG{p}{(}\PYG{n}{exponenta}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{th\PYGZus{}max}\PYG{p}{)}\PYG{o}{\PYGZhy{}}\PYG{n}{pow}\PYG{p}{(}\PYG{n}{exponenta}\PYG{p}{,}\PYG{+w}{ }\PYG{n}{th\PYGZus{}min}\PYG{p}{));}
+\PYG{+w}{				}\PYG{p}{\PYGZcb{}}
+\PYG{+w}{                }\PYG{n}{p}\PYG{+w}{ }\PYG{o}{*=}\PYG{+w}{ }\PYG{n}{max\PYGZus{}p}\PYG{p}{;}
+\PYG{+w}{        }\PYG{p}{\PYGZcb{}}
+\PYG{+w}{	}\PYG{k}{if}\PYG{+w}{ }\PYG{p}{(}\PYG{n}{p}\PYG{+w}{ }\PYG{o}{\PYGZgt{}}\PYG{+w}{ }\PYG{l+m+mf}{1.0}\PYG{p}{)}
+\PYG{+w}{		}\PYG{n}{p}\PYG{+w}{ }\PYG{o}{=}\PYG{+w}{ }\PYG{l+m+mf}{1.0}\PYG{p}{;}
+\PYG{+w}{	}\PYG{k}{return}\PYG{+w}{ }\PYG{n}{p}\PYG{p}{;}
+\PYG{p}{\PYGZcb{}}
+\end{Verbatim}

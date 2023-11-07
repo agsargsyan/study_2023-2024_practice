@@ -1,0 +1,59 @@
+\begin{Verbatim}[commandchars=\\\{\}]
+\PYG{c+ch}{\PYGZsh{}!/usr/bin/env python}
+
+\PYG{l+s+s2}{\PYGZdq{}\PYGZdq{}\PYGZdq{}}
+\PYG{l+s+s2}{Simple experiment.}
+\PYG{l+s+s2}{Output: ping.dat}
+\PYG{l+s+s2}{\PYGZdq{}\PYGZdq{}\PYGZdq{}}
+
+from mininet.net import Mininet
+from mininet.cli import CLI
+from mininet.node import OVSKernelSwitch, Controller
+from mininet.log import setLogLevel, info
+import \PYG{n+nb}{time}
+
+def emptyNet\PYG{o}{()}:
+
+   \PYG{l+s+s2}{\PYGZdq{}Create an empty network and add nodes to it.\PYGZdq{}}
+
+   \PYG{n+nv}{net} \PYG{o}{=} Mininet\PYG{o}{(} \PYG{n+nv}{controller}\PYG{o}{=}Controller, \PYG{n+nv}{waitConnected}\PYG{o}{=}True \PYG{o}{)}
+
+   info\PYG{o}{(} \PYG{l+s+s1}{\PYGZsq{}*** Adding controller\PYGZbs{}n\PYGZsq{}} \PYG{o}{)}
+   net.addController\PYG{o}{(} \PYG{l+s+s1}{\PYGZsq{}c0\PYGZsq{}} \PYG{o}{)}
+
+   info\PYG{o}{(} \PYG{l+s+s1}{\PYGZsq{}*** Adding hosts\PYGZbs{}n\PYGZsq{}} \PYG{o}{)}
+   \PYG{n+nv}{h1} \PYG{o}{=} net.addHost\PYG{o}{(} \PYG{l+s+s1}{\PYGZsq{}h1\PYGZsq{}}, \PYG{n+nv}{ip}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}10.0.0.1\PYGZsq{}} \PYG{o}{)}
+   \PYG{n+nv}{h2} \PYG{o}{=} net.addHost\PYG{o}{(} \PYG{l+s+s1}{\PYGZsq{}h2\PYGZsq{}}, \PYG{n+nv}{ip}\PYG{o}{=}\PYG{l+s+s1}{\PYGZsq{}10.0.0.2\PYGZsq{}} \PYG{o}{)}
+
+
+   info\PYG{o}{(} \PYG{l+s+s1}{\PYGZsq{}*** Adding switch\PYGZbs{}n\PYGZsq{}} \PYG{o}{)}
+   \PYG{n+nv}{s1} \PYG{o}{=} net.addSwitch\PYG{o}{(} \PYG{l+s+s1}{\PYGZsq{}s1\PYGZsq{}} \PYG{o}{)}
+   \PYG{n+nv}{s2} \PYG{o}{=} net.addSwitch\PYG{o}{(} \PYG{l+s+s1}{\PYGZsq{}s2\PYGZsq{}} \PYG{o}{)}
+
+   info\PYG{o}{(}\PYG{l+s+s1}{\PYGZsq{}*** Creating links\PYGZbs{}n\PYGZsq{}}\PYG{o}{)}
+   net.addLink\PYG{o}{(} h1, s1, \PYG{n+nv}{bw} \PYG{o}{=} \PYG{l+m}{10} \PYG{o}{)}
+   net.addLink\PYG{o}{(} s1, s2 \PYG{o}{)}
+   net.addLink\PYG{o}{(} h2, s2, \PYG{n+nv}{bw} \PYG{o}{=} \PYG{l+m}{10} \PYG{o}{)}
+
+   info\PYG{o}{(} \PYG{l+s+s1}{\PYGZsq{}*** Starting network\PYGZbs{}n\PYGZsq{}}\PYG{o}{)}
+   net.start\PYG{o}{()}
+   info\PYG{o}{(} \PYG{l+s+s1}{\PYGZsq{}*** Set red options\PYGZbs{}n\PYGZsq{}}\PYG{o}{)}
+   s1.cmdPrint\PYG{o}{(} \PYG{l+s+s1}{\PYGZsq{}tc qdisc add dev s1\PYGZhy{}eth2 root handle 1: red limit 29214400 max 15728640 min 5242880 burst 5243 avpkt 1000 bandwidth 1gbit \PYGZsq{}}\PYG{o}{)}
+
+   info\PYG{o}{(}\PYG{l+s+s1}{\PYGZsq{}*** Traffic generation\PYGZbs{}n\PYGZsq{}}\PYG{o}{)}
+   h2.cmdPrint\PYG{o}{(}\PYG{l+s+s1}{\PYGZsq{}iperf3 \PYGZhy{}s \PYGZhy{}D \PYGZhy{}1 \PYGZsq{}}\PYG{o}{)}
+   net.waitConnected\PYG{o}{()}
+   h1.cmdPrint\PYG{o}{(}\PYG{l+s+s1}{\PYGZsq{}iperf3 \PYGZhy{}c\PYGZsq{}}, h2.IP\PYG{o}{()},\PYG{l+s+s1}{\PYGZsq{}\PYGZhy{}J \PYGZgt{} iperf\PYGZus{}result.json\PYGZsq{}}\PYG{o}{)}
+
+   info\PYG{o}{(} \PYG{l+s+s1}{\PYGZsq{}*** Ping\PYGZbs{}n\PYGZsq{}}\PYG{o}{)}
+   h1.cmdPrint\PYG{o}{(} \PYG{l+s+s1}{\PYGZsq{}ping \PYGZhy{}c 10\PYGZsq{}}, h2.IP\PYG{o}{()}, \PYG{l+s+s1}{\PYGZsq{}| grep \PYGZdq{}time=\PYGZdq{} | awk \PYGZbs{}\PYGZsq{}}\PYG{o}{\PYGZob{}}print \PYG{n+nv}{\PYGZdl{}5}, \PYG{n+nv}{\PYGZdl{}7}\PYG{o}{\PYGZcb{}}\PYG{l+s+se}{\PYGZbs{}\PYGZsq{}} \PYG{p}{|} sed \PYGZhy{}e \PYG{l+s+se}{\PYGZbs{}\PYGZsq{}}s/time\PYG{o}{=}//g\PYG{l+s+se}{\PYGZbs{}\PYGZsq{}} \PYGZhy{}e\PYG{l+s+se}{\PYGZbs{}\PYGZsq{}}s/icmp\PYGZus{}seq\PYG{o}{=}//g\PYG{l+s+se}{\PYGZbs{}\PYGZsq{}} \PYGZgt{} ping.dat\PYG{l+s+s1}{\PYGZsq{} )}
+
+\PYG{l+s+s1}{   info( \PYGZsq{}}*** Stopping network\PYG{l+s+s1}{\PYGZsq{} )}
+\PYG{l+s+s1}{   net.stop()}
+
+\PYG{l+s+s1}{if \PYGZus{}\PYGZus{}name\PYGZus{}\PYGZus{} == \PYGZsq{}}\PYGZus{}\PYGZus{}main\PYGZus{}\PYGZus{}\PYG{l+s+s1}{\PYGZsq{}:}
+\PYG{l+s+s1}{    setLogLevel( \PYGZsq{}}info\PYG{err}{\PYGZsq{}} \PYG{o}{)}
+    emptyNet\PYG{o}{()}
+
+\PYGZpc{} \PYG{l+s+se}{\PYGZbs{}e}nd\PYG{o}{\PYGZob{}}verbatim\PYG{o}{\PYGZcb{}}
+\end{Verbatim}
